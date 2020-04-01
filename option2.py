@@ -24,16 +24,16 @@ class Ui_Option2(object):
         
         
         Option2.setObjectName("Option2")
-        Option2.resize(1000, 601)
+        Option2.resize(1200, 801)
         self.centralwidget = QtWidgets.QWidget(Option2)
         self.centralwidget.setObjectName("centralwidget")
 
         self.Mplwidget = MplWidget(parent = self.centralwidget)
-        self.Mplwidget.setGeometry(QtCore.QRect(255, 71, 721, 491))
+        self.Mplwidget.setGeometry(QtCore.QRect(255, 71, 921, 691))
         self.Mplwidget.setObjectName("MplWidget")
 
         self.label0 = QtWidgets.QLabel(self.centralwidget)
-        self.label0.setGeometry(QtCore.QRect(527, 5, 200, 70))
+        self.label0.setGeometry(QtCore.QRect(627, 5, 200, 70))
         font = QtGui.QFont()
         font.setPointSize(24)
         font.setWeight(75)
@@ -61,12 +61,12 @@ class Ui_Option2(object):
         self.title.setObjectName("title")
 
         self.butt3 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt3.setGeometry(QtCore.QRect(20, 530, 211, 31))
+        self.butt3.setGeometry(QtCore.QRect(20, 730, 211, 31))
         self.butt3.setObjectName("butt3")
         self.butt3.clicked.connect(self. clicked3)
 
         self.butt4 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt4.setGeometry(QtCore.QRect(20, 490, 211, 31))
+        self.butt4.setGeometry(QtCore.QRect(20, 690, 211, 31))
         self.butt4.setObjectName("butt4")
         self.butt4.clicked.connect(self. clicked4)
 
@@ -198,12 +198,12 @@ class Ui_Option2(object):
         
         
     def disconnect(self):
-        self.connect
+        False
 
         
     def save(self):
-        print(self.maxstrength)
-        with open("test_data.csv","a") as f:
+        
+        with open("max strength","a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([time.time(),self.maxstrength])
                         

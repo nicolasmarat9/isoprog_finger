@@ -14,19 +14,23 @@ from threading import Thread
 
 class Ui_Option4(object):
     def setupUi(self,Option4 ):
+        
+        self.state = 0
+        self.j = 0
+        self.d = 0    
         self.i = 0
         self.w = 25
         self.spn = 0
         self.inter = []
         
         Option4.setObjectName("Option4")
-        Option4.resize(1000, 601)
+        Option4.resize(1200, 801)
         
         self.centralwidget = QtWidgets.QWidget(Option4)
         self.centralwidget.setObjectName("centralwidget")
 
         self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 721, 491))
+        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 921, 691))
         self.MplWidget.setObjectName("MplWidget")
 
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
@@ -47,11 +51,11 @@ class Ui_Option4(object):
         self.title.setObjectName("title")
 
         self.butt3 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt3.setGeometry(QtCore.QRect(20, 530, 211, 31))
+        self.butt3.setGeometry(QtCore.QRect(20, 730, 211, 31))
         self.butt3.setObjectName("butt3")
 
         self.butt4 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt4.setGeometry(QtCore.QRect(20, 490, 211, 31))
+        self.butt4.setGeometry(QtCore.QRect(20, 690, 211, 31))
         self.butt4.setObjectName("butt4")
 
         self.label1 = QtWidgets.QLabel(self.centralwidget)
@@ -137,7 +141,7 @@ class Ui_Option4(object):
             self.inter.append(value)           
                         
             self.lcdNumber.display(value)
-            self.MplWidget.update_graph3(value, self.i, self.w, self.spn)
+            self.MplWidget.update_graph3(value, self.i, self.w, self.spn, self.state, self.j, self.d)
             self.i += 1
             self.w += 1
             self.spn = self.spinBox.value()         
@@ -147,7 +151,7 @@ class Ui_Option4(object):
         ardconnect2.disconnect(ser)
         
     def save(self):
-        print(self.maxstrength)
+        
         with open("test_data.csv","a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([time.time(),self.inter])

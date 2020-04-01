@@ -10,25 +10,38 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
+from stopwatch import Stopwatch
 
 
 class Ui_Option3(object):
     
     def setupUi(self, Option3):
+        self.v = 0
         self.i = 0
-        self.w = 25
+        self.w = 35
         self.spn = 0
+        self.state = 0
         self.straight = []
+        self.stopwatch = Stopwatch()
         
         Option3.setObjectName("Option3")
-        Option3.resize(1000, 601)
+        Option3.resize(1200, 801)
         
         self.centralwidget = QtWidgets.QWidget(Option3)
         self.centralwidget.setObjectName("centralwidget")
 
         self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 721, 491))
+        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 921, 691))
         self.MplWidget.setObjectName("MplWidget")
+
+        self.label0 = QtWidgets.QLabel(self.centralwidget)
+        self.label0.setGeometry(QtCore.QRect(580, 35, 280, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setWeight(50)
+        self.label0.setFont(font)
+        self.label0.setAlignment(QtCore.Qt.AlignCenter)
+        self.label0.setObjectName("label0")        
 
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
         self.lcdNumber.setGeometry(QtCore.QRect(100, 70, 141, 41))
@@ -42,18 +55,19 @@ class Ui_Option3(object):
         self.butt2 = QtWidgets.QPushButton(self.centralwidget)
         self.butt2.setGeometry(QtCore.QRect(10, 130, 71, 41))
         self.butt2.setObjectName("butt2")
+        self.butt2.clicked.connect(self. clicked2)
 
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(10, 10, 401, 41))
         self.title.setObjectName("title")
 
         self.butt3 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt3.setGeometry(QtCore.QRect(20, 530, 211, 31))
+        self.butt3.setGeometry(QtCore.QRect(20, 730, 211, 31))
         self.butt3.setObjectName("butt3")
         self.butt3.clicked.connect(self. clicked3)
 
         self.butt4 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt4.setGeometry(QtCore.QRect(20, 490, 211, 31))
+        self.butt4.setGeometry(QtCore.QRect(20, 690, 211, 31))
         self.butt4.setObjectName("butt4")
         self.butt4.clicked.connect(self. clicked4)
 
@@ -108,7 +122,7 @@ class Ui_Option3(object):
         self.title.setText(_translate("Option3", "<html><head/><body><p><span style=\" font-size:12pt;\">STRAIGHT ENDURANCE</span></p></body></html>"))
         self.butt3.setText(_translate("Option3", "BACK TO OPTIONS"))
         self.butt4.setText(_translate("Option3", "SAVE"))
-        self.label.setText(_translate("Option3", "<html><head/><body><p>Time</p></body></html>"))
+        self.label.setText(_translate("Option3", "<html><head/><body><p>Time (sec)</p></body></html>"))
         self.label_2.setText(_translate("Option3", "<html><head/><body><p>Everadge</p></body></html>"))
 
 
@@ -133,9 +147,10 @@ class Ui_Option3(object):
         
 
     def connect(self):
+        self.v = 0
         ser = ardconnect2.ardconnect()
                
-        while True:
+        while self.v == 0:
                         
             ser_bytes = ser.readline()
             value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
@@ -146,17 +161,35 @@ class Ui_Option3(object):
             self.i += 1
             self.w += 1
             self.spn = self.spinBox.value()
+            
+            if(self.state == 0) and(value > 5):
+                self.stopwatch.start()
+                self.state = 1
+
+            elif(self.state == 1) and(value < 0.3):
+                self.stopwatch.stop()
+                self.pulltime = int(self.stopwatch.duration)
+                self.label1.setText(str(int(self.pulltime)))
+                self.label0.setText("Straight endurance test is finish")
+             
+                
+            
+  
                  
         
     def disconnect(self):
-        ardconnect2.disconnect(ser)
+        self.v = 1
+        self.label1.setText("")
+        self.MplWidget.canvas.axes.clear()
+        self.state = 0
         
     def save(self):
-        print(self.maxstrength)
+        
         with open("test_data.csv","a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow([time.time(),self.straight])
-                        
+            writer.writerow([self.pulltime,self.straight])
+            self.label0.setText("Straight endurance saved")
+            
 
     def close(self):
         Option1.close()    
