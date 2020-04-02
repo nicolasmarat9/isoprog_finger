@@ -10,28 +10,30 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
+from stopwatch import Stopwatch
 
 
 class Ui_Option4(object):
     def setupUi(self,Option4 ):
         
         self.state = 0
-        self.j = 0
-        self.d = 0    
+        self.teeth = 0
+        self.val = 0    
         self.i = 0
-        self.w = 25
+        self.j = 25
         self.spn = 0
         self.inter = []
+        self.stopwatch = Stopwatch()
         
         Option4.setObjectName("Option4")
-        Option4.resize(1200, 801)
+        Option4.resize(1400, 801)
         
         self.centralwidget = QtWidgets.QWidget(Option4)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 921, 691))
-        self.MplWidget.setObjectName("MplWidget")
+        self.plot = MplWidget(self.centralwidget)
+        self.plot.setGeometry(QtCore.QRect(255, 71, 1121, 691))
+        self.plot.setObjectName("plot")
 
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
         self.lcdNumber.setGeometry(QtCore.QRect(100, 70, 141, 41))
@@ -89,6 +91,16 @@ class Ui_Option4(object):
         self.menubar = QtWidgets.QMenuBar(Option4)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 18))
         self.menubar.setObjectName("menubar")
+        
+        self.filename3 = QtWidgets.QLabel(self.centralwidget)
+        self.filename3.setGeometry(QtCore.QRect(20, 650, 211, 30))
+        self.filename3.setObjectName("filename3")        
+        
+        self.fileEdit3 = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.fileEdit3.setGeometry(QtCore.QRect(100, 650, 131, 30))
+        self.fileEdit3.setObjectName("fileEdit3")           
+               
+        
 
         Option4.setMenuBar(self.menubar)
 
@@ -110,7 +122,8 @@ class Ui_Option4(object):
         self.butt4.setText(_translate("Option4", "SAVE"))
         self.label.setText(_translate("Option4", "<html><head/><body><p>Peak load</p></body></html>"))
         self.label_2.setText(_translate("Option4", "<html><head/><body><p>Everadge</p></body></html>"))
-
+        self.filename3.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
+ 
 
         
     def clicked1(self):
@@ -132,27 +145,57 @@ class Ui_Option4(object):
         
 
     def connect(self):
+        
         ser = ardconnect2.ardconnect()
-               
+              
         while True:
                         
             ser_bytes = ser.readline()
             value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-            self.inter.append(value)           
+                
                         
             self.lcdNumber.display(value)
-            self.MplWidget.update_graph3(value, self.i, self.w, self.spn, self.state, self.j, self.d)
+            self.plot.update_graph3(value, self.i, self.teeth, self.j)
             self.i += 1
-            self.w += 1
-            self.spn = self.spinBox.value()         
+            self.j += 1
+            self.spn = self.spinBox.value()
+            
+    
+            if(self.state == 0) and (self.val == 0):
+                self.state = 1
+                self.val += 1
+                self.teeth = 0
+                
+            elif(self.state == 1) and (self.val < 50):
+                self.state = 1
+                self.val += 1
+                self.teeth = 0
+                
+            elif(self.state == 1) and (self.val >= 50):
+                self.state = 2
+                self.val -= 1
+                self.teeth = self.spn
+                
+            elif(self.state == 2) and (self.val > 0):
+                self.state = 2
+                self.val -= 1
+                self.teeth = self.spn
+                
+            elif(self.state == 2) and (self.val == 0):
+                self.state = 1
+                self.val += 1
+                self.teeth = 0
+                
+
       
         
     def disconnect(self):
         ardconnect2.disconnect(ser)
         
     def save(self):
+        self.name = self.fileEdit3.toPlainText()
         
-        with open("test_data.csv","a") as f:
+        with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([time.time(),self.inter])
                         

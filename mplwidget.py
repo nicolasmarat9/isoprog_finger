@@ -73,13 +73,13 @@ class MplWidget(QWidget ):
         
 
         
-    def update_graph2(self, value, i, spn, w):
+    def update_graph2(self, value, i, spn, j):
         
         self.y.append(value)
         self.x.append(i)
         
         self.y2.append(spn)   
-        self.x2.append(w)
+        self.x2.append(j)
         
         
         self.canvas.axes.clear()
@@ -95,47 +95,14 @@ class MplWidget(QWidget ):
 
 
         
-    def update_graph3(self, value, i, spn, w, state, j, d):
+    def update_graph3(self, value, i, j, teeth):
         
-        f = spn
-
-
-    
-        if(state == 0) and (d == 0):
-            state = 1
-            d += 1
-            j = 0
-            
-        elif(state == 1) and (d < 50):
-            state = 1
-            d += 1
-            j = 0
-            
-        elif(state == 1) and (d == 50):
-            state = 2
-            d -= 1
-            j = spn
-            
-        elif(state == 2) and (d > 0):
-            state = 2
-            d -= 1
-            j = spn
-            
-        elif(state == 2) and (d == 0):
-            state = 1
-            d += 1
-            j = 0
-            
-
-
-        
+       
         self.y.append(value)
         self.x.append(i)
         
-        
-        self.y2.append(j)
-               
-        self.x2.append(w)
+        self.y2.append(teeth)
+        self.x2.append(j)
         
         
         self.canvas.axes.clear()
@@ -147,41 +114,7 @@ class MplWidget(QWidget ):
         self.canvas.draw()
 
 
-    def interval(self, spn):
 
-
-        self.state = 0
-        j = 0
-        d = 0            
-        f = spn
-
-
-    
-        if(self.state == 0) and (d == 0):
-            self.state = 1
-            d += 1
-            j = 0
-            return j
-        elif(self.state == 1) and (d < 50):
-            self.state = 1
-            d += 1
-            j = 0
-            return j
-        elif(self.state == 1) and (d == 50):
-            self.state = 2
-            d -= 1
-            j = spn
-            return j
-        elif(self.state == 2) and (d > 0):
-            self.state = 2
-            d -= 1
-            j = spn
-            return j
-        elif(self.state == 2) and (d == 0):
-            self.state = 1
-            d += 1
-            j = 0
-            return j
 
 
 
