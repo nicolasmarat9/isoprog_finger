@@ -58,6 +58,10 @@ class Ui_MainWindow(object):
         self.bouldEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.bouldEdit.setGeometry(QtCore.QRect(770, 270, 130, 30))
         self.bouldEdit.setObjectName("bouldEdit")
+
+        self.noteEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.noteEdit.setGeometry(QtCore.QRect(600, 350, 300, 150))
+        self.noteEdit.setObjectName("noteEdit")        
         
         self.namelabel = QtWidgets.QLabel(self.centralwidget)
         self.namelabel.setGeometry(QtCore.QRect(500, 70, 170, 30))
@@ -82,6 +86,10 @@ class Ui_MainWindow(object):
         self.bouldlabel = QtWidgets.QLabel(self.centralwidget)
         self.bouldlabel.setGeometry(QtCore.QRect(500, 270, 230, 30))
         self.bouldlabel.setObjectName("bouldlabel")
+
+        self.notelabel = QtWidgets.QLabel(self.centralwidget)
+        self.notelabel.setGeometry(QtCore.QRect(500, 350, 230, 30))
+        self.notelabel.setObjectName("notelabel")
         
         self.climblabel = QtWidgets.QLabel(self.centralwidget)
         self.climblabel.setGeometry(QtCore.QRect(500, 310, 230, 30))
@@ -129,8 +137,7 @@ class Ui_MainWindow(object):
         self.freeButt.setGeometry(QtCore.QRect(60, 350, 281, 51))
         self.freeButt.setObjectName("freeButt")
         self.freeButt.clicked.connect(self.clicked_7)
-        
-        
+         
         self.savebutt = QtWidgets.QPushButton(self.centralwidget)
         self.savebutt.setGeometry(QtCore.QRect(560, 530, 261, 31))
         self.savebutt.setObjectName("savebutt")
@@ -183,6 +190,7 @@ class Ui_MainWindow(object):
         self.sexlabel.setText(_translate("MainWindow", "<html><head/><body><p>sex :</p></body></html>"))
         self.Titlelabel_1.setText(_translate("MainWindow", "<html><head/><body><p>TRAINING OPTIONS</p></body></html>"))
         self.Titlelabel_2.setText(_translate("MainWindow", "<html><head/><body><p>PERSONAL INFORMATIONS</p></body></html>"))
+        self.notelabel.setText(_translate("MainWindow", "<html><head/><body><p>Notes :</p></body></html>"))
 
 
     def clicked_1(self):
@@ -252,6 +260,7 @@ class Ui_MainWindow(object):
         self.climb = self.climbEdit.toPlainText()
         self.bould = self.bouldEdit.toPlainText()
         self.sex = str(self.Sexbox.currentText())
+        self.notes = self.noteEdit.toPlainText()        
          
         with open("%s.csv"%self.name, "a") as f:
             writer = csv.writer(f,delimiter=",")
@@ -262,6 +271,7 @@ class Ui_MainWindow(object):
             writer.writerow(["climbing",self.climb])
             writer.writerow(["bouldering",self.bould])
             writer.writerow(["sex",self.sex])
+            writer.writerow(["sex",self.notes])
                
 
 

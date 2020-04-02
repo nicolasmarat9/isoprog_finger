@@ -38,6 +38,10 @@ class Ui_Free(object):
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
         self.lcdNumber.setGeometry(QtCore.QRect(100, 70, 141, 41))
         self.lcdNumber.setObjectName("lcdNumber")
+
+        self.lcdNumber2 = QtWidgets.QLCDNumber(self.centralwidget)
+        self.lcdNumber2.setGeometry(QtCore.QRect(100, 130, 141, 41))
+        self.lcdNumber2.setObjectName("lcdNumber2") 
         
         self.butt1 = QtWidgets.QPushButton(self.centralwidget)
         self.butt1.setGeometry(QtCore.QRect(10, 70, 71, 41))
@@ -81,7 +85,7 @@ class Ui_Free(object):
         _translate = QtCore.QCoreApplication.translate
         Free.setWindowTitle(_translate("Free", "peakload"))
         self.butt1.setText(_translate("Free", "START"))
-        self.butt2.setText(_translate("Free", "STOP"))
+        self.butt2.setText(_translate("Free", "CLEAR"))
         self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
         self.butt3.setText(_translate("Free", "BACK TO OPTIONS"))
 
@@ -110,6 +114,7 @@ class Ui_Free(object):
             self.peakload = max(self.peakload, value)
             
             self.lcdNumber.display(value)
+            self.lcdNumber2.display(self.peakload)
             self.MplWidget.update_bargraph(value, self.peakload)
 
        

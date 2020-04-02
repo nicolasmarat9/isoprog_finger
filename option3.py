@@ -16,12 +16,16 @@ from stopwatch import Stopwatch
 class Ui_Option3(object):
     
     def setupUi(self, Option3):
+        
+        self.rang = 0
+        self.rang2 = 0
         self.clean3 = 0
         self.i = 0
         self.j = 35
         self.spn = 0
         self.state = 0
         self.stopwatch = Stopwatch()
+        self.straight = []
         
         Option3.setObjectName("Option3")
         Option3.resize(1200, 801)
@@ -161,41 +165,52 @@ class Ui_Option3(object):
         while self.clean3 == 0:
                         
             ser_bytes = ser.readline()
-            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))            
+            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+            self.straight.append(value)
                         
             self.lcdNumber_3.display(value)
             self.plot.update_graph2(value, self.i, self.j, self.spn)
             self.i += 1
             self.j += 1
             self.spn = self.spinBox_3.value()
-            
-            if(self.state == 0) and(value > 5):
-                self.stopwatch.start()
-                self.state = 1
+            self.rang  = self.spn -5
+            self.rang2 = self.spn +5
 
-            elif(self.state == 1) and(value < 0.3):
+            if(self.state == 0) and (value < self.rang ) :
+                continue
+            elif(self.state == 0) and (value in range(self.rang, self.rang2)) :
+                self.state = 1
+                
+            
+            elif(self.state == 1) and (value in range(self.rang, self.rang2)):
+                self.stopwatch.start()
+                self.displaylabel_3.setText("start")
+                
+                
+            elif(self.state == 1) and (value < self.rang) :
                 self.stopwatch.stop()
                 self.pulltime = int(self.stopwatch.duration)
                 self.displaylabel1_3.setText(str(int(self.pulltime)))
-                self.label0.setText("Straight endurance test is finish")
-                
-                
+                self.displaylabel_3.setText("Straight endurance test is finish")
+
              
-                
             
     def disconnect(self):
         self.clean3 = 1
-        self.label1.setText("")
-        self.MplWidget.canvas.axes.clear()
+        self.displaylabel1_3.setText("")
+        self.displaylabel_3.setText("")
+        self.plot.canvas.axes.clear()
         self.state = 0
         
     def save(self):
-        self.name = self.fileEdit.toPlainText()        
+        
+        self.clean3 = 1
+        self.name = self.fileEdit_3.toPlainText()        
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([self.pulltime,self.straight])
-            self.label0.setText("Straight endurance saved")
+        self.displaylabel_3.setText("Straight endurance saved")
             
 
     def close(self):
