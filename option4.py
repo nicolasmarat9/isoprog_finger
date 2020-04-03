@@ -23,6 +23,7 @@ class Ui_Option4(object):
         self.state2 = 0
         self.state3 = 0
         self.clean = 0
+        self.clean2 = 0
         
         self.teeth = 0
         self.val = 0    
@@ -33,7 +34,6 @@ class Ui_Option4(object):
         
         self.inter = []
         self.inter2 = []
-        self.stopwatch = Stopwatch()
         self.timepoint = 0
         self.pulltime = 0
         self.pulltime2 = 0
@@ -123,7 +123,7 @@ class Ui_Option4(object):
         self.fileEdit_4.setObjectName("fileEdit_4")
 
         self.displaylabel_4= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_4.setGeometry(QtCore.QRect(580, 35, 430, 40))
+        self.displaylabel_4.setGeometry(QtCore.QRect(610, 35, 430, 40))
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setWeight(50)
@@ -131,6 +131,14 @@ class Ui_Option4(object):
         self.displaylabel_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_4.setObjectName("displaylabel_4")
                
+        self.displaylabel3_4= QtWidgets.QLabel(self.centralwidget)
+        self.displaylabel3_4.setGeometry(QtCore.QRect(23 ,400, 200, 100))
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setWeight(50)
+        self.displaylabel3_4.setFont(font)
+        self.displaylabel3_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaylabel3_4.setObjectName("displaylabel3_4")
         
 
         Option4.setMenuBar(self.menubar)
@@ -178,19 +186,19 @@ class Ui_Option4(object):
         n = Thread(target = self.next)
         n.start()     
                   
-        
-                        
-        
 
     def connect(self):
-        
+        self.state2 = 0
         self.spn = 0
         self.clean = 0
+        self.clean2 = 0
         ser = ardconnect2.ardconnect()
+        w = Thread(target = self.timersec)
+        w.start()
         
         if self.state3 == 0:
             
-            while self.clean == 0:
+            while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
                 value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
@@ -201,83 +209,59 @@ class Ui_Option4(object):
                 self.plot.update_graph3(value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
-                w = Thread(target = self.timersec)
                 
                 s.start()
-                u.start()
-                w.start()
+                u.start()         
 
                 s.join()
                 u.join()
-                w.join()           
 
-                #self.stopwatch.start()
-                
-                
-                      
-                if(self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
-                    #self.stopwatch.stop()
+                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
                     self.pulltime = self.timer #int(self.stopwatch.duration)
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
-
-                    
-                    
-                elif(self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    
-                    #self.stopwatch.stop()
+                    self.state2 = 1
+            
+                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
                     self.pulltime = self.timer #int(self.stopwatch.duration)
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
-
-
+                    self.state2 = 1
+                    
         if self.state3 == 1:
             
-            while self.clean == 0:
+            while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
                 value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 self.inter2.append(value)
-              
-                            
+                           
                 self.lcdNumber_4.display(value)
                 self.plot.update_graph3(value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
-                w = Thread(target = self.timersec)
-                
+                               
                 s.start()
                 u.start()
-                w.start()
-
+                
                 s.join()
                 u.join()
-                w.join()
-
-                #self.stopwatch.start()
-                
-                
-                      
-                if(self.timepoint > 50) and (self.state == 1) and (self.val > 22) and (value < self.rang) :
-                    #self.stopwatch.stop()
+                   
+                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val > 22) and (value < self.rang) :
                     self.pulltime2 = self.timer #int(self.stopwatch.duration)
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm2 = self.inter2
-
-                    
-                    
-                    
-                elif(self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    
-                    self.stopwatch.stop()
+                    self.state2 = 1
+            
+                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
                     self.pulltime2 = self.timer # int(self.stopwatch.duration)
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm2 = self.inter2  
-
+                    self.state2 = 1
 
 
     def plotvalue(self):
@@ -319,9 +303,10 @@ class Ui_Option4(object):
             self.timepoint += 1
 
     def timersec(self):
-        self.timer += 1
-        #time.sleep(1)
-        print(self.timer)
+        while(self.clean == 0):
+            self.timer += 1
+            time.sleep(1)
+            self.displaylabel3_4.setText(str(int(self.timer)))
             
 
     def next(self):
@@ -330,24 +315,29 @@ class Ui_Option4(object):
             self.state3 = 1
         elif(self.state3 == 1):
             self.state3 = 0
-        self.displaylabel_4.setText("")    
+        self.clean = 1    
+        self.clean2 = 1
+        self.timer = 0
+        self.displaylabel_4.setText("")
+        self.displaylabel3_4.setText("") 
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
-        self.stopwatch.reset()
         self.i = 0
         self.j = 25        
         self.timepoint = 0
         self.state = 0
-        self.clean = 1
+        self.timer = 0
         self.val = 0
         
-
-           
+   
     def disconnect(self):
-
+        
+        self.state2 = 1
+        self.clean = 1
+        self.clean2 = 1
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
@@ -355,15 +345,14 @@ class Ui_Option4(object):
         self.plot.y2.clear()
         self.inter.clear()
         self.inter2.clear()
-        self.stopwatch.reset()
         self.i = 0
         self.j = 25        
-        self.clean = 1
         self.displaylabel1_4.setText("")
         self.displaylabel2_4.setText("")
         self.displaylabel_4.setText("")
+        self.displaylabel3_4.setText("") 
         self.state = 0
-        self.clean = 1
+        self.state3 = 0
         self.val = 0
         
         
