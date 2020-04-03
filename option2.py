@@ -10,7 +10,7 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
-import threading
+
 
 
 class Ui_Option2(object):
@@ -20,8 +20,13 @@ class Ui_Option2(object):
     def setupUi(self, Option2):
         
         self.i = 0
-        self.maxstrength = []
+        self.peak = 0
+        self.peak_2 = 0
         self.peakload = 0
+        self.clean = 0
+        self.maxbyte = []
+        self.maxbyte_2 = []
+        self.state = 0
         
         
         Option2.setObjectName("Option2")
@@ -81,26 +86,26 @@ class Ui_Option2(object):
         self.saveButt_2.clicked.connect(self. clicked4_2)
 
         self.peaklabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_2.setGeometry(QtCore.QRect(120, 180, 120, 31))
+        self.peaklabel_2.setGeometry(QtCore.QRect(150, 180, 80, 31))
         self.peaklabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_2.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel_2.setObjectName("peaklabel_2")
 
-        self.evelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.evelabel_2.setGeometry(QtCore.QRect(120, 230, 120, 31))
-        self.evelabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.evelabel_2.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.evelabel_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.evelabel_2.setObjectName("evelabel_2")
+        self.peaklabel_22 = QtWidgets.QLabel(self.centralwidget)
+        self.peaklabel_22.setGeometry(QtCore.QRect(150, 230, 80, 31))
+        self.peaklabel_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.peaklabel_22.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.peaklabel_22.setAlignment(QtCore.Qt.AlignCenter)
+        self.peaklabel_22.setObjectName("evelabel_2")
 
         self.peakloadlabel = QtWidgets.QLabel(self.centralwidget)
-        self.peakloadlabel.setGeometry(QtCore.QRect(20, 180, 110, 31))
+        self.peakloadlabel.setGeometry(QtCore.QRect(20, 180, 200, 31))
         self.peakloadlabel.setObjectName("peakloadlabel")
 
-        self.everadgelabel = QtWidgets.QLabel(self.centralwidget)
-        self.everadgelabel.setGeometry(QtCore.QRect(20, 230, 81, 31))
-        self.everadgelabel.setObjectName("everadgelabel")
+        self.peakloadlabel_2 = QtWidgets.QLabel(self.centralwidget)
+        self.peakloadlabel_2.setGeometry(QtCore.QRect(20, 230, 200, 31))
+        self.peakloadlabel_2.setObjectName("everadgelabel")
 
         self.namelabel_2 = QtWidgets.QLabel(self.centralwidget)
         self.namelabel_2.setGeometry(QtCore.QRect(20, 650, 211, 30))
@@ -134,13 +139,13 @@ class Ui_Option2(object):
         self.title_2.setText(_translate("Option2", "<html><head/><body><p><span style=\" font-size:12pt;\">MAX STRENGTH</span></p></body></html>"))
         self.backButt_2.setText(_translate("Option2", "BACK TO OPTIONS"))
         self.saveButt_2.setText(_translate("Option2", "SAVE"))
-        self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak load</p></body></html>"))
-        self.everadgelabel.setText(_translate("Option2", "<html><head/><body><p>Everadge</p></body></html>"))
+        self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak load right</p></body></html>"))
+        self.peakloadlabel_2.setText(_translate("Option2", "<html><head/><body><p>peak load left</p></body></html>"))
         self.namelabel_2.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
  
 
     def clicked1_2(self):
-        e = Thread(target = self.connect)
+        e = Thread(target = self.connect_22)
         e.start()
 
     def clicked2_2(self):
@@ -157,27 +162,53 @@ class Ui_Option2(object):
                 
         
 
-    def connect(self):
+    def connect_22(self):
+
+        self.clean = 0
         ser = ardconnect2.ardconnect()
         krono = Thread(target = self.timer)
         krono.start()
-               
-        while True:
-                        
-            ser_bytes = ser.readline()
-            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-            self.maxstrength.append(value)
-            self.peakload = max(self.peakload, value)
-                       
-            self.lcdNumber_2.display(value)
-            self.plot.update_graph(value, self.i)
-            self.i += 1
+        
+        if(self.state == 0):
             
+            while (self.clean == 0):
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                
+                
+                self.peakload = max(self.peakload, value)
+                self.maxbyte.append(value)
+                           
+                self.lcdNumber_2.display(value)
+                self.plot.update_graph(value, self.i)
+                
+                self.i += 1
+                
+        elif(self.state == 1):
+
+            while (self.clean == 0):
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                
+                
+                self.peakload = max(self.peakload, value)
+                self.maxbyte_2.append(value)
+                           
+                self.lcdNumber_2.display(value)
+                self.plot.update_graph(value, self.i)
+                
+                self.i += 1
+                
+
+
 
 
 
     def timer(self):
         
+    
         self.displaylabel_2.setText("Get ready")    
         time.sleep(1)            
         self.displaylabel_2.setText(str(5))    
@@ -210,16 +241,46 @@ class Ui_Option2(object):
         time.sleep(3)
         self.displaylabel_2.setText("")
                                     
-        self.disconnect()
-        
-        peak = str(self.peakload)
-        self.peaklabel_2.setText(peak)
         
         
+
+        if(self.state == 0):
+            self.peak = str(self.peakload)
+            self.peaklabel_2.setText(self.peak)
+        elif(self.state == 1):
+            self.peak_2 = str(self.peakload)
+            self.peaklabel_22.setText(self.peak_2)
+        self.state += 1
+        time.sleep(1)
+        self.end()
+
+        
+    def end(self):
+        
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+         
+        self.i = 0
+        self.clean = 1
+        self.peakload = 0
         
         
     def disconnect(self):
-        False
+        
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        self.maxbyte.clear()
+        self.maxbyte_2:clear()
+        self.i = 0
+        self.clean = 1
+        self.displaylabel_2.setText("")
+        self.displaylabel_22.setText("")
+        self.peaklabel_2.setText("")
+        self.peaklabel_22.setText("")
+        self.state = 0
+        
 
         
     def save(self):
@@ -227,11 +288,15 @@ class Ui_Option2(object):
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow([time.time(),self.maxstrength])
+            writer.writerow(["right hand, peakload",self.peak])
+            writer.writerow(["left hand, peakload", self.peak_2])
+            writer.writerow(["right hand, pulling data",self.maxbyte]) 
+            writer.writerow(["left hand, pulling data",self.maxbyte_2])
+            
         self.displaylabel_22.setText("peak load saved")                
 
     def close(self):
-        Option1.close()    
+        Option2.close()    
 
 
 if __name__ == "__main__":

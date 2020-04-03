@@ -19,13 +19,19 @@ class Ui_Option3(object):
         
         self.rang = 0
         self.rang2 = 0
-        self.clean3 = 0
         self.i = 0
         self.j = 35
         self.spn = 0
         self.state = 0
+        self.state2 = 0
+        self.state3 = 0        
         self.stopwatch = Stopwatch()
         self.straight = []
+        self.straight_2 = []
+        self.pulltime = 0
+        self.pulltime_2 = 0
+        self.timepoint = 0
+        self.intens = 0
         
         Option3.setObjectName("Option3")
         Option3.resize(1200, 801)
@@ -38,9 +44,9 @@ class Ui_Option3(object):
         self.plot.setObjectName("plot")
 
         self.displaylabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_3.setGeometry(QtCore.QRect(580, 35, 280, 40))
+        self.displaylabel_3.setGeometry(QtCore.QRect(500, 35, 470, 40))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(13)
         font.setWeight(50)
         self.displaylabel_3.setFont(font)
         self.displaylabel_3.setAlignment(QtCore.Qt.AlignCenter)
@@ -59,7 +65,12 @@ class Ui_Option3(object):
         self.stopButt_3.setGeometry(QtCore.QRect(10, 130, 71, 41))
         self.stopButt_3.setObjectName("stopButt_3")
         self.stopButt_3.clicked.connect(self. clicked2_3)
-
+        
+        self.nextButt_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.nextButt_3.setGeometry(QtCore.QRect(150, 130, 80, 41))
+        self.nextButt_3.setObjectName("next_3")
+        self.nextButt_3.clicked.connect(self. clicked5_3)
+        
         self.title_3 = QtWidgets.QLabel(self.centralwidget)
         self.title_3.setGeometry(QtCore.QRect(10, 10, 401, 41))
         self.title_3.setObjectName("title")
@@ -75,25 +86,25 @@ class Ui_Option3(object):
         self.saveButt_3.clicked.connect(self. clicked4_3)
 
         self.displaylabel1_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel1_3.setGeometry(QtCore.QRect(120, 180, 120, 31))
+        self.displaylabel1_3.setGeometry(QtCore.QRect(150, 180, 80, 31))
         self.displaylabel1_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel1_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel1_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel1_3.setObjectName("displaylabel1_3")
 
         self.displaylabel2_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel2_3.setGeometry(QtCore.QRect(120, 230, 120, 31))
+        self.displaylabel2_3.setGeometry(QtCore.QRect(150, 230, 80, 31))
         self.displaylabel2_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel2_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel2_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel2_3.setObjectName("displaylabel2_3")
 
         self.timelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.timelabel_3.setGeometry(QtCore.QRect(20, 180, 110, 31))
+        self.timelabel_3.setGeometry(QtCore.QRect(20, 180, 150, 31))
         self.timelabel_3.setObjectName("timelabel_3")
 
         self.everadgelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.everadgelabel_3.setGeometry(QtCore.QRect(20, 230, 81, 31))
+        self.everadgelabel_3.setGeometry(QtCore.QRect(20, 230, 150, 31))
         self.everadgelabel_3.setObjectName("everadgelabel_3")
 
         self.spinBox_3 = QtWidgets.QSpinBox(self.centralwidget)
@@ -133,8 +144,9 @@ class Ui_Option3(object):
         self.title_3.setText(_translate("Option3", "<html><head/><body><p><span style=\" font-size:12pt;\">STRAIGHT ENDURANCE</span></p></body></html>"))
         self.backButt_3.setText(_translate("Option3", "BACK TO OPTIONS"))
         self.saveButt_3.setText(_translate("Option3", "SAVE"))
-        self.timelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time (sec)</p></body></html>"))
-        self.everadgelabel_3.setText(_translate("Option3", "<html><head/><body><p>Everadge</p></body></html>"))
+        self.nextButt_3.setText(_translate("Option3", "NEXT"))        
+        self.timelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time right (sec)</p></body></html>"))
+        self.everadgelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time left (sec)</p></body></html>"))
         self.namelabel_3.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
  
 
@@ -155,66 +167,159 @@ class Ui_Option3(object):
         n = Thread(target = self.save)
         n.start()     
                 
-                
+    def clicked5_3(self):
+        n = Thread(target = self.next)
+        n.start()     
+                                
         
 
     def connect(self):
-        self.clean3 = 0
+        
+        self.spn = 0
+        self.state = 0
         ser = ardconnect2.ardconnect()
-               
-        while self.clean3 == 0:
-                        
-            ser_bytes = ser.readline()
-            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-            self.straight.append(value)
-                        
-            self.lcdNumber_3.display(value)
-            self.plot.update_graph2(value, self.i, self.j, self.spn)
-            self.i += 1
-            self.j += 1
-            self.spn = self.spinBox_3.value()
-            self.rang  = self.spn -5
-            self.rang2 = self.spn +5
 
-            if(self.state == 0) and (value < self.rang ) :
-                continue
-            elif(self.state == 0) and (value in range(self.rang, self.rang2)) :
-                self.state = 1
-                
+        if(self.state3 == 0):
             
-            elif(self.state == 1) and (value in range(self.rang, self.rang2)):
-                self.stopwatch.start()
-                self.displaylabel_3.setText("start")
+            while(self.state == 0):
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.straight.append(value)
+                            
+                self.lcdNumber_3.display(value)
+                self.plot.update_graph2(value, self.i, self.j, self.spn)
                 
-                
-            elif(self.state == 1) and (value < self.rang) :
-                self.stopwatch.stop()
-                self.pulltime = int(self.stopwatch.duration)
-                self.displaylabel1_3.setText(str(int(self.pulltime)))
-                self.displaylabel_3.setText("Straight endurance test is finish")
+                self.i += 1
+                self.j += 1
+                self.spn = self.spinBox_3.value()
+                self.rang  = self.spn -5
+                self.rang2 = self.spn +8
 
-             
+                v = Thread(target = self.timesim)
+                v.start()
+                
+
+                
+                if(self.state == 0) and(self.timepoint > 35):
+                    self.displaylabel_3.setText("START") 
+                    self.stopwatch.start()
+                    
+                    if(self.state == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                        self.stopwatch.stop()
+                        self.pulltime = int(self.stopwatch.duration)
+                        self.displaylabel1_3.setText(str(int(self.pulltime)))
+                        self.displaylabel_3.setText("Straight endurance test is finish")
+                        
+                        
+                        
+                  
+
+        elif(self.state3 == 1):
+
+            while(self.state == 0):
+                
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.straight_2.append(value)
+                            
+                self.lcdNumber_3.display(value)
+                self.plot.update_graph2(value, self.i, self.j, self.spn)
+                
+                self.i += 1
+                self.j += 1
+                self.spn = self.spinBox_3.value()
+                self.rang  = self.spn -5
+                self.rang2 = self.spn +8
+
+                v = Thread(target = self.timesim)
+                v.start()
+
+                
+                if(self.state == 0) and(self.timepoint > 35):
+                    self.displaylabel_3.setText("START") 
+                    self.stopwatch.start()
+                    
+                    if(self.state == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                        self.stopwatch.stop()
+                        self.pulltime_2 = int(self.stopwatch.duration)
+                        self.displaylabel2_3.setText(str(int(self.pulltime_2)))
+                        self.displaylabel_3.setText("Straight endurance test is finish")
+
+                        
+
+    def plotvalue(self):
+    
+        self.i += 1
+        self.j += 1
+        self.spn = self.spinBox.value()
+        self.rang = self.spn - 5
+        self.rang2 = self.spn + 5 
+                
+    def timesim(self):
+        if(self.state2 == 0):
+            self.timepoint += 1
+
+
+    def next(self):
+        self.displaylabel_3.setText("WAIT")
+        
+        if(self.state3 == 0):
+            self.state3 = 1
+        elif(self.state3 == 1):
+            self.state3 = 0
+            
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        self.plot.x2.clear()
+        self.plot.y2.clear()
+        self.stopwatch.reset()
+        self.i = 0
+        self.j = 35        
+        self.timepoint = 0
+        self.state = 1
+        self.displaylabel_3.setText("")  
             
     def disconnect(self):
+        
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        self.plot.x2.clear()
+        self.plot.y2.clear()
+        self.stopwatch.reset()
+        self.i = 0
+        self.j = 35        
         self.clean3 = 1
         self.displaylabel1_3.setText("")
+        self.displaylabel2_3.setText("")
         self.displaylabel_3.setText("")
-        self.plot.canvas.axes.clear()
-        self.state = 0
+        self.state = 1
+        self.spn = 0
+        self.state3 = 0
+        self.straight.clear()
+        self:straight_2.clear()        
+        
         
     def save(self):
         
-        self.clean3 = 1
-        self.name = self.fileEdit_3.toPlainText()        
+        
+        self.name = self.fileEdit_3.toPlainText()
+        self.intens = self.spinBox_3.value()
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.pulltime,self.straight])
+            writer.writerow(["intensity", self.intens])
+            writer.writerow(["left hand, pulling time, pulling data",self.pulltime_2,self.straight_2])
+            writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.straight])
+ 
         self.displaylabel_3.setText("Straight endurance saved")
             
 
     def close(self):
-        Option1.close()    
+        Option3.close()    
 
         
 

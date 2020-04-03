@@ -21,15 +21,23 @@ class Ui_Option4(object):
         self.rang2 =  0
         self.state = 0
         self.state2 = 0
+        self.state3 = 0
+        self.clean = 0
+        
         self.teeth = 0
         self.val = 0    
         self.i = 0
         self.j = 25
         self.spn = 0
+        self.timer = 0
+        
         self.inter = []
+        self.inter2 = []
         self.stopwatch = Stopwatch()
         self.timepoint = 0
-        self.clean = 0
+        self.pulltime = 0
+        self.pulltime2 = 0
+        
         
         Option4.setObjectName("Option4")
         Option4.resize(1400, 801)
@@ -55,6 +63,11 @@ class Ui_Option4(object):
         self.stopButt_4.setObjectName("stopButt_4")
         self.stopButt_4.clicked.connect(self. clicked2)
 
+        self.nextButt_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.nextButt_4.setGeometry(QtCore.QRect(150, 130, 80, 41))
+        self.nextButt_4.setObjectName("next_4")
+        self.nextButt_4.clicked.connect(self. clicked5)        
+
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(10, 10, 401, 41))
         self.title.setObjectName("title")
@@ -62,31 +75,33 @@ class Ui_Option4(object):
         self.backButt_4 = QtWidgets.QPushButton(self.centralwidget)
         self.backButt_4.setGeometry(QtCore.QRect(20, 730, 211, 31))
         self.backButt_4.setObjectName("backButt_4")
+        self.backButt_4.clicked.connect(self. clicked3)
 
         self.saveButt_4 = QtWidgets.QPushButton(self.centralwidget)
         self.saveButt_4.setGeometry(QtCore.QRect(20, 690, 211, 31))
         self.saveButt_4.setObjectName("saveButt_4")
+        self.saveButt_4.clicked.connect(self. clicked4)
 
         self.displaylabel1_4 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel1_4.setGeometry(QtCore.QRect(120, 180, 120, 31))
+        self.displaylabel1_4.setGeometry(QtCore.QRect(150, 180, 80 , 31))
         self.displaylabel1_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel1_4.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel1_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel1_4.setObjectName("displaylabel1_4")
 
         self.displaylabel2_4 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel2_4.setGeometry(QtCore.QRect(120, 230, 120, 31))
+        self.displaylabel2_4.setGeometry(QtCore.QRect(150, 230, 80, 31))
         self.displaylabel2_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel2_4.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel2_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel2_4.setObjectName("displaylabel2_4")
 
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(20, 180, 110, 31))
+        self.label.setGeometry(QtCore.QRect(20, 180, 150, 31))
         self.label.setObjectName("label")
 
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(20, 230, 81, 31))
+        self.label_2.setGeometry(QtCore.QRect(20, 230, 150, 31))
         self.label_2.setObjectName("label_2")
 
         self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
@@ -108,9 +123,9 @@ class Ui_Option4(object):
         self.fileEdit_4.setObjectName("fileEdit_4")
 
         self.displaylabel_4= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_4.setGeometry(QtCore.QRect(580, 35, 280, 40))
+        self.displaylabel_4.setGeometry(QtCore.QRect(580, 35, 430, 40))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(13)
         font.setWeight(50)
         self.displaylabel_4.setFont(font)
         self.displaylabel_4.setAlignment(QtCore.Qt.AlignCenter)
@@ -136,10 +151,11 @@ class Ui_Option4(object):
         self.title.setText(_translate("Option4", "<html><head/><body><p><span style=\" font-size:12pt;\">INTERVAL ENDURANCE</span></p></body></html>"))
         self.backButt_4.setText(_translate("Option4", "BACK TO OPTIONS"))
         self.saveButt_4.setText(_translate("Option4", "SAVE"))
-        self.label.setText(_translate("Option4", "<html><head/><body><p>Time (sec)</p></body></html>"))
-        self.label_2.setText(_translate("Option4", "<html><head/><body><p>Everadge</p></body></html>"))
+        self.nextButt_4.setText(_translate("Option4", "NEXT"))
+        self.label.setText(_translate("Option4", "<html><head/><body><p>Time right (sec)</p></body></html>"))
+        self.label_2.setText(_translate("Option4", "<html><head/><body><p>Time left (sec)</p></body></html>"))
         self.filename4.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
- 
+        
 
         
     def clicked1(self):
@@ -156,51 +172,112 @@ class Ui_Option4(object):
 
     def clicked4(self):
         r = Thread(target = self.save)
-        r.start()     
+        r.start()
+        
+    def clicked5(self):
+        n = Thread(target = self.next)
+        n.start()     
+                  
+        
                         
         
 
     def connect(self):
-        self.clean = 0
         
+        self.spn = 0
+        self.clean = 0
         ser = ardconnect2.ardconnect()
+        
+        if self.state3 == 0:
+            
+            while self.clean == 0:
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.inter.append(value)
               
-        while(self.clean == 0):
-                        
-            ser_bytes = ser.readline()
-            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                            
+                self.lcdNumber_4.display(value)
+                self.plot.update_graph3(value, self.i, self.teeth, self.j)
+                s = Thread(target = self.plotvalue)
+                u = Thread(target = self.timesim)
+                w = Thread(target = self.timersec)
+                
+                s.start()
+                u.start()
+                w.start()
 
-            self.straight.append(value)
-                
-                        
-            self.lcdNumber.display(value)
-            self.plot.update_graph3(value, self.i, self.teeth, self.j)
-            s = Thread(target = self.plotvalue)
-            u = Thread(target = self.timesim)
-            
-            s.start()
-            u.start()
+                s.join()
+                u.join()
+                w.join()           
 
-            s.join()
-            u.join()            
+                #self.stopwatch.start()
+                
+                
+                      
+                if(self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
+                    #self.stopwatch.stop()
+                    self.pulltime = self.timer #int(self.stopwatch.duration)
+                    self.displaylabel1_4.setText(str(int(self.pulltime)))
+                    self.displaylabel_4.setText("Interval endurance test is finish")
+                    self.interm = self.inter
 
-            self.stopwatch.start()
+                    
+                    
+                elif(self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
+                    
+                    #self.stopwatch.stop()
+                    self.pulltime = self.timer #int(self.stopwatch.duration)
+                    self.displaylabel1_4.setText(str(int(self.pulltime)))
+                    self.displaylabel_4.setText("Interval endurance test is finish")
+                    self.interm = self.inter
+
+
+        if self.state3 == 1:
             
-            
-                  
-            if(self.timepoint > 50) and (self.state == 1) and (self.val > 22) and (value < self.rang) :
-                self.stopwatch.stop()
-                self.pulltime = int(self.stopwatch.duration)
-                self.displaylabel1_4.setText(str(int(self.pulltime)))
-                self.displaylabel_4.setText("Interval endurance test is finish")
+            while self.clean == 0:
+                            
+                ser_bytes = ser.readline()
+                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.inter2.append(value)
+              
+                            
+                self.lcdNumber_4.display(value)
+                self.plot.update_graph3(value, self.i, self.teeth, self.j)
+                s = Thread(target = self.plotvalue)
+                u = Thread(target = self.timesim)
+                w = Thread(target = self.timersec)
+                
+                s.start()
+                u.start()
+                w.start()
+
+                s.join()
+                u.join()
+                w.join()
+
+                #self.stopwatch.start()
                 
                 
-            elif(self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                
-                self.stopwatch.stop()
-                self.pulltime = int(self.stopwatch.duration)
-                self.displaylabel1_4.setText(str(int(self.pulltime)))
-                self.displaylabel_4.setText("Interval endurance test is finish")
+                      
+                if(self.timepoint > 50) and (self.state == 1) and (self.val > 22) and (value < self.rang) :
+                    #self.stopwatch.stop()
+                    self.pulltime2 = self.timer #int(self.stopwatch.duration)
+                    self.displaylabel2_4.setText(str(int(self.pulltime2)))
+                    self.displaylabel_4.setText("Interval endurance test is finish")
+                    self.interm2 = self.inter2
+
+                    
+                    
+                    
+                elif(self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
+                    
+                    self.stopwatch.stop()
+                    self.pulltime2 = self.timer # int(self.stopwatch.duration)
+                    self.displaylabel2_4.setText(str(int(self.pulltime2)))
+                    self.displaylabel_4.setText("Interval endurance test is finish")
+                    self.interm2 = self.inter2  
+
 
 
     def plotvalue(self):
@@ -236,27 +313,72 @@ class Ui_Option4(object):
             self.val += 1
             self.teeth = 0
             
+            
     def timesim(self):
         if(self.state2 ==0):
             self.timepoint += 1
 
+    def timersec(self):
+        self.timer += 1
+        #time.sleep(1)
+        print(self.timer)
+            
+
+    def next(self):
+       
+        if(self.state3 == 0):
+            self.state3 = 1
+        elif(self.state3 == 1):
+            self.state3 = 0
+        self.displaylabel_4.setText("")    
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        self.plot.x2.clear()
+        self.plot.y2.clear()
+        self.stopwatch.reset()
+        self.i = 0
+        self.j = 25        
+        self.timepoint = 0
+        self.state = 0
+        self.clean = 1
+        self.val = 0
+        
+
            
     def disconnect(self):
-        self.clean3 = 1
-        self.displaylabel1_4.setText("")
-        self.displaylabel_4.setText("")
+
         self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        self.plot.x2.clear()
+        self.plot.y2.clear()
+        self.inter.clear()
+        self.inter2.clear()
+        self.stopwatch.reset()
+        self.i = 0
+        self.j = 25        
+        self.clean = 1
+        self.displaylabel1_4.setText("")
+        self.displaylabel2_4.setText("")
+        self.displaylabel_4.setText("")
         self.state = 0
+        self.clean = 1
+        self.val = 0
+        
         
     def save(self):
         
-        self.clean3 = 1
+        self.intens = self.spinBox.value()
         self.name = self.fileEdit_4.toPlainText()        
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.pulltime,self.straight])
-        self.displaylabel_4.setText("Straight endurance saved")
+            writer.writerow(["intensity", self.intens])
+            writer.writerow(["left hand, pulling time, pulling data",self.pulltime2,self.interm2])
+            writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.interm])
+           
+        self.displaylabel_4.setText("Interval endurance saved")
             
 
     def close(self):
