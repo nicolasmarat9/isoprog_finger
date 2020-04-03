@@ -10,7 +10,7 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
-
+import ctypes
 
 
 class Ui_Option2(object):
@@ -290,7 +290,7 @@ class Ui_Option2(object):
             writer.writerow(["right hand pulling data", self.maxbyte]) 
             writer.writerow(["left hand pulling data", self.maxbyte_2])
             
-        self.displaylabel_22.setText("peak load saved")                
+        ctypes.windll.user32.MessageBoxW(0, "maximal strength data saved", "Saved", 1)               
 
     def close(self):
         Option2.close()    

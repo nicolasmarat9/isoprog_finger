@@ -9,6 +9,8 @@ from option2 import Ui_Option2
 from option3 import Ui_Option3
 from option4 import Ui_Option4
 import csv
+import ctypes
+
 
 
 class Ui_MainWindow(object):
@@ -281,8 +283,10 @@ class Ui_MainWindow(object):
         self.climb = self.climbEdit.toPlainText()
         self.bould = self.bouldEdit.toPlainText()
         self.sex = str(self.Sexbox.currentText())
-        self.notes = self.noteEdit.toPlainText()        
-         
+        self.notes = self.noteEdit.toPlainText()
+        ctypes.windll.user32.MessageBoxW(0, "personnal data saved", "Saved", 1)
+        
+        
         with open("%s.csv"%self.name, "a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow(["weight",self.weight])
@@ -293,7 +297,9 @@ class Ui_MainWindow(object):
             writer.writerow(["bouldering",self.bould])
             writer.writerow(["sex",self.sex])
             writer.writerow(["notes",self.notes])
-               
+
+      
+                   
 
 
 

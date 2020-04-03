@@ -10,6 +10,7 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
+import ctypes
 
 
 class Ui_Option3(object):
@@ -335,7 +336,7 @@ class Ui_Option3(object):
             writer.writerow(["left hand, pulling time, pulling data",self.pulltime_2,self.straight_2])
             writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.straight])
  
-        self.displaylabel_3.setText("Straight endurance saved")
+        ctypes.windll.user32.MessageBoxW(0, "straight endurance data saved", "Saved", 1)
             
 
     def close(self):

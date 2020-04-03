@@ -14,12 +14,12 @@ import csv
 from mplwidget import MplWidget
 from math import nan as nan
 import pandas as pd
+import ctypes
 
 
 class Ui_Option1(object):
    
-
-    
+   
     def setupUi(self, Option1):
         
         self.exit = 0
@@ -268,7 +268,7 @@ class Ui_Option1(object):
             writer.writerow(["peakloadl1", self.picl1])
             writer.writerow(["peakloadr2", self.picr2])
             writer.writerow(["peakloadl2", self.picl2])
-        self.displaylabel_1.setText("peak load saved")
+        ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
             
 
     def close(self):
