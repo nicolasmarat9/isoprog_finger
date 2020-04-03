@@ -32,6 +32,8 @@ class Ui_Option4(object):
         self.spn = 0
         self.timer = 0
         
+        self.intens = 0
+        self.intens2 = 0
         self.inter = []
         self.inter2 = []
         self.interm = []
@@ -124,6 +126,23 @@ class Ui_Option4(object):
         self.fileEdit_4.setGeometry(QtCore.QRect(100, 650, 131, 30))
         self.fileEdit_4.setObjectName("fileEdit_4")
 
+        self.handlabel_4 = QtWidgets.QLabel(self.centralwidget)
+        self.handlabel_4.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_4.setObjectName("handlabel_4") 
+
+        self.notelabel_4 = QtWidgets.QLabel(self.centralwidget)
+        self.notelabel_4.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_4.setObjectName("notelabel_4")
+
+        self.noteEdit_4 = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.noteEdit_4.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_4.setObjectName("noteEdit_4")
+
+        self.handbox_4 = QtWidgets.QComboBox(self.centralwidget)
+        self.handbox_4.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox_4.setObjectName("handbox_3")
+        self.handbox_4.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])         
+
         self.displaylabel_4= QtWidgets.QLabel(self.centralwidget)
         self.displaylabel_4.setGeometry(QtCore.QRect(610, 35, 430, 40))
         font = QtGui.QFont()
@@ -165,6 +184,8 @@ class Ui_Option4(object):
         self.label.setText(_translate("Option4", "<html><head/><body><p>Time right (sec)</p></body></html>"))
         self.label_2.setText(_translate("Option4", "<html><head/><body><p>Time left (sec)</p></body></html>"))
         self.filename4.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
+        self.handlabel_4.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
+        self.notelabel_4.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
         
 
         
@@ -223,6 +244,7 @@ class Ui_Option4(object):
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
+                    self.intens = self.spinBox.value()
                     self.state2 = 1
             
                 elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
@@ -230,6 +252,7 @@ class Ui_Option4(object):
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
+                    self.intens = self.spinBox.value()
                     self.state2 = 1
                     
         if self.state3 == 1:
@@ -239,7 +262,7 @@ class Ui_Option4(object):
                 ser_bytes = ser.readline()
                 self.value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 self.inter2.append(self.value)
-                           
+                                           
                 self.lcdNumber_4.display(self.value)
                 self.plot.update_graph3(self.value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
@@ -256,13 +279,15 @@ class Ui_Option4(object):
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm2 = self.inter2
+                    self.intens2 = self.spinBox.value()
                     self.state2 = 1
             
                 elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
                     self.pulltime2 = self.timer 
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
-                    self.interm2 = self.inter2  
+                    self.interm2 = self.inter2
+                    self.intens2 = self.spinBox.value()
                     self.state2 = 1
 
 
@@ -363,22 +388,32 @@ class Ui_Option4(object):
         self.val = 0
         self.teeth = 0
         self.value = 0
+        self.intens = 0
+        self.intens2 = 0
         
         
     def save(self):
         
-        self.intens = self.spinBox.value()
-        self.name = self.fileEdit_4.toPlainText()        
+        
+        self.name = self.fileEdit_4.toPlainText()
+        self.notes = self.noteEdit_4.toPlainText()
+        self.hand = str(self.handbox_4.currentText())        
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([self.name, "interval endurance"])
-            writer.writerow(["intensity", self.intens])
+            writer.writerow(["notes", self.notes])
+            writer.writerow(["Holding style", self.hand])            
+            writer.writerow(["right intensity", self.intens])
+            writer.writerow(["left intensity", self.intens])            
             writer.writerow(["left hand, pulling time, pulling data",self.pulltime2,self.interm2])
             writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.interm])
            
         ctypes.windll.user32.MessageBoxW(0, "interval endurance data saved", "Saved", 1)
-            
+        self.fileEdit_4.clear()
+        self.noteEdit_4.clear()
+        self.handbox_4.clear()
+        
 
     def close(self):
         Ui_Option4.destroy()        

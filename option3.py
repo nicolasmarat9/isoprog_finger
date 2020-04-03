@@ -31,7 +31,9 @@ class Ui_Option3(object):
         self.pulltime_2 = 0
         self.timepoint = 0
         self.intens = 0
+        self.intens2 = 0
         self.timer = 0
+        self.clean = 0
         
         Option3.setObjectName("Option3")
         Option3.resize(1200, 801)
@@ -123,7 +125,24 @@ class Ui_Option3(object):
 
         self.namelabel_3 = QtWidgets.QLabel(self.centralwidget)
         self.namelabel_3.setGeometry(QtCore.QRect(20, 650, 211, 30))
-        self.namelabel_3.setObjectName("namelabel_3")        
+        self.namelabel_3.setObjectName("namelabel_3")
+
+        self.handlabel_3 = QtWidgets.QLabel(self.centralwidget)
+        self.handlabel_3.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_3.setObjectName("handlabel_3") 
+
+        self.notelabel_3 = QtWidgets.QLabel(self.centralwidget)
+        self.notelabel_3.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_3.setObjectName("notelabel_3")
+
+        self.noteEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.noteEdit_3.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_3.setObjectName("noteEdit_3")
+
+        self.handbox_3 = QtWidgets.QComboBox(self.centralwidget)
+        self.handbox_3.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox_3.setObjectName("handbox_3")
+        self.handbox_3.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])        
         
         self.fileEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.fileEdit_3.setGeometry(QtCore.QRect(100, 650, 131, 30))
@@ -157,7 +176,9 @@ class Ui_Option3(object):
         self.timelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time right (sec)</p></body></html>"))
         self.everadgelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time left (sec)</p></body></html>"))
         self.namelabel_3.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
- 
+        self.handlabel_3.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
+        self.notelabel_3.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
+  
 
         
     def clicked1_3(self):
@@ -205,6 +226,7 @@ class Ui_Option3(object):
                 self.i += 1
                 self.j += 1
                 self.spn = self.spinBox_3.value()
+                self.intens = self.spinBox_3.value()
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
 
@@ -241,6 +263,7 @@ class Ui_Option3(object):
                 self.i += 1
                 self.j += 1
                 self.spn = self.spinBox_3.value()
+                self.intens2 = self.spinBox_3.value()
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
 
@@ -288,6 +311,7 @@ class Ui_Option3(object):
         self.clean = 1
         self.timer = 0
         self.state = 1
+        self.state2 = 1
         self.displaylabel_3.setText("") 
         self.displaylabel3_3.setText("")
         self.plot.canvas.axes.clear()
@@ -299,44 +323,63 @@ class Ui_Option3(object):
         self.j = 35        
         self.timepoint = 0
         self.val = 0
+        self.rang = 0
+        self.rang2 = 0
+        self.spn = 0
         
           
             
     def disconnect(self):
-        
+        self.timer = 0
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
-        self.stopwatch.reset()
         self.i = 0
         self.j = 35        
-        self.clean3 = 1
+        self.clean = 1
         self.displaylabel1_3.setText("")
         self.displaylabel2_3.setText("")
         self.displaylabel_3.setText("")
+        self.displaylabel3_3.setText("")
         self.state = 1
+        self.state2 = 1
         self.spn = 0
         self.state3 = 0
         self.straight.clear()
-        self:straight_2.clear()        
+        self:straight_2.clear()
+        self.rang = 0
+        self.rang2 = 0
+        self.pulltime = 0
+        self.pulltime_2 = 0
+        self.timepoint = 0
+        self.intens = 0
+        self.intens2 = 0
+        
         
         
     def save(self):
         
         
         self.name = self.fileEdit_3.toPlainText()
-        self.intens = self.spinBox_3.value()
+        self.notes = self.noteEdit_3.toPlainText()
+        self.hand = str(self.handbox_3.currentText())
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([self.name, "straight endurance"])
-            writer.writerow(["intensity", self.intens])
+            writer.writerow(["notes", self.notes])
+            writer.writerow(["Holding style", self.hand])
+            writer.writerow(["right intensity", self.intens])
+            writer.writerow(["right intensity", self.intens2])
             writer.writerow(["left hand, pulling time, pulling data",self.pulltime_2,self.straight_2])
             writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.straight])
  
         ctypes.windll.user32.MessageBoxW(0, "straight endurance data saved", "Saved", 1)
+        self.fileEdit_3.clear()
+        self.noteEdit_3.clear()
+        self.handbox_3.clear()
             
 
     def close(self):

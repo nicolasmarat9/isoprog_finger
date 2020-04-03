@@ -55,7 +55,12 @@ class Ui_Option1(object):
         self.stopButt_1.setGeometry(QtCore.QRect(10, 130, 71, 41))
         self.stopButt_1.setObjectName("stopButt_1")
         self.stopButt_1.clicked.connect(self. clicked2)
-        
+
+        self.handbox = QtWidgets.QComboBox(self.centralwidget)
+        self.handbox.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox.setObjectName("handbox")
+        self.handbox.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])
+       
         self.title = QtWidgets.QLabel(self.centralwidget)
         self.title.setGeometry(QtCore.QRect(10, 10, 201, 41))
         self.title.setObjectName("title")
@@ -121,6 +126,14 @@ class Ui_Option1(object):
         self.namelabel_1 = QtWidgets.QLabel(self.centralwidget)
         self.namelabel_1.setGeometry(QtCore.QRect(20, 650, 211, 30))
         self.namelabel_1.setObjectName("namelabel_1")
+
+        self.handlabel_1 = QtWidgets.QLabel(self.centralwidget)
+        self.handlabel_1.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_1.setObjectName("handlabel_1") 
+
+        self.notelabel_1 = QtWidgets.QLabel(self.centralwidget)
+        self.notelabel_1.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_1.setObjectName("notelabel_1")
            
         self.savebutt_1 = QtWidgets.QPushButton(self.centralwidget)
         self.savebutt_1.setGeometry(QtCore.QRect(20, 690, 211, 31))
@@ -130,7 +143,11 @@ class Ui_Option1(object):
         self.nameEdit_1 = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.nameEdit_1.setGeometry(QtCore.QRect(100, 650, 131, 30))
         self.nameEdit_1.setObjectName("nameEdit_1")
-        
+
+        self.noteEdit_1 = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.noteEdit_1.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_1.setObjectName("noteEdit_1")
+                
         Option1.setCentralWidget(self.centralwidget)
         
         self.menubar = QtWidgets.QMenuBar(Option1)
@@ -162,7 +179,9 @@ class Ui_Option1(object):
         self.left2label.setText(_translate("Option1", "<html><head/><body><p>Left hand 2</p></body></html>"))
         self.namelabel_1.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.savebutt_1.setText(_translate("Option1", "SAVE"))
-       
+        self.handlabel_1.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
+        self.notelabel_1.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
+          
 
         
     def clicked1(self):
@@ -260,16 +279,23 @@ class Ui_Option1(object):
 
     def save(self):
         self.name = self.nameEdit_1.toPlainText()
+        self.notes = self.noteEdit_1.toPlainText()
+        self.hand = str(self.handbox.currentText())
+        
         self.clean = 1
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([self.name, "peakload"])
+            writer.writerow(["notes", self.notes])
+            writer.writerow(["Holding style", self.hand])
             writer.writerow(["peakloadr1", self.picr1])
             writer.writerow(["peakloadl1", self.picl1])
             writer.writerow(["peakloadr2", self.picr2])
             writer.writerow(["peakloadl2", self.picl2])
         ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
-            
+        self.nameEdit_1.clear()
+        self.noteEdit_1.clear()
+        self.handbox.clear()
 
     def close(self):
         sys.exit()

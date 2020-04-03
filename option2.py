@@ -109,11 +109,28 @@ class Ui_Option2(object):
 
         self.namelabel_2 = QtWidgets.QLabel(self.centralwidget)
         self.namelabel_2.setGeometry(QtCore.QRect(20, 650, 211, 30))
-        self.namelabel_2.setObjectName("namelabel_2")        
+        self.namelabel_2.setObjectName("namelabel_2")
+        
+        self.handlabel_2 = QtWidgets.QLabel(self.centralwidget)
+        self.handlabel_2.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_2.setObjectName("handlabel_2")
         
         self.nameEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.nameEdit_2.setGeometry(QtCore.QRect(100, 650, 131, 30))
-        self.nameEdit_2.setObjectName("nameEdit_2")        
+        self.nameEdit_2.setObjectName("nameEdit_2")
+        
+        self.notelabel_2 = QtWidgets.QLabel(self.centralwidget)
+        self.notelabel_2.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_2.setObjectName("notelabel_2")
+        
+        self.noteEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.noteEdit_2.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_2.setObjectName("noteEdit_2")
+        
+        self.handbox_2 = QtWidgets.QComboBox(self.centralwidget)
+        self.handbox_2.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox_2.setObjectName("handbox_2")
+        self.handbox_2.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])
                
         Option2.setCentralWidget(self.centralwidget)
 
@@ -142,7 +159,9 @@ class Ui_Option2(object):
         self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak load right</p></body></html>"))
         self.peakloadlabel_2.setText(_translate("Option2", "<html><head/><body><p>peak load left</p></body></html>"))
         self.namelabel_2.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
- 
+        self.handlabel_2.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
+        self.notelabel_2.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
+  
 
     def clicked1_2(self):
         e = Thread(target = self.connect_22)
@@ -280,17 +299,25 @@ class Ui_Option2(object):
 
         
     def save(self):
-        self.name = self.nameEdit_2.toPlainText()        
+        self.name = self.nameEdit_2.toPlainText()
+        self.notes = self.noteEdit_2.toPlainText()
+        self.hand = str(self.handbox_2.currentText())
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
             writer.writerow([self.name, "maximal strength"])
+            writer.writerow(["notes", self.notes])
+            writer.writerow(["Holding style", self.hand])
             writer.writerow(["right hand peakload", self.peak])
             writer.writerow(["left hand peakload", self.peak_2])
             writer.writerow(["right hand pulling data", self.maxbyte]) 
             writer.writerow(["left hand pulling data", self.maxbyte_2])
             
         ctypes.windll.user32.MessageBoxW(0, "maximal strength data saved", "Saved", 1)               
+        self.nameEdit_2.clear()
+        self.noteEdit_2.clear()
+        self.handbox_2.clear()
+        
 
     def close(self):
         Option2.close()    
