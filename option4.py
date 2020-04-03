@@ -10,8 +10,6 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
-from stopwatch import Stopwatch
-
 
 class Ui_Option4(object):
     
@@ -24,7 +22,8 @@ class Ui_Option4(object):
         self.state3 = 0
         self.clean = 0
         self.clean2 = 0
-        
+
+        self.value = 0
         self.teeth = 0
         self.val = 0    
         self.i = 0
@@ -201,12 +200,12 @@ class Ui_Option4(object):
             while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
-                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-                self.inter.append(value)
+                self.value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.inter.append(self.value)
               
                             
-                self.lcdNumber_4.display(value)
-                self.plot.update_graph3(value, self.i, self.teeth, self.j)
+                self.lcdNumber_4.display(self.value)
+                self.plot.update_graph3(self.value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
                 
@@ -216,15 +215,15 @@ class Ui_Option4(object):
                 s.join()
                 u.join()
 
-                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime = self.timer #int(self.stopwatch.duration)
+                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (self.value < self.rang) :
+                    self.pulltime = self.timer
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
                     self.state2 = 1
             
-                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime = self.timer #int(self.stopwatch.duration)
+                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
+                    self.pulltime = self.timer
                     self.displaylabel1_4.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm = self.inter
@@ -235,11 +234,11 @@ class Ui_Option4(object):
             while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
-                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-                self.inter2.append(value)
+                self.value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.inter2.append(self.value)
                            
-                self.lcdNumber_4.display(value)
-                self.plot.update_graph3(value, self.i, self.teeth, self.j)
+                self.lcdNumber_4.display(self.value)
+                self.plot.update_graph3(self.value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
                                
@@ -249,15 +248,15 @@ class Ui_Option4(object):
                 s.join()
                 u.join()
                    
-                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val > 22) and (value < self.rang) :
-                    self.pulltime2 = self.timer #int(self.stopwatch.duration)
+                if(self.state2 == 0) and (self.timepoint > 50) and (self.state == 1) and (self.val < 22) and (self.value < self.rang) :
+                    self.pulltime2 = self.timer 
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm2 = self.inter2
                     self.state2 = 1
             
-                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime2 = self.timer # int(self.stopwatch.duration)
+                elif(self.state2 == 0) and (self.timepoint > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
+                    self.pulltime2 = self.timer 
                     self.displaylabel2_4.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
                     self.interm2 = self.inter2  
@@ -303,6 +302,7 @@ class Ui_Option4(object):
             self.timepoint += 1
 
     def timersec(self):
+        time.sleep(6)
         while(self.clean == 0):
             self.timer += 1
             time.sleep(1)
@@ -319,18 +319,22 @@ class Ui_Option4(object):
         self.clean2 = 1
         self.timer = 0
         self.displaylabel_4.setText("")
-        self.displaylabel3_4.setText("") 
+        self.displaylabel3_4.setText("")
+
+        self.i = 0
+        self.j = 25        
+        self.timepoint = 0
+        self.state = 0
+        self.val = 0
+        self.teeth = 0
+        self.value = 0
+        
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
-        self.i = 0
-        self.j = 25        
-        self.timepoint = 0
-        self.state = 0
-        self.timer = 0
-        self.val = 0
+
         
    
     def disconnect(self):
@@ -354,6 +358,8 @@ class Ui_Option4(object):
         self.state = 0
         self.state3 = 0
         self.val = 0
+        self.teeth = 0
+        self.value = 0
         
         
     def save(self):
@@ -363,6 +369,7 @@ class Ui_Option4(object):
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
+            writer.writerow([self.name, "interval endurance"])
             writer.writerow(["intensity", self.intens])
             writer.writerow(["left hand, pulling time, pulling data",self.pulltime2,self.interm2])
             writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.interm])

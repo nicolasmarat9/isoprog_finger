@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         
         self.state = 0
         self.weight = 0
+        self.clean = 0
         
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(950, 600)
@@ -60,7 +61,7 @@ class Ui_MainWindow(object):
         self.bouldEdit.setObjectName("bouldEdit")
 
         self.noteEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit.setGeometry(QtCore.QRect(600, 350, 300, 150))
+        self.noteEdit.setGeometry(QtCore.QRect(600, 350, 300, 140))
         self.noteEdit.setObjectName("noteEdit")        
         
         self.namelabel = QtWidgets.QLabel(self.centralwidget)
@@ -137,9 +138,14 @@ class Ui_MainWindow(object):
         self.freeButt.setGeometry(QtCore.QRect(60, 350, 281, 51))
         self.freeButt.setObjectName("freeButt")
         self.freeButt.clicked.connect(self.clicked_7)
+
+        self.clearButt = QtWidgets.QPushButton(self.centralwidget)
+        self.clearButt.setGeometry(QtCore.QRect(560, 540, 261, 31))
+        self.clearButt.setObjectName("clearButt")
+        self.clearButt.clicked.connect(self.clicked_8)        
          
         self.savebutt = QtWidgets.QPushButton(self.centralwidget)
-        self.savebutt.setGeometry(QtCore.QRect(560, 530, 261, 31))
+        self.savebutt.setGeometry(QtCore.QRect(560, 500, 261, 31))
         self.savebutt.setObjectName("savebutt")
         self.savebutt.clicked.connect(self.clicked_5)
 
@@ -179,6 +185,7 @@ class Ui_MainWindow(object):
         self.straightButt.setText(_translate("MainWindow", "Mesure Straight Endurance"))
         self.interButt.setText(_translate("MainWindow", "Mesure Interval Endurance"))
         self.freeButt.setText(_translate("MainWindow", "FREE"))
+        self.clearButt.setText(_translate("MainWindow", "CLEAR"))
         self.savebutt.setText(_translate("MainWindow", "SAVE"))
         self.startButt.setText(_translate("MainWindow", "START"))
         self.namelabel.setText(_translate("MainWindow", "<html><head/><body><p>First name, Last name :</p></body></html>"))
@@ -229,14 +236,27 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Free()
         self.ui.setupUi(self.window)
-        self.window.show()        
+        self.window.show()
+        
+    def clicked_8(self):
+        self.nameEdit.clear()
+        self.sizeEdit.clear()
+        self.climbEdit.clear()
+        self.bouldEdit.clear()
+        self.noteEdit.clear()
+        self.ageBox.setValue(0)
+        self.weightBox.setValue(0.00)
+        self.Sexbox.clear()
+        
 
     def connecte(self):
         ser = ardconnect2.ardconnect()
+        self.state = 0
+        self.clean = 0
 
         
                
-        while True:
+        while(self.clean == 0):
                         
             ser_bytes = ser.readline()
             value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
@@ -249,8 +269,9 @@ class Ui_MainWindow(object):
             elif(self.state == 1) and(value < 0.3):
                 time.sleep(1)
                 self.weightBox.setValue(self.weight)
+                self.clean = 1
                 
-                
+       
         
     def saves(self):
         self.name = self.nameEdit.toPlainText()
@@ -271,7 +292,7 @@ class Ui_MainWindow(object):
             writer.writerow(["climbing",self.climb])
             writer.writerow(["bouldering",self.bould])
             writer.writerow(["sex",self.sex])
-            writer.writerow(["sex",self.notes])
+            writer.writerow(["notes",self.notes])
                
 
 

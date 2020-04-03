@@ -263,10 +263,11 @@ class Ui_Option1(object):
         self.clean = 1
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow(["peakloadr1",self.picr1])
-            writer.writerow(["peakloadl1",self.picl1])
-            writer.writerow(["peakloadr2",self.picr2])
-            writer.writerow(["peakloadl2",self.picl2])
+            writer.writerow([self.name, "peakload"])
+            writer.writerow(["peakloadr1", self.picr1])
+            writer.writerow(["peakloadl1", self.picl1])
+            writer.writerow(["peakloadr2", self.picr2])
+            writer.writerow(["peakloadl2", self.picl2])
         self.displaylabel_1.setText("peak load saved")
             
 

@@ -10,7 +10,6 @@ import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
-from stopwatch import Stopwatch
 
 
 class Ui_Option3(object):
@@ -25,13 +24,13 @@ class Ui_Option3(object):
         self.state = 0
         self.state2 = 0
         self.state3 = 0        
-        self.stopwatch = Stopwatch()
         self.straight = []
         self.straight_2 = []
         self.pulltime = 0
         self.pulltime_2 = 0
         self.timepoint = 0
         self.intens = 0
+        self.timer = 0
         
         Option3.setObjectName("Option3")
         Option3.resize(1200, 801)
@@ -50,7 +49,16 @@ class Ui_Option3(object):
         font.setWeight(50)
         self.displaylabel_3.setFont(font)
         self.displaylabel_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel_3.setObjectName("displaylabel_3")        
+        self.displaylabel_3.setObjectName("displaylabel_3")
+
+        self.displaylabel3_3= QtWidgets.QLabel(self.centralwidget)
+        self.displaylabel3_3.setGeometry(QtCore.QRect(23 ,400, 200, 100))
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setWeight(50)
+        self.displaylabel3_3.setFont(font)
+        self.displaylabel3_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaylabel3_3.setObjectName("displaylabel3_3")
 
         self.lcdNumber_3 = QtWidgets.QLCDNumber(self.centralwidget)
         self.lcdNumber_3.setGeometry(QtCore.QRect(100, 70, 141, 41))
@@ -174,10 +182,13 @@ class Ui_Option3(object):
         
 
     def connect(self):
-        
+        self.clean = 0
         self.spn = 0
         self.state = 0
+        self.state2 = 0
         ser = ardconnect2.ardconnect()
+        z = Thread(target = self.timersec)
+        z.start() 
 
         if(self.state3 == 0):
             
@@ -201,16 +212,15 @@ class Ui_Option3(object):
                 
 
                 
-                if(self.state == 0) and(self.timepoint > 35):
+                if(self.state2 == 0) and(self.timepoint > 25):
                     self.displaylabel_3.setText("START") 
-                    self.stopwatch.start()
                     
-                    if(self.state == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
-                        self.stopwatch.stop()
-                        self.pulltime = int(self.stopwatch.duration)
+                    
+                    if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                        self.pulltime = self.timer
                         self.displaylabel1_3.setText(str(int(self.pulltime)))
                         self.displaylabel_3.setText("Straight endurance test is finish")
-                        
+                        self.state2 = 1
                         
                         
                   
@@ -237,16 +247,15 @@ class Ui_Option3(object):
                 v.start()
 
                 
-                if(self.state == 0) and(self.timepoint > 35):
+                if(self.state2 == 0) and(self.timepoint > 25):
                     self.displaylabel_3.setText("START") 
-                    self.stopwatch.start()
                     
-                    if(self.state == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
-                        self.stopwatch.stop()
-                        self.pulltime_2 = int(self.stopwatch.duration)
+                    
+                    if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                        self.pulltime_2 = self.timer
                         self.displaylabel2_3.setText(str(int(self.pulltime_2)))
                         self.displaylabel_3.setText("Straight endurance test is finish")
-
+                        self.state2 = 1
                         
 
     def plotvalue(self):
@@ -261,26 +270,36 @@ class Ui_Option3(object):
         if(self.state2 == 0):
             self.timepoint += 1
 
+    def timersec(self):
+        time.sleep(2)
+        while(self.clean == 0):
+            self.timer += 1
+            time.sleep(1)
+            self.displaylabel3_3.setText(str(int(self.timer)))         
+
 
     def next(self):
-        self.displaylabel_3.setText("WAIT")
-        
+              
         if(self.state3 == 0):
             self.state3 = 1
         elif(self.state3 == 1):
             self.state3 = 0
-            
+        self.clean = 1
+        self.timer = 0
+        self.state = 1
+        self.displaylabel_3.setText("") 
+        self.displaylabel3_3.setText("")
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
-        self.stopwatch.reset()
         self.i = 0
         self.j = 35        
         self.timepoint = 0
-        self.state = 1
-        self.displaylabel_3.setText("")  
+        self.val = 0
+        
+          
             
     def disconnect(self):
         
@@ -311,6 +330,7 @@ class Ui_Option3(object):
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
+            writer.writerow([self.name, "straight endurance"])
             writer.writerow(["intensity", self.intens])
             writer.writerow(["left hand, pulling time, pulling data",self.pulltime_2,self.straight_2])
             writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.straight])

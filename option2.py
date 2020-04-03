@@ -40,10 +40,10 @@ class Ui_Option2(object):
         self.plot.setObjectName("plot")
 
         self.displaylabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_2.setGeometry(QtCore.QRect(530, 5, 400, 70))
+        self.displaylabel_2.setGeometry(QtCore.QRect(3 ,300, 246, 200))
         font = QtGui.QFont()
-        font.setPointSize(24)
-        font.setWeight(75)
+        font.setPointSize(30)
+        font.setWeight(50)
         self.displaylabel_2.setFont(font)
         self.displaylabel_2.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_2.setObjectName("displaylabel_2")
@@ -202,14 +202,10 @@ class Ui_Option2(object):
                 self.i += 1
                 
 
-
-
-
-
     def timer(self):
         
     
-        self.displaylabel_2.setText("Get ready")    
+        self.displaylabel_2.setText("Get\nready")    
         time.sleep(1)            
         self.displaylabel_2.setText(str(5))    
         time.sleep(1)
@@ -288,10 +284,11 @@ class Ui_Option2(object):
         
         with open("%s.csv"%self.name,"a") as f:
             writer = csv.writer(f,delimiter=",")
-            writer.writerow(["right hand, peakload",self.peak])
-            writer.writerow(["left hand, peakload", self.peak_2])
-            writer.writerow(["right hand, pulling data",self.maxbyte]) 
-            writer.writerow(["left hand, pulling data",self.maxbyte_2])
+            writer.writerow([self.name, "maximal strength"])
+            writer.writerow(["right hand peakload", self.peak])
+            writer.writerow(["left hand peakload", self.peak_2])
+            writer.writerow(["right hand pulling data", self.maxbyte]) 
+            writer.writerow(["left hand pulling data", self.maxbyte_2])
             
         self.displaylabel_22.setText("peak load saved")                
 
