@@ -35,117 +35,123 @@ class Ui_Option3(object):
         self.timer = 0
         self.clean = 0
         
+        
         Option3.setObjectName("Option3")
-        Option3.resize(1200, 801)
+        Option3.resize(1427, 969)
+        Option3.move(488, 3)
         
         self.centralwidget = QtWidgets.QWidget(Option3)
         self.centralwidget.setObjectName("centralwidget")
 
         self.plot = MplWidget(self.centralwidget)
-        self.plot.setGeometry(QtCore.QRect(255, 71, 921, 691))
+        self.plot.setGeometry(QtCore.QRect(295, 71, 1115, 881))
         self.plot.setObjectName("plot")
 
         self.displaylabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_3.setGeometry(QtCore.QRect(500, 35, 470, 40))
+        self.displaylabel_3.setGeometry(QtCore.QRect(655, 5, 400, 70))
         font = QtGui.QFont()
-        font.setPointSize(13)
+        font.setPointSize(12)
         font.setWeight(50)
         self.displaylabel_3.setFont(font)
         self.displaylabel_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_3.setObjectName("displaylabel_3")
 
         self.displaylabel3_3= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_3.setGeometry(QtCore.QRect(23 ,400, 200, 100))
+        self.displaylabel3_3.setGeometry(QtCore.QRect(25 ,360, 246, 200))
         font = QtGui.QFont()
-        font.setPointSize(30)
+        font.setPointSize(40)
         font.setWeight(50)
         self.displaylabel3_3.setFont(font)
         self.displaylabel3_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel3_3.setObjectName("displaylabel3_3")
 
         self.lcdNumber_3 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber_3.setGeometry(QtCore.QRect(100, 70, 141, 41))
+        self.lcdNumber_3.setGeometry(QtCore.QRect(130, 90, 141, 61))
         self.lcdNumber_3.setObjectName("lcdNumber")
 
         self.startButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_3.setGeometry(QtCore.QRect(10, 70, 71, 41))
+        self.startButt_3.setGeometry(QtCore.QRect(30, 90, 71, 41))
         self.startButt_3.setObjectName("startButt_3")
         self.startButt_3.clicked.connect(self. clicked1_3)
 
         self.stopButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_3.setGeometry(QtCore.QRect(10, 130, 71, 41))
+        self.stopButt_3.setGeometry(QtCore.QRect(30, 150, 71, 41))
         self.stopButt_3.setObjectName("stopButt_3")
         self.stopButt_3.clicked.connect(self. clicked2_3)
         
         self.nextButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.nextButt_3.setGeometry(QtCore.QRect(150, 130, 80, 41))
+        self.nextButt_3.setGeometry(QtCore.QRect(170, 160, 80, 41))
         self.nextButt_3.setObjectName("next_3")
         self.nextButt_3.clicked.connect(self. clicked5_3)
         
         self.title_3 = QtWidgets.QLabel(self.centralwidget)
-        self.title_3.setGeometry(QtCore.QRect(10, 10, 401, 41))
+        self.title_3.setGeometry(QtCore.QRect(30, 30, 301, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setWeight(65)
+        self.title_3.setFont(font)                
         self.title_3.setObjectName("title")
 
         self.backButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_3.setGeometry(QtCore.QRect(20, 730, 211, 31))
+        self.backButt_3.setGeometry(QtCore.QRect(30, 890, 235, 31))
         self.backButt_3.setObjectName("backButt_3")
         self.backButt_3.clicked.connect(self. clicked3_3)
 
         self.saveButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.saveButt_3.setGeometry(QtCore.QRect(20, 690, 211, 31))
+        self.saveButt_3.setGeometry(QtCore.QRect(30, 840, 235, 31))
         self.saveButt_3.setObjectName("saveButt_4")
         self.saveButt_3.clicked.connect(self. clicked4_3)
 
         self.displaylabel1_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel1_3.setGeometry(QtCore.QRect(150, 180, 80, 31))
+        self.displaylabel1_3.setGeometry(QtCore.QRect(170, 210, 80, 31))
         self.displaylabel1_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel1_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel1_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel1_3.setObjectName("displaylabel1_3")
 
         self.displaylabel2_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel2_3.setGeometry(QtCore.QRect(150, 230, 80, 31))
+        self.displaylabel2_3.setGeometry(QtCore.QRect(170, 260, 80, 31))
         self.displaylabel2_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.displaylabel2_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.displaylabel2_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel2_3.setObjectName("displaylabel2_3")
 
         self.timelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.timelabel_3.setGeometry(QtCore.QRect(20, 180, 150, 31))
+        self.timelabel_3.setGeometry(QtCore.QRect(40, 210, 200, 31))
         self.timelabel_3.setObjectName("timelabel_3")
 
         self.everadgelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.everadgelabel_3.setGeometry(QtCore.QRect(20, 230, 150, 31))
+        self.everadgelabel_3.setGeometry(QtCore.QRect(40, 260, 200, 31))
         self.everadgelabel_3.setObjectName("everadgelabel_3")
 
         self.spinBox_3 = QtWidgets.QSpinBox(self.centralwidget)
-        self.spinBox_3.setGeometry(QtCore.QRect(20, 300, 211, 35))
+        self.spinBox_3.setGeometry(QtCore.QRect(50, 320, 211, 35))
         self.spinBox_3.setMaximum(200)
         self.spinBox_3.setObjectName("spinBox_3")
 
         self.namelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel_3.setGeometry(QtCore.QRect(20, 650, 211, 30))
+        self.namelabel_3.setGeometry(QtCore.QRect(40, 790, 211, 30))
         self.namelabel_3.setObjectName("namelabel_3")
 
         self.handlabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_3.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_3.setGeometry(QtCore.QRect(40, 650, 130, 30))
         self.handlabel_3.setObjectName("handlabel_3") 
 
         self.notelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_3.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_3.setGeometry(QtCore.QRect(40, 700, 211, 30))
         self.notelabel_3.setObjectName("notelabel_3")
 
         self.noteEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_3.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_3.setGeometry(QtCore.QRect(130, 700, 131, 70))
         self.noteEdit_3.setObjectName("noteEdit_3")
 
         self.handbox_3 = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox_3.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox_3.setGeometry(QtCore.QRect(130, 650, 131, 30))
         self.handbox_3.setObjectName("handbox_3")
         self.handbox_3.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])        
         
         self.fileEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.fileEdit_3.setGeometry(QtCore.QRect(100, 650, 131, 30))
+        self.fileEdit_3.setGeometry(QtCore.QRect(130, 790, 131, 30))
         self.fileEdit_3.setObjectName("fileEdit_3")           
                
         Option3.setCentralWidget(self.centralwidget)
@@ -303,7 +309,7 @@ class Ui_Option3(object):
 
 
     def next(self):
-              
+                     
         if(self.state3 == 0):
             self.state3 = 1
         elif(self.state3 == 1):

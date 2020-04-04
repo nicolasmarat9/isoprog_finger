@@ -27,22 +27,24 @@ class Ui_Option2(object):
         self.maxbyte = []
         self.maxbyte_2 = []
         self.state = 0
+        self.display = 0
         
         
         Option2.setObjectName("Option2")
-        Option2.resize(1200, 801)
+        Option2.resize(1427, 969)
+        Option2.move(488, 3)
         
         self.centralwidget = QtWidgets.QWidget(Option2)
         self.centralwidget.setObjectName("centralwidget")
 
         self.plot = MplWidget(parent = self.centralwidget)
-        self.plot.setGeometry(QtCore.QRect(255, 71, 921, 691))
+        self.plot.setGeometry(QtCore.QRect(295, 71, 1115, 881))
         self.plot.setObjectName("plot")
 
         self.displaylabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_2.setGeometry(QtCore.QRect(3 ,300, 246, 200))
+        self.displaylabel_2.setGeometry(QtCore.QRect(25 ,320, 246, 200))
         font = QtGui.QFont()
-        font.setPointSize(30)
+        font.setPointSize(40)
         font.setWeight(50)
         self.displaylabel_2.setFont(font)
         self.displaylabel_2.setAlignment(QtCore.Qt.AlignCenter)
@@ -58,77 +60,81 @@ class Ui_Option2(object):
         self.displaylabel_22.setObjectName("displaylabel_22")        
 
         self.lcdNumber_2 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber_2.setGeometry(QtCore.QRect(100, 70, 141, 41))
+        self.lcdNumber_2.setGeometry(QtCore.QRect(130, 90, 141, 61))
         self.lcdNumber_2.setObjectName("lcdNumber_2")
 
         self.startButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_2.setGeometry(QtCore.QRect(10, 70, 71, 41))
+        self.startButt_2.setGeometry(QtCore.QRect(30, 90, 71, 41))
         self.startButt_2.setObjectName("startButt_2")
-        self.startButt_2.clicked.connect(self. clicked1_2)
+        self.startButt_2.clicked.connect(self.clicked1_2)
 
         self.stopButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_2.setGeometry(QtCore.QRect(10, 130, 71, 41))
+        self.stopButt_2.setGeometry(QtCore.QRect(30, 150, 71, 41))
         self.stopButt_2.setObjectName("stopButt_2")
-        self.stopButt_2.clicked.connect(self. clicked2_2)
+        self.stopButt_2.clicked.connect(self.clicked2_2)
 
         self.title_2 = QtWidgets.QLabel(self.centralwidget)
-        self.title_2.setGeometry(QtCore.QRect(10, 10, 201, 41))
+        self.title_2.setGeometry(QtCore.QRect(30, 30, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setWeight(65)
+        self.title_2.setFont(font)          
         self.title_2.setObjectName("title_2")
 
         self.backButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_2.setGeometry(QtCore.QRect(20, 730, 211, 31))
+        self.backButt_2.setGeometry(QtCore.QRect(30, 890, 235, 31))
         self.backButt_2.setObjectName("backButt_2")
-        self.backButt_2.clicked.connect(self. clicked3_2)
+        self.backButt_2.clicked.connect(self.clicked3_2)
 
         self.saveButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.saveButt_2.setGeometry(QtCore.QRect(20, 690, 211, 31))
+        self.saveButt_2.setGeometry(QtCore.QRect(30, 840, 235, 31))
         self.saveButt_2.setObjectName("saveButt_2")
-        self.saveButt_2.clicked.connect(self. clicked4_2)
+        self.saveButt_2.clicked.connect(self.clicked4_2)
 
         self.peaklabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_2.setGeometry(QtCore.QRect(150, 180, 80, 31))
+        self.peaklabel_2.setGeometry(QtCore.QRect(170, 210, 80, 31))
         self.peaklabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_2.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel_2.setObjectName("peaklabel_2")
 
         self.peaklabel_22 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_22.setGeometry(QtCore.QRect(150, 230, 80, 31))
+        self.peaklabel_22.setGeometry(QtCore.QRect(170, 260, 80, 31))
         self.peaklabel_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_22.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_22.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel_22.setObjectName("evelabel_2")
 
         self.peakloadlabel = QtWidgets.QLabel(self.centralwidget)
-        self.peakloadlabel.setGeometry(QtCore.QRect(20, 180, 200, 31))
+        self.peakloadlabel.setGeometry(QtCore.QRect(40, 210, 200, 31))
         self.peakloadlabel.setObjectName("peakloadlabel")
 
         self.peakloadlabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peakloadlabel_2.setGeometry(QtCore.QRect(20, 230, 200, 31))
+        self.peakloadlabel_2.setGeometry(QtCore.QRect(40, 260, 200, 31))
         self.peakloadlabel_2.setObjectName("everadgelabel")
 
         self.namelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel_2.setGeometry(QtCore.QRect(20, 650, 211, 30))
+        self.namelabel_2.setGeometry(QtCore.QRect(40, 790, 211, 30))
         self.namelabel_2.setObjectName("namelabel_2")
         
         self.handlabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_2.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_2.setGeometry(QtCore.QRect(40, 650, 130, 30))
         self.handlabel_2.setObjectName("handlabel_2")
         
         self.nameEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.nameEdit_2.setGeometry(QtCore.QRect(100, 650, 131, 30))
+        self.nameEdit_2.setGeometry(QtCore.QRect(130, 790, 131, 30))
         self.nameEdit_2.setObjectName("nameEdit_2")
         
         self.notelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_2.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_2.setGeometry(QtCore.QRect(40, 700, 211, 30))
         self.notelabel_2.setObjectName("notelabel_2")
         
         self.noteEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_2.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_2.setGeometry(QtCore.QRect(130, 700, 131, 70))
         self.noteEdit_2.setObjectName("noteEdit_2")
         
         self.handbox_2 = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox_2.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox_2.setGeometry(QtCore.QRect(130, 650, 131, 30))
         self.handbox_2.setObjectName("handbox_2")
         self.handbox_2.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])
                
@@ -182,7 +188,7 @@ class Ui_Option2(object):
         
 
     def connect_22(self):
-
+        self.display = 0
         self.clean = 0
         ser = ardconnect2.ardconnect()
         krono = Thread(target = self.timer)
@@ -223,51 +229,66 @@ class Ui_Option2(object):
 
     def timer(self):
         
-    
-        self.displaylabel_2.setText("Get\nready")    
-        time.sleep(1)            
-        self.displaylabel_2.setText(str(5))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(4))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(3))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(2))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(1))    
-        time.sleep(1)
-        self.displaylabel_2.setText("START")    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(7))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(6))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(5))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(4))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(3))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(2))    
-        time.sleep(1)
-        self.displaylabel_2.setText(str(1))    
-        time.sleep(1)
-        self.displaylabel_2.setText("STOP")    
-        time.sleep(3)
-        self.displaylabel_2.setText("")
-                                    
-        
-        
+        if(self.display == 0):
+            self.displaylabel_2.setText("Get\nready")    
+            time.sleep(1)
+        if(self.display == 0):    
+            self.displaylabel_2.setText(str(5))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText(str(4))    
+            time.sleep(1)
+        if(self.display == 0):             
+            self.displaylabel_2.setText(str(3))    
+            time.sleep(1)
+        if(self.display == 0):             
+            self.displaylabel_2.setText(str(2))    
+            time.sleep(1)
+        if(self.display == 0):             
+            self.displaylabel_2.setText(str(1))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText("START")    
+            time.sleep(1)
+        if(self.display == 0):      
+            self.displaylabel_2.setText(str(7))    
+            time.sleep(1)
+        if(self.display == 0): 
+            self.displaylabel_2.setText(str(6))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText(str(5))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText(str(4))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText(str(3))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText(str(2))    
+            time.sleep(1)
+        if(self.display == 0):      
+            self.displaylabel_2.setText(str(1))    
+            time.sleep(1)
+        if(self.display == 0):     
+            self.displaylabel_2.setText("STOP")    
+            time.sleep(3)
+        if(self.display == 0):     
+            self.displaylabel_2.setText("")
+                                        
+            
+            
 
-        if(self.state == 0):
-            self.peak = str(self.peakload)
-            self.peaklabel_2.setText(self.peak)
-        elif(self.state == 1):
-            self.peak_2 = str(self.peakload)
-            self.peaklabel_22.setText(self.peak_2)
-        self.state += 1
-        time.sleep(1)
-        self.end()
+            if(self.state == 0):
+                self.peak = str(self.peakload)
+                self.peaklabel_2.setText(self.peak)
+            elif(self.state == 1):
+                self.peak_2 = str(self.peakload)
+                self.peaklabel_22.setText(self.peak_2)
+            self.state += 1
+            time.sleep(1)
+            self.end()
 
         
     def end(self):
@@ -282,7 +303,7 @@ class Ui_Option2(object):
         
         
     def disconnect(self):
-        
+        self.display = 1
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()

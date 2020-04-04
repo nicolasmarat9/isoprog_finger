@@ -17,8 +17,11 @@ import pandas as pd
 import ctypes
 
 
+
+
 class Ui_Option1(object):
-   
+
+
    
     def setupUi(self, Option1):
         
@@ -33,63 +36,68 @@ class Ui_Option1(object):
 
         
         Option1.setObjectName("Option1")
-        Option1.resize(1000, 801)
+        Option1.resize(1427, 969)
+        Option1.move(488, 3)
         
         self.centralwidget = QtWidgets.QWidget(Option1)
         self.centralwidget.setObjectName("centralwidget")
 
         self.plot = MplWidget(self.centralwidget)
-        self.plot.setGeometry(QtCore.QRect(255, 71, 721, 691))
+        self.plot.setGeometry(QtCore.QRect(420, 71, 860, 881))
         self.plot.setObjectName("plot")
         
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber.setGeometry(QtCore.QRect(100, 70, 141, 41))
+        self.lcdNumber.setGeometry(QtCore.QRect(130, 90, 141, 61))
         self.lcdNumber.setObjectName("lcdNumber")
         
         self.startButt_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_1.setGeometry(QtCore.QRect(10, 70, 71, 41))
+        self.startButt_1.setGeometry(QtCore.QRect(30, 90, 71, 41))
         self.startButt_1.setObjectName("startButt_1")
-        self.startButt_1.clicked.connect(self. clicked1)
+        self.startButt_1.clicked.connect(self.clicked1)
         
         self.stopButt_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_1.setGeometry(QtCore.QRect(10, 130, 71, 41))
+        self.stopButt_1.setGeometry(QtCore.QRect(30, 150, 71, 41))
         self.stopButt_1.setObjectName("stopButt_1")
-        self.stopButt_1.clicked.connect(self. clicked2)
+        self.stopButt_1.clicked.connect(self.clicked2)
 
         self.handbox = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox.setGeometry(QtCore.QRect(100, 530, 131, 30))
+        self.handbox.setGeometry(QtCore.QRect(130, 650, 131, 30))
         self.handbox.setObjectName("handbox")
         self.handbox.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])
        
         self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(10, 10, 201, 41))
+        self.title.setGeometry(QtCore.QRect(30, 30, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setWeight(65)
+        self.title.setFont(font)       
         self.title.setObjectName("title")
         
         self.backButt_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_1.setGeometry(QtCore.QRect(20, 730, 211, 31))
+        self.backButt_1.setGeometry(QtCore.QRect(30, 890, 235, 31))
         self.backButt_1.setObjectName("backButt_1")
-        self.backButt_1.clicked.connect(self. clicked3)
+        self.backButt_1.clicked.connect(self.clicked3)
         
         self.picr1label = QtWidgets.QLabel(self.centralwidget)
-        self.picr1label.setGeometry(QtCore.QRect(135, 180, 100, 31))
+        self.picr1label.setGeometry(QtCore.QRect(165, 200, 100, 31))
         self.picr1label.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.picr1label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.picr1label.setAlignment(QtCore.Qt.AlignCenter)
         self.picr1label.setObjectName("picr1label")
         
         self.picl1label = QtWidgets.QLabel(self.centralwidget)
-        self.picl1label.setGeometry(QtCore.QRect(135, 230, 100, 31))
+        self.picl1label.setGeometry(QtCore.QRect(165, 250, 100, 31))
         self.picl1label.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.picl1label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.picl1label.setAlignment(QtCore.Qt.AlignCenter)
         self.picl1label.setObjectName("picl1label")
         
         self.right1label = QtWidgets.QLabel(self.centralwidget)
-        self.right1label.setGeometry(QtCore.QRect(20, 180, 110, 31))
+        self.right1label.setGeometry(QtCore.QRect(40, 200, 110, 31))
         self.right1label.setObjectName("right1label")
 
         self.displaylabel_1 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_1.setGeometry(QtCore.QRect(480, 35, 280, 40))
+        self.displaylabel_1.setGeometry(QtCore.QRect(705, 35, 280, 40))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setWeight(50)
@@ -98,54 +106,54 @@ class Ui_Option1(object):
         self.displaylabel_1.setObjectName("displaylabel_1")
         
         self.left1label = QtWidgets.QLabel(self.centralwidget)
-        self.left1label.setGeometry(QtCore.QRect(20, 230, 81, 31))
+        self.left1label.setGeometry(QtCore.QRect(40, 250, 81, 31))
         self.left1label.setObjectName("left1label")
         
         self.picr2label = QtWidgets.QLabel(self.centralwidget)
-        self.picr2label.setGeometry(QtCore.QRect(135, 280, 100, 31))
+        self.picr2label.setGeometry(QtCore.QRect(165, 300, 100, 31))
         self.picr2label.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.picr2label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.picr2label.setAlignment(QtCore.Qt.AlignCenter)
         self.picr2label.setObjectName("picr2label")
         
         self.picl2label = QtWidgets.QLabel(self.centralwidget)
-        self.picl2label.setGeometry(QtCore.QRect(135, 330, 100, 31))
+        self.picl2label.setGeometry(QtCore.QRect(165, 350, 100, 31))
         self.picl2label.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.picl2label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.picl2label.setAlignment(QtCore.Qt.AlignCenter)
         self.picl2label.setObjectName("picl2label")
         
         self.right2label = QtWidgets.QLabel(self.centralwidget)
-        self.right2label.setGeometry(QtCore.QRect(20, 280, 110, 31))
+        self.right2label.setGeometry(QtCore.QRect(40, 300, 110, 31))
         self.right2label.setObjectName("right2label")
         
         self.left2label = QtWidgets.QLabel(self.centralwidget)
-        self.left2label.setGeometry(QtCore.QRect(20, 330, 81, 31))
+        self.left2label.setGeometry(QtCore.QRect(40, 350, 81, 31))
         self.left2label.setObjectName("left2label")
         
         self.namelabel_1 = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel_1.setGeometry(QtCore.QRect(20, 650, 211, 30))
+        self.namelabel_1.setGeometry(QtCore.QRect(40, 790, 211, 30))
         self.namelabel_1.setObjectName("namelabel_1")
 
         self.handlabel_1 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_1.setGeometry(QtCore.QRect(20, 530, 130, 30))
+        self.handlabel_1.setGeometry(QtCore.QRect(40, 650, 130, 30))
         self.handlabel_1.setObjectName("handlabel_1") 
 
         self.notelabel_1 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_1.setGeometry(QtCore.QRect(20, 570, 211, 30))
+        self.notelabel_1.setGeometry(QtCore.QRect(40, 700, 211, 30))
         self.notelabel_1.setObjectName("notelabel_1")
            
         self.savebutt_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.savebutt_1.setGeometry(QtCore.QRect(20, 690, 211, 31))
+        self.savebutt_1.setGeometry(QtCore.QRect(30, 840, 235, 31))
         self.savebutt_1.setObjectName("savebutt_1")
-        self.savebutt_1.clicked.connect(self. clicked4)
+        self.savebutt_1.clicked.connect(self.clicked4)
 
         self.nameEdit_1 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.nameEdit_1.setGeometry(QtCore.QRect(100, 650, 131, 30))
+        self.nameEdit_1.setGeometry(QtCore.QRect(130, 790, 131, 30))
         self.nameEdit_1.setObjectName("nameEdit_1")
 
         self.noteEdit_1 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_1.setGeometry(QtCore.QRect(100, 570, 131, 70))
+        self.noteEdit_1.setGeometry(QtCore.QRect(130, 700, 131, 70))
         self.noteEdit_1.setObjectName("noteEdit_1")
                 
         Option1.setCentralWidget(self.centralwidget)
@@ -193,8 +201,10 @@ class Ui_Option1(object):
         b.start()
         
     def clicked3(self):
-        c = Thread(target = self.close)
-        c.start()
+
+        Option1.close()
+
+        
 
     def clicked4(self):
         d = Thread(target = self.save)
@@ -263,12 +273,16 @@ class Ui_Option1(object):
             elif(self.state == 8):
                 if(self.clean == 0):
                     self.displaylabel_1.setText("peak load test is finish")
-                
-
-            
+                    self.plot.canvas.axes.clear()
+           
 
                 
     def disconnect(self):
+        self.peakload = 0
+        self.picr1 = 0
+        self.picl1 = 0
+        self.picr2 = 0
+        self.picl2 = 0
         self.exit = 1
         self.picr1label.setText("")
         self.picl1label.setText("")
@@ -297,12 +311,9 @@ class Ui_Option1(object):
         self.noteEdit_1.clear()
         self.handbox.clear()
 
-    def close(self):
-        sys.exit()
+             
 
-        
-
-if __name__ == "__main__":
+while __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Option1 = QtWidgets.QMainWindow()

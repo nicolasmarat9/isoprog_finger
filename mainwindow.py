@@ -14,6 +14,7 @@ import ctypes
 
 
 class Ui_MainWindow(object):
+    
     def setupUi(self, MainWindow):
         
         self.state = 0
@@ -21,85 +22,86 @@ class Ui_MainWindow(object):
         self.clean = 0
         
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(950, 600)
+        MainWindow.resize(480, 969)
+        MainWindow.move(3, 3)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         
         self.nameEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.nameEdit.setGeometry(QtCore.QRect(750, 70, 150, 30))
+        self.nameEdit.setGeometry(QtCore.QRect(280, 70, 150, 30))
         self.nameEdit.setObjectName("nameEdit")
 
         self.ageBox = QtWidgets.QSpinBox(self.centralwidget)
-        self.ageBox.setGeometry(QtCore.QRect(770, 110, 130, 30))
+        self.ageBox.setGeometry(QtCore.QRect(300, 110, 130, 30))
         self.ageBox.setMaximum(100)
         self.ageBox.setObjectName("ageBox")
 
         self.weightBox = QtWidgets.QDoubleSpinBox(self.centralwidget)
-        self.weightBox.setGeometry(QtCore.QRect(770, 150, 130, 30))
+        self.weightBox.setGeometry(QtCore.QRect(300, 150, 130, 30))
         self.weightBox.setMaximum(200)
         self.weightBox.setObjectName("weightBox")
         
         self.startButt = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt.setGeometry(QtCore.QRect(660, 150, 100, 30))
+        self.startButt.setGeometry(QtCore.QRect(190, 150, 100, 30))
         self.startButt.setObjectName("startButt")
         self.startButt.clicked.connect(self.clicked_6)        
  
         self.sizeEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.sizeEdit.setGeometry(QtCore.QRect(770, 310, 130, 30))
+        self.sizeEdit.setGeometry(QtCore.QRect(300, 310, 130, 30))
         self.sizeEdit.setObjectName("sizeEdit")
 
         self.Sexbox = QtWidgets.QComboBox(self.centralwidget)
-        self.Sexbox.setGeometry(QtCore.QRect(770, 190, 130, 30))
+        self.Sexbox.setGeometry(QtCore.QRect(300, 190, 130, 30))
         self.Sexbox.setObjectName("Sexbox")
         self.Sexbox.addItems(['', 'Female', 'Male'])
         
         self.climbEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.climbEdit.setGeometry(QtCore.QRect(770, 230, 130, 30))
+        self.climbEdit.setGeometry(QtCore.QRect(300, 230, 130, 30))
         self.climbEdit.setObjectName("climbEdit")
         
         self.bouldEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.bouldEdit.setGeometry(QtCore.QRect(770, 270, 130, 30))
+        self.bouldEdit.setGeometry(QtCore.QRect(300, 270, 130, 30))
         self.bouldEdit.setObjectName("bouldEdit")
 
         self.noteEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit.setGeometry(QtCore.QRect(600, 350, 300, 140))
+        self.noteEdit.setGeometry(QtCore.QRect(130, 350, 300, 140))
         self.noteEdit.setObjectName("noteEdit")        
         
         self.namelabel = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel.setGeometry(QtCore.QRect(500, 70, 170, 30))
+        self.namelabel.setGeometry(QtCore.QRect(40, 70, 170, 30))
         self.namelabel.setObjectName("namelabel")
 
         self.agelabel = QtWidgets.QLabel(self.centralwidget)
-        self.agelabel.setGeometry(QtCore.QRect(500, 110, 170, 30))
+        self.agelabel.setGeometry(QtCore.QRect(40, 110, 170, 30))
         self.agelabel.setObjectName("agelabel")
 
         self.weightlabel = QtWidgets.QLabel(self.centralwidget)
-        self.weightlabel.setGeometry(QtCore.QRect(500, 150, 170, 30))
+        self.weightlabel.setGeometry(QtCore.QRect(40, 150, 170, 30))
         self.weightlabel.setObjectName("weightlabel")
 
         self.sexlabel = QtWidgets.QLabel(self.centralwidget)
-        self.sexlabel.setGeometry(QtCore.QRect(500, 190, 170, 30))
+        self.sexlabel.setGeometry(QtCore.QRect(40, 190, 170, 30))
         self.sexlabel.setObjectName("sexlabel")
 
         self.sizelabel = QtWidgets.QLabel(self.centralwidget)
-        self.sizelabel.setGeometry(QtCore.QRect(500, 230, 230, 30))
+        self.sizelabel.setGeometry(QtCore.QRect(40, 230, 230, 30))
         self.sizelabel.setObjectName("sizelabel")
         
         self.bouldlabel = QtWidgets.QLabel(self.centralwidget)
-        self.bouldlabel.setGeometry(QtCore.QRect(500, 270, 230, 30))
+        self.bouldlabel.setGeometry(QtCore.QRect(40, 270, 230, 30))
         self.bouldlabel.setObjectName("bouldlabel")
 
         self.notelabel = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel.setGeometry(QtCore.QRect(500, 350, 230, 30))
+        self.notelabel.setGeometry(QtCore.QRect(40, 350, 230, 30))
         self.notelabel.setObjectName("notelabel")
         
         self.climblabel = QtWidgets.QLabel(self.centralwidget)
-        self.climblabel.setGeometry(QtCore.QRect(500, 310, 230, 30))
+        self.climblabel.setGeometry(QtCore.QRect(40, 310, 230, 30))
         self.climblabel.setObjectName("climblabel")
 
         self.Titlelabel_1 = QtWidgets.QLabel(self.centralwidget)
-        self.Titlelabel_1.setGeometry(QtCore.QRect(85, 20, 230, 30))
+        self.Titlelabel_1.setGeometry(QtCore.QRect(85, 640, 300, 30))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setWeight(65)
@@ -108,7 +110,7 @@ class Ui_MainWindow(object):
         self.Titlelabel_1.setObjectName("Titlelabel_1")
         
         self.Titlelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.Titlelabel_2.setGeometry(QtCore.QRect(540, 20, 300, 30))
+        self.Titlelabel_2.setGeometry(QtCore.QRect(85, 20, 300, 30))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setWeight(65)
@@ -117,42 +119,42 @@ class Ui_MainWindow(object):
         self.Titlelabel_2.setObjectName("Titlelabel_2")        
 
         self.peakButt = QtWidgets.QPushButton(self.centralwidget)
-        self.peakButt.setGeometry(QtCore.QRect(60, 70, 281, 51))
+        self.peakButt.setGeometry(QtCore.QRect(70, 690, 320, 41))
         self.peakButt.setObjectName("peakButt")
         self.peakButt.clicked.connect(self.clicked_1)
 
         self.maxButt = QtWidgets.QPushButton(self.centralwidget)
-        self.maxButt.setGeometry(QtCore.QRect(60, 140, 281, 51))
+        self.maxButt.setGeometry(QtCore.QRect(70, 740, 320, 41))
         self.maxButt.setObjectName("maxButt")
         self.maxButt.clicked.connect(self.clicked_2)
 
         self.straightButt = QtWidgets.QPushButton(self.centralwidget)
-        self.straightButt.setGeometry(QtCore.QRect(60, 210, 281, 51))
+        self.straightButt.setGeometry(QtCore.QRect(70, 790, 320, 41))
         self.straightButt.setObjectName("straightButt")
         self.straightButt.clicked.connect(self.clicked_3)
 
         self.interButt = QtWidgets.QPushButton(self.centralwidget)
-        self.interButt.setGeometry(QtCore.QRect(60, 280, 281, 51))
+        self.interButt.setGeometry(QtCore.QRect(70, 840, 320, 41))
         self.interButt.setObjectName("interButt")
         self.interButt.clicked.connect(self.clicked_4)
         
         self.freeButt = QtWidgets.QPushButton(self.centralwidget)
-        self.freeButt.setGeometry(QtCore.QRect(60, 350, 281, 51))
+        self.freeButt.setGeometry(QtCore.QRect(70, 890, 320, 41))
         self.freeButt.setObjectName("freeButt")
         self.freeButt.clicked.connect(self.clicked_7)
 
         self.clearButt = QtWidgets.QPushButton(self.centralwidget)
-        self.clearButt.setGeometry(QtCore.QRect(560, 540, 261, 31))
+        self.clearButt.setGeometry(QtCore.QRect(105, 540, 261, 31))
         self.clearButt.setObjectName("clearButt")
         self.clearButt.clicked.connect(self.clicked_8)        
          
         self.savebutt = QtWidgets.QPushButton(self.centralwidget)
-        self.savebutt.setGeometry(QtCore.QRect(560, 500, 261, 31))
+        self.savebutt.setGeometry(QtCore.QRect(105, 500, 261, 31))
         self.savebutt.setObjectName("savebutt")
         self.savebutt.clicked.connect(self.clicked_5)
 
         self.line = QtWidgets.QFrame(self.centralwidget)
-        self.line.setGeometry(QtCore.QRect(390, 20, 50, 600))
+        self.line.setGeometry(QtCore.QRect(460, 20, 50, 1000))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -206,24 +208,29 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option1()
         self.ui.setupUi(self.window)
+        #MainWindow.close()
         self.window.show()
+        
 
     def clicked_2(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option2()
         self.ui.setupUi(self.window)
+        #MainWindow.hide()
         self.window.show()
         
     def clicked_3(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option3()
         self.ui.setupUi(self.window)
+        #MainWindow.hide()
         self.window.show()
         
     def clicked_4(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option4()
         self.ui.setupUi(self.window)
+        #MainWindow.hide()
         self.window.show()
 
     def clicked_6(self):
@@ -238,6 +245,7 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Free()
         self.ui.setupUi(self.window)
+        #MainWindow.hide()
         self.window.show()
         
     def clicked_8(self):
@@ -297,10 +305,6 @@ class Ui_MainWindow(object):
             writer.writerow(["bouldering",self.bould])
             writer.writerow(["sex",self.sex])
             writer.writerow(["notes",self.notes])
-
-      
-                   
-
 
 
 if __name__ == "__main__":
