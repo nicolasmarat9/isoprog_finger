@@ -10,6 +10,7 @@ from option3 import Ui_Option3
 from option4 import Ui_Option4
 import csv
 import ctypes
+import pandas as pd
 
 
 
@@ -20,6 +21,7 @@ class Ui_MainWindow(object):
         self.state = 0
         self.weight = 0
         self.clean = 0
+        self.peakloadvalue = 0
         
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(480, 969)
@@ -293,18 +295,25 @@ class Ui_MainWindow(object):
         self.sex = str(self.Sexbox.currentText())
         self.notes = self.noteEdit.toPlainText()
         ctypes.windll.user32.MessageBoxW(0, "personnal data saved", "Saved", 1)
-        
-        
-        with open("%s.csv"%self.name, "a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow(["weight",self.weight])
-            writer.writerow(["name",self.name])
-            writer.writerow(["size",self.size])
-            writer.writerow(["age",self.age])
-            writer.writerow(["climbing",self.climb])
-            writer.writerow(["bouldering",self.bould])
-            writer.writerow(["sex",self.sex])
-            writer.writerow(["notes",self.notes])
+
+        personnal_data = {
+            
+            "name": pd.Series([self.name]),
+            "sex": pd.Series([self.sex]),
+            "age": pd.Series([self.age]),
+            "size": pd.Series([self.size]),
+            "weight": pd.Series([self.weight]),
+            "climbing": pd.Series([self.climb]),
+            "bouldering": pd.Series([self.bould]),
+            "notes": pd.Series([self.notes])
+        }
+        df = pd.DataFrame(personnal_data)
+        df.to_csv("%s.csv"%self.name, header = True, index = False)
+
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -315,3 +324,14 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+
+
+
+
+
+
+
+
+
+    

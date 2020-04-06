@@ -14,21 +14,29 @@ import ctypes
 
 
 class Ui_Option2(object):
-    
-    
-    
+   
     def setupUi(self, Option2):
         
+        # definitions:
+        
         self.i = 0
-        self.peak = 0
-        self.peak_2 = 0
-        self.peakload = 0
-        self.clean = 0
+        self.peak2_1 = 0
+        self.peak2_2 = 0
+        self.peakload2 = 0
+        self.average = 0
+        self.average1 = 0
+        self.average2 = 0
+        self.value = 0
+        
         self.maxbyte = []
         self.maxbyte_2 = []
-        self.state = 0
-        self.display = 0
+        self.everadge = []
         
+        self.statemain2 = 0
+        self.statedisplay2 = 0
+        self.stateclean2 = 0
+        
+        # Option1 window:
         
         Option2.setObjectName("Option2")
         Option2.resize(1427, 969)
@@ -81,29 +89,24 @@ class Ui_Option2(object):
         self.title_2.setFont(font)          
         self.title_2.setObjectName("title_2")
 
-        self.backButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_2.setGeometry(QtCore.QRect(30, 890, 235, 31))
-        self.backButt_2.setObjectName("backButt_2")
-        self.backButt_2.clicked.connect(self.clicked3_2)
-
         self.saveButt_2 = QtWidgets.QPushButton(self.centralwidget)
         self.saveButt_2.setGeometry(QtCore.QRect(30, 840, 235, 31))
         self.saveButt_2.setObjectName("saveButt_2")
         self.saveButt_2.clicked.connect(self.clicked4_2)
 
         self.peaklabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_2.setGeometry(QtCore.QRect(170, 210, 80, 31))
+        self.peaklabel_2.setGeometry(QtCore.QRect(190, 210, 80, 31))
         self.peaklabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_2.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel_2.setObjectName("peaklabel_2")
 
-        self.peaklabel_22 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_22.setGeometry(QtCore.QRect(170, 260, 80, 31))
-        self.peaklabel_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.peaklabel_22.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.peaklabel_22.setAlignment(QtCore.Qt.AlignCenter)
-        self.peaklabel_22.setObjectName("evelabel_2")
+        self.peaklabel2_2 = QtWidgets.QLabel(self.centralwidget)
+        self.peaklabel2_2.setGeometry(QtCore.QRect(190, 260, 80, 31))
+        self.peaklabel2_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.peaklabel2_2.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.peaklabel2_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.peaklabel2_2.setObjectName("peaklabel2_2")
 
         self.peakloadlabel = QtWidgets.QLabel(self.centralwidget)
         self.peakloadlabel.setGeometry(QtCore.QRect(40, 210, 200, 31))
@@ -160,10 +163,9 @@ class Ui_Option2(object):
         self.startButt_2.setText(_translate("Option2", "START"))
         self.stopButt_2.setText(_translate("Option2", "STOP"))
         self.title_2.setText(_translate("Option2", "<html><head/><body><p><span style=\" font-size:12pt;\">MAX STRENGTH</span></p></body></html>"))
-        self.backButt_2.setText(_translate("Option2", "BACK TO OPTIONS"))
         self.saveButt_2.setText(_translate("Option2", "SAVE"))
-        self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak load right</p></body></html>"))
-        self.peakloadlabel_2.setText(_translate("Option2", "<html><head/><body><p>peak load left</p></body></html>"))
+        self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak average right</p></body></html>"))
+        self.peakloadlabel_2.setText(_translate("Option2", "<html><head/><body><p>peak average left</p></body></html>"))
         self.namelabel_2.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.handlabel_2.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
         self.notelabel_2.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
@@ -176,10 +178,6 @@ class Ui_Option2(object):
     def clicked2_2(self):
         f = Thread(target = self.disconnect)
         f.start()
-        
-    def clicked3_2(self):
-        h = Thread(target = self.close)
-        h.start()
 
     def clicked4_2(self):
         g = Thread(target = self.save)
@@ -188,134 +186,179 @@ class Ui_Option2(object):
         
 
     def connect_22(self):
-        self.display = 0
-        self.clean = 0
+        self.statedisplay2 = 0
+        self.stateclean2 = 0
         ser = ardconnect2.ardconnect()
         krono = Thread(target = self.timer)
         krono.start()
         
-        if(self.state == 0):
+        if(self.statemain2 == 0):
             
-            while (self.clean == 0):
+            while (self.stateclean2 == 0):
                             
                 ser_bytes = ser.readline()
-                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 
                 
-                self.peakload = max(self.peakload, value)
-                self.maxbyte.append(value)
+                self.peakload2 = max(self.peakload2, self.value)
+                self.maxbyte.append(self.value)
                            
-                self.lcdNumber_2.display(value)
-                self.plot.update_graph(value, self.i)
+                self.lcdNumber_2.display(self.value)
+                self.plot.update_graph(self.value, self.i)
                 
                 self.i += 1
                 
-        elif(self.state == 1):
+        elif(self.statemain2 == 1):
 
-            while (self.clean == 0):
+            while (self.stateclean2 == 0):
                             
                 ser_bytes = ser.readline()
-                value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+                self.value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 
                 
-                self.peakload = max(self.peakload, value)
-                self.maxbyte_2.append(value)
+                self.peakload2 = max(self.peakload2, self.value)
+                self.maxbyte_2.append(self.value)
                            
-                self.lcdNumber_2.display(value)
-                self.plot.update_graph(value, self.i)
+                self.lcdNumber_2.display(self.value)
+                self.plot.update_graph(self.value, self.i)
                 
                 self.i += 1
                 
 
     def timer(self):
         
-        if(self.display == 0):
+        if(self.statedisplay2 == 0):
             self.displaylabel_2.setText("Get\nready")    
             time.sleep(1)
-        if(self.display == 0):    
+        if(self.statedisplay2 == 0):    
             self.displaylabel_2.setText(str(5))    
             time.sleep(1)
-        if(self.display == 0):     
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText(str(4))    
             time.sleep(1)
-        if(self.display == 0):             
+        if(self.statedisplay2 == 0):             
             self.displaylabel_2.setText(str(3))    
             time.sleep(1)
-        if(self.display == 0):             
+        if(self.statedisplay2 == 0):             
             self.displaylabel_2.setText(str(2))    
             time.sleep(1)
-        if(self.display == 0):             
+        if(self.statedisplay2 == 0):             
             self.displaylabel_2.setText(str(1))    
             time.sleep(1)
-        if(self.display == 0):     
+        if(self.statedisplay2 == 0):
             self.displaylabel_2.setText("START")    
-            time.sleep(1)
-        if(self.display == 0):      
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):      
             self.displaylabel_2.setText(str(7))    
-            time.sleep(1)
-        if(self.display == 0): 
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0): 
             self.displaylabel_2.setText(str(6))    
-            time.sleep(1)
-        if(self.display == 0):     
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText(str(5))    
-            time.sleep(1)
-        if(self.display == 0):     
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText(str(4))    
-            time.sleep(1)
-        if(self.display == 0):     
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText(str(3))    
-            time.sleep(1)
-        if(self.display == 0):     
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText(str(2))    
-            time.sleep(1)
-        if(self.display == 0):      
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+        if(self.statedisplay2 == 0):      
             self.displaylabel_2.setText(str(1))    
-            time.sleep(1)
-        if(self.display == 0):     
-            self.displaylabel_2.setText("STOP")    
+            time.sleep(0.49)
+            self.everadge.append(self.value)
+            time.sleep(0.49)
+            self.everadge.append(self.value)            
+        if(self.statedisplay2 == 0):     
+            self.displaylabel_2.setText("STOP")
+            self.average = sum(self.everadge) / len(self.everadge)
             time.sleep(3)
-        if(self.display == 0):     
+        if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText("")
                                         
             
             
 
-            if(self.state == 0):
-                self.peak = str(self.peakload)
-                self.peaklabel_2.setText(self.peak)
-            elif(self.state == 1):
-                self.peak_2 = str(self.peakload)
-                self.peaklabel_22.setText(self.peak_2)
-            self.state += 1
+            if(self.statemain2 == 0):
+                self.peak2_1 = str(self.peakload2)
+                self.peaklabel_2.setText(str(round(self.average, 2)))
+                self.average1 = self.average
+            elif(self.statemain2 == 1):
+                self.peak2_2 = str(self.peakload2)
+                self.peaklabel2_2.setText(str(round(self.average, 2)))
+                self.average2 = self.average
+            self.statemain2 += 1
             time.sleep(1)
             self.end()
 
+    def everadgedata(self):
+        while True:
+            self.everadge.append(self.value)
+
+   
+
         
     def end(self):
+
+
+        self.i = 0
+        self.stateclean2 = 1
+        self.peakload2 = 0
+        self.average = 0
         
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
-         
-        self.i = 0
-        self.clean = 1
-        self.peakload = 0
-        
-        
+        self.plot.linehand.clear()
+        self.everadge.clear()
+
+       
     def disconnect(self):
-        self.display = 1
+        
+        self.statedisplay2 = 1
+        self.statemain2 = 0
+        self.stateclean2 = 1
+        self.i = 0
+        self.average
+               
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
+        self.plot.linehand.clear()
+        
         self.maxbyte.clear()
-        self.maxbyte_2:clear()
-        self.i = 0
-        self.clean = 1
+        self.maxbyte_2.clear()
+        self.everadge.clear()
+        
         self.displaylabel_2.setText("")
         self.displaylabel_22.setText("")
         self.peaklabel_2.setText("")
-        self.peaklabel_22.setText("")
-        self.state = 0
+        self.peaklabel2_2.setText("")
+ 
         
 
         
@@ -323,16 +366,48 @@ class Ui_Option2(object):
         self.name = self.nameEdit_2.toPlainText()
         self.notes = self.noteEdit_2.toPlainText()
         self.hand = str(self.handbox_2.currentText())
+
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data1 = [self.notes]
+        df["max strength notes"] = data1
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
         
-        with open("%s.csv"%self.name,"a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.name, "maximal strength"])
-            writer.writerow(["notes", self.notes])
-            writer.writerow(["Holding style", self.hand])
-            writer.writerow(["right hand peakload", self.peak])
-            writer.writerow(["left hand peakload", self.peak_2])
-            writer.writerow(["right hand pulling data", self.maxbyte]) 
-            writer.writerow(["left hand pulling data", self.maxbyte_2])
+        df = pd.read_csv("%s.csv"%self.name)
+        data2 = [self.hand]
+        df["max strength style"] = data2
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+       
+        df = pd.read_csv("%s.csv"%self.name)
+        data3 = [self.peak2_1]
+        df["maxstr load right"] = data3
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data4 = [self.peak2_2]
+        df["maxstr load left"] = data4
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data5 = [self.average1]
+        df["maxstr average right"] = data5
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data6 = [self.average2]
+        df["maxstr average left"] = data6
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+       
+        df = pd.read_csv("%s.csv"%self.name)
+        data7 = [self.maxbyte]
+        df["right maxstr pulling data"] = data7
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data8 = [self.maxbyte_2]
+        df["left maxstr pulling data"] = data8
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+           
             
         ctypes.windll.user32.MessageBoxW(0, "maximal strength data saved", "Saved", 1)               
         self.nameEdit_2.clear()
@@ -340,8 +415,7 @@ class Ui_Option2(object):
         self.handbox_2.clear()
         
 
-    def close(self):
-        Option2.close()    
+  
 
 
 if __name__ == "__main__":

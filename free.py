@@ -26,30 +26,31 @@ class Ui_Free(object):
         self.peakload = 0
         
         Free.setObjectName("Free")
-        Free.resize(800, 601)
+        Free.resize(1427, 969)
+        Free.move(488, 3)
         
         self.centralwidget = QtWidgets.QWidget(Free)
         self.centralwidget.setObjectName("centralwidget")
 
         self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setGeometry(QtCore.QRect(255, 71, 521, 491))
+        self.MplWidget.setGeometry(QtCore.QRect(420, 71, 860, 881))
         self.MplWidget.setObjectName("MplWidget")
         
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber.setGeometry(QtCore.QRect(100, 70, 141, 41))
+        self.lcdNumber.setGeometry(QtCore.QRect(130, 90, 141, 61))
         self.lcdNumber.setObjectName("lcdNumber")
 
         self.lcdNumber2 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber2.setGeometry(QtCore.QRect(100, 130, 141, 41))
+        self.lcdNumber2.setGeometry(QtCore.QRect(130, 160, 141, 61))
         self.lcdNumber2.setObjectName("lcdNumber2") 
         
         self.butt1 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt1.setGeometry(QtCore.QRect(10, 70, 71, 41))
+        self.butt1.setGeometry(QtCore.QRect(30, 90, 71, 41))
         self.butt1.setObjectName("butt1")
         self.butt1.clicked.connect(self. clicked1)
         
         self.butt2 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt2.setGeometry(QtCore.QRect(10, 130, 71, 41))
+        self.butt2.setGeometry(QtCore.QRect(30, 150, 71, 41))
         self.butt2.setObjectName("butt2")
         self.butt2.clicked.connect(self. clicked2)
         
@@ -57,10 +58,6 @@ class Ui_Free(object):
         self.title.setGeometry(QtCore.QRect(10, 10, 201, 41))
         self.title.setObjectName("title")
         
-        self.butt3 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt3.setGeometry(QtCore.QRect(20, 530, 211, 31))
-        self.butt3.setObjectName("butt3")
-        self.butt3.clicked.connect(self. clicked3)
   
         
         Free.setCentralWidget(self.centralwidget)
@@ -87,7 +84,7 @@ class Ui_Free(object):
         self.butt1.setText(_translate("Free", "START"))
         self.butt2.setText(_translate("Free", "CLEAR"))
         self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
-        self.butt3.setText(_translate("Free", "BACK TO OPTIONS"))
+     
 
         
     def clicked1(self):
@@ -98,9 +95,6 @@ class Ui_Free(object):
         d = Thread(target = self.disconnect)
         d.start()
         
-    def clicked3(self):
-        v = Thread(target = self.close)
-        v.start()
 
 
     def connect(self):
@@ -128,8 +122,6 @@ class Ui_Free(object):
         self.peakload = 0
 
 
-    def close(self):
-        Option1.close()
 
         
 

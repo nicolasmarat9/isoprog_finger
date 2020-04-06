@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
 import ctypes
+import importlib
 
 
 class Ui_Option3(object):
@@ -34,6 +35,10 @@ class Ui_Option3(object):
         self.intens2 = 0
         self.timer = 0
         self.clean = 0
+        self.peakloadleft = []
+        self.peakloadright = []
+        self.averagepeakright = 0
+        self.averagepeakleft = 0
         
         
         Option3.setObjectName("Option3")
@@ -93,9 +98,14 @@ class Ui_Option3(object):
         self.title_3.setObjectName("title")
 
         self.backButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_3.setGeometry(QtCore.QRect(30, 890, 235, 31))
+        self.backButt_3.setGeometry(QtCore.QRect(30, 890, 115, 31))
         self.backButt_3.setObjectName("backButt_3")
         self.backButt_3.clicked.connect(self. clicked3_3)
+
+        self.backButt2_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.backButt2_3.setGeometry(QtCore.QRect(150, 890, 115, 31))
+        self.backButt2_3.setObjectName("backButt_3")
+        self.backButt2_3.clicked.connect(self. clicked7_3)        
 
         self.saveButt_3 = QtWidgets.QPushButton(self.centralwidget)
         self.saveButt_3.setGeometry(QtCore.QRect(30, 840, 235, 31))
@@ -176,7 +186,8 @@ class Ui_Option3(object):
         self.startButt_3.setText(_translate("Option3", "START"))
         self.stopButt_3.setText(_translate("Option3", "STOP"))
         self.title_3.setText(_translate("Option3", "<html><head/><body><p><span style=\" font-size:12pt;\">STRAIGHT ENDURANCE</span></p></body></html>"))
-        self.backButt_3.setText(_translate("Option3", "BACK TO OPTIONS"))
+        self.backButt_3.setText(_translate("Option3", "PEAK RIGHT"))
+        self.backButt2_3.setText(_translate("Option3", "PEAK LEFT"))        
         self.saveButt_3.setText(_translate("Option3", "SAVE"))
         self.nextButt_3.setText(_translate("Option3", "NEXT"))        
         self.timelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time right (sec)</p></body></html>"))
@@ -188,7 +199,7 @@ class Ui_Option3(object):
 
         
     def clicked1_3(self):
-        k = Thread(target = self.connect)
+        k = Thread(target = self.connect_3)
         k.start()
 
     def clicked2_3(self):
@@ -205,11 +216,14 @@ class Ui_Option3(object):
                 
     def clicked5_3(self):
         n = Thread(target = self.next)
-        n.start()     
-                                
+        n.start()
+        
+    def clicked7_3(self):
+        slup = Thread(target = self.close2)
+        slup.start()                                     
         
 
-    def connect(self):
+    def connect_3(self):
         self.clean = 0
         self.spn = 0
         self.state = 0
@@ -320,11 +334,15 @@ class Ui_Option3(object):
         self.state2 = 1
         self.displaylabel_3.setText("") 
         self.displaylabel3_3.setText("")
+        
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
+        self.plot.linehand.clear()
+        self.plot.lineprog.clear()
+        
         self.i = 0
         self.j = 35        
         self.timepoint = 0
@@ -342,6 +360,9 @@ class Ui_Option3(object):
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
+        self.plot.linehand.clear()
+        self.plot.lineprog.clear()
+        
         self.i = 0
         self.j = 35        
         self.clean = 1
@@ -349,6 +370,7 @@ class Ui_Option3(object):
         self.displaylabel2_3.setText("")
         self.displaylabel_3.setText("")
         self.displaylabel3_3.setText("")
+        
         self.state = 1
         self.state2 = 1
         self.spn = 0
@@ -371,17 +393,49 @@ class Ui_Option3(object):
         self.name = self.fileEdit_3.toPlainText()
         self.notes = self.noteEdit_3.toPlainText()
         self.hand = str(self.handbox_3.currentText())
+
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data1 = [self.notes]
+        df["straight endurance notes"] = data1
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
         
-        with open("%s.csv"%self.name,"a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.name, "straight endurance"])
-            writer.writerow(["notes", self.notes])
-            writer.writerow(["Holding style", self.hand])
-            writer.writerow(["right intensity", self.intens])
-            writer.writerow(["right intensity", self.intens2])
-            writer.writerow(["left hand, pulling time, pulling data",self.pulltime_2,self.straight_2])
-            writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.straight])
- 
+        df = pd.read_csv("%s.csv"%self.name)
+        data2 = [self.hand]
+        df["straight endurance style"] = data2
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+       
+        df = pd.read_csv("%s.csv"%self.name)
+        data3 = [self.intens]
+        df["right strend intensity"] = data3
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data4 = [self.intens2]
+        df["left strend intensity"] = data4
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data5 = [self.pulltime]
+        df["right strend pulling time"] = data5
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data6 = [self.pulltime_2]
+        df["left strend pulling time"] = data6
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data7 = [self.straight]
+        df["right strend pulling data"] = data7
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data8 = [self.straight_2]
+        df["left strend pulling data"] = data8
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+
+    
         ctypes.windll.user32.MessageBoxW(0, "straight endurance data saved", "Saved", 1)
         self.fileEdit_3.clear()
         self.noteEdit_3.clear()
@@ -389,9 +443,43 @@ class Ui_Option3(object):
             
 
     def close(self):
-        Option3.close()    
+        self.name = self.fileEdit_3.toPlainText()
+        with open("%s.csv"%self.name,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string4 = ''
+                for c in (row["peakloadright"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string4 += c
+                
+                self.peakloadright = list(str.split(string4))
+                self.peakloadright = [float(i) for i in self.peakloadright]
+                self.averagepeakright = sum(self.peakloadright) / len(self.peakloadright)
+                self.averagepeakright = round(self.averagepeakright * 0.6)
+                self.spinBox_3.setValue(self.averagepeakright)
+                
 
-        
+    def close2(self):
+        self.name = self.fileEdit_3.toPlainText()
+        with open("%s.csv"%self.name,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string2 = ''
+                for c in (row["peakloadleft"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string2 += c
+
+                self.peakloadleft = list(str.split(string2))
+                self.peakloadleft = [float(i) for i in self.peakloadleft]
+                self.averagepeakleft = sum(self.peakloadleft) / len(self.peakloadleft)
+                self.averagepeakleft= round(self.averagepeakleft * 0.6)
+                self.spinBox_3.setValue(self.averagepeakleft)
+                
+                
 
 if __name__ == "__main__":
     import sys

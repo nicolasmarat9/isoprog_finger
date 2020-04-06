@@ -18,8 +18,12 @@ import ctypes
 
 
 
-
 class Ui_Option1(object):
+
+   # def __init__( self, parent = None):
+
+
+       #super(Option1, self).__init__(self, parent)
 
 
    
@@ -72,11 +76,6 @@ class Ui_Option1(object):
         font.setWeight(65)
         self.title.setFont(font)       
         self.title.setObjectName("title")
-        
-        self.backButt_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_1.setGeometry(QtCore.QRect(30, 890, 235, 31))
-        self.backButt_1.setObjectName("backButt_1")
-        self.backButt_1.clicked.connect(self.clicked3)
         
         self.picr1label = QtWidgets.QLabel(self.centralwidget)
         self.picr1label.setGeometry(QtCore.QRect(165, 200, 100, 31))
@@ -180,7 +179,6 @@ class Ui_Option1(object):
         self.startButt_1.setText(_translate("Option1", "START"))
         self.stopButt_1.setText(_translate("Option1", "STOP"))
         self.title.setText(_translate("Option1", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
-        self.backButt_1.setText(_translate("Option1", "BACK TO OPTIONS"))
         self.right1label.setText(_translate("Option1", "<html><head/><body><p>Right hand 1</p></body></html>"))
         self.left1label.setText(_translate("Option1", "<html><head/><body><p>Left hand 1</p></body></html>"))
         self.right2label.setText(_translate("Option1", "<html><head/><body><p>Right hand 2</p></body></html>"))
@@ -199,12 +197,6 @@ class Ui_Option1(object):
     def clicked2(self):
         b = Thread(target = self.disconnect)
         b.start()
-        
-    def clicked3(self):
-
-        Option1.close()
-
-        
 
     def clicked4(self):
         d = Thread(target = self.save)
@@ -295,17 +287,33 @@ class Ui_Option1(object):
         self.name = self.nameEdit_1.toPlainText()
         self.notes = self.noteEdit_1.toPlainText()
         self.hand = str(self.handbox.currentText())
-        
+        picloadr = self.picr1, self.picr2
+        picloadl = self.picl1, self.picl2
         self.clean = 1
-        with open("%s.csv"%self.name,"a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.name, "peakload"])
-            writer.writerow(["notes", self.notes])
-            writer.writerow(["Holding style", self.hand])
-            writer.writerow(["peakloadr1", self.picr1])
-            writer.writerow(["peakloadl1", self.picl1])
-            writer.writerow(["peakloadr2", self.picr2])
-            writer.writerow(["peakloadl2", self.picl2])
+
+        
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data1 = [self.notes]
+        df["peakloadnotes"] = data1
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data2 = [self.hand]
+        df["peakloadstyle"] = data2
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+       
+        df = pd.read_csv("%s.csv"%self.name)
+        data3 = [picloadr]
+        df["peakloadright"] = data3
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data4 = [picloadl]
+        df["peakloadleft"] = data4
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+
+        
         ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
         self.nameEdit_1.clear()
         self.noteEdit_1.clear()

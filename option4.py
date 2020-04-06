@@ -41,6 +41,10 @@ class Ui_Option4(object):
         self.timepoint = 0
         self.pulltime = 0
         self.pulltime2 = 0
+        self.peakloadleft = []
+        self.peakloadright = []
+        self.averagepeakright = 0
+        self.averagepeakleft = 0        
         
         
         
@@ -83,9 +87,14 @@ class Ui_Option4(object):
         self.title.setObjectName("title")
 
         self.backButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_4.setGeometry(QtCore.QRect(30, 890, 235, 31))
+        self.backButt_4.setGeometry(QtCore.QRect(30, 890, 115, 31))
         self.backButt_4.setObjectName("backButt_4")
         self.backButt_4.clicked.connect(self. clicked3)
+
+        self.backButt2_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.backButt2_4.setGeometry(QtCore.QRect(150, 890, 115, 31))
+        self.backButt2_4.setObjectName("backButt2_4")
+        self.backButt2_4.clicked.connect(self. clicked7_3)           
 
         self.saveButt_4 = QtWidgets.QPushButton(self.centralwidget)
         self.saveButt_4.setGeometry(QtCore.QRect(30, 840, 235, 31))
@@ -185,7 +194,8 @@ class Ui_Option4(object):
         self.startButt_4.setText(_translate("Option4", "START"))
         self.stopButt_4.setText(_translate("Option4", "STOP"))
         self.title.setText(_translate("Option4", "<html><head/><body><p><span style=\" font-size:12pt;\">INTERVAL ENDURANCE</span></p></body></html>"))
-        self.backButt_4.setText(_translate("Option4", "BACK TO OPTIONS"))
+        self.backButt_4.setText(_translate("Option4", "PEAK RIGHT"))
+        self.backButt2_4.setText(_translate("Option4", "PEAK LEFT"))        
         self.saveButt_4.setText(_translate("Option4", "SAVE"))
         self.nextButt_4.setText(_translate("Option4", "NEXT"))
         self.label.setText(_translate("Option4", "<html><head/><body><p>Time right (sec)</p></body></html>"))
@@ -214,8 +224,11 @@ class Ui_Option4(object):
         
     def clicked5(self):
         n = Thread(target = self.next)
-        n.start()     
-                  
+        n.start()
+        
+    def clicked7_3(self):
+        guh = Thread(target = self.close2)
+        guh.start()                       
 
     def connect(self):
         self.displaylabel3_4.setText("")
@@ -370,6 +383,8 @@ class Ui_Option4(object):
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
+        self.plot.linehand.clear()
+        self.plot.lineprog.clear()        
 
         
    
@@ -385,6 +400,9 @@ class Ui_Option4(object):
         self.plot.y2.clear()
         self.inter.clear()
         self.inter2.clear()
+        self.plot.linehand.clear()
+        self.plot.lineprog.clear()
+        
         self.i = 0
         self.j = 25        
         self.displaylabel1_4.setText("")
@@ -399,6 +417,8 @@ class Ui_Option4(object):
         self.intens = 0
         self.intens2 = 0
         self.timer = 0
+        self.pulltime = 0
+        self.pulltime2 = 0
         
         
     def save(self):
@@ -408,24 +428,91 @@ class Ui_Option4(object):
         self.notes = self.noteEdit_4.toPlainText()
         self.hand = str(self.handbox_4.currentText())        
         
-        with open("%s.csv"%self.name,"a") as f:
-            writer = csv.writer(f,delimiter=",")
-            writer.writerow([self.name, "interval endurance"])
-            writer.writerow(["notes", self.notes])
-            writer.writerow(["Holding style", self.hand])            
-            writer.writerow(["right intensity", self.intens])
-            writer.writerow(["left intensity", self.intens])            
-            writer.writerow(["left hand, pulling time, pulling data",self.pulltime2,self.interm2])
-            writer.writerow(["right hand, pulling time, pulling data", self.pulltime,self.interm])
-           
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data1 = [self.notes]
+        df["interval endurance notes"] = data1
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data2 = [self.hand]
+        df["interval endurance style"] = data2
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+       
+        df = pd.read_csv("%s.csv"%self.name)
+        data3 = [self.intens]
+        df["right intend intensity"] = data3
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data4 = [self.intens2]
+        df["left intend intensity"] = data4
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data5 = [self.pulltime]
+        df["right intend pulling time"] = data5
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+
+        df = pd.read_csv("%s.csv"%self.name)
+        data6 = [self.pulltime2]
+        df["left intend pulling time"] = data6
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data7 = [self.interm]
+        df["right intend pulling data"] = data7
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        
+        df = pd.read_csv("%s.csv"%self.name)
+        data8 = [self.interm2]
+        df["left intend pulling data"] = data8
+        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+
+          
         ctypes.windll.user32.MessageBoxW(0, "interval endurance data saved", "Saved", 1)
         self.fileEdit_4.clear()
         self.noteEdit_4.clear()
         self.handbox_4.clear()
-        
+
 
     def close(self):
-        Ui_Option4.destroy()        
+        self.name = self.fileEdit_4.toPlainText()
+        with open("%s.csv"%self.name,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string4 = ''
+                for c in (row["peakloadright"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string4 += c
+                
+                self.peakloadright = list(str.split(string4))
+                self.peakloadright = [float(i) for i in self.peakloadright]
+                self.averagepeakright = sum(self.peakloadright) / len(self.peakloadright)
+                self.averagepeakright = round(self.averagepeakright * 0.6)
+                self.spinBox_7.setValue(self.averagepeakright)
+        
+        
+
+    def close2(self):
+        self.name = self.fileEdit_4.toPlainText()
+        with open("%s.csv"%self.name,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string2 = ''
+                for c in (row["peakloadleft"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string2 += c
+
+                self.peakloadleft = list(str.split(string2))
+                self.peakloadleft = [float(i) for i in self.peakloadleft]
+                self.averagepeakright = sum(self.peakloadleft) / len(self.peakloadleft)
+                self.averagepeakright = round(self.averagepeakright * 0.6)
+                self.spinBox_7.setValue(self.averagepeakright)        
         
 
 if __name__ == "__main__":
