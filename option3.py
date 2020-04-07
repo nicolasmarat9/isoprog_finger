@@ -39,6 +39,7 @@ class Ui_Option3(object):
         self.peakloadright = []
         self.averagepeakright = 0
         self.averagepeakleft = 0
+        self.state4 = 0
         
         
         Option3.setObjectName("Option3")
@@ -135,9 +136,20 @@ class Ui_Option3(object):
         self.everadgelabel_3.setObjectName("everadgelabel_3")
 
         self.spinBox_3 = QtWidgets.QSpinBox(self.centralwidget)
-        self.spinBox_3.setGeometry(QtCore.QRect(50, 320, 211, 35))
+        self.spinBox_3.setGeometry(QtCore.QRect(205, 320, 60, 35))
         self.spinBox_3.setMaximum(200)
         self.spinBox_3.setObjectName("spinBox_3")
+
+        self.peaklabel_3 = QtWidgets.QLabel(self.centralwidget)
+        self.peaklabel_3.setGeometry(QtCore.QRect(130, 320, 60, 35))
+        self.peaklabel_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.peaklabel_3.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.peaklabel_3.setAlignment(QtCore.Qt.AlignCenter)        
+        self.peaklabel_3.setObjectName("peaklabel_3")
+        
+        self.goallabel_3 = QtWidgets.QLabel(self.centralwidget)
+        self.goallabel_3.setGeometry(QtCore.QRect(40, 320, 100, 30))
+        self.goallabel_3.setObjectName("goallabel_3")
 
         self.namelabel_3 = QtWidgets.QLabel(self.centralwidget)
         self.namelabel_3.setGeometry(QtCore.QRect(40, 790, 211, 30))
@@ -184,7 +196,7 @@ class Ui_Option3(object):
         _translate = QtCore.QCoreApplication.translate
         Option3.setWindowTitle(_translate("Option3", "Straight endurance"))
         self.startButt_3.setText(_translate("Option3", "START"))
-        self.stopButt_3.setText(_translate("Option3", "STOP"))
+        self.stopButt_3.setText(_translate("Option3", "RESET"))
         self.title_3.setText(_translate("Option3", "<html><head/><body><p><span style=\" font-size:12pt;\">STRAIGHT ENDURANCE</span></p></body></html>"))
         self.backButt_3.setText(_translate("Option3", "PEAK RIGHT"))
         self.backButt2_3.setText(_translate("Option3", "PEAK LEFT"))        
@@ -195,7 +207,7 @@ class Ui_Option3(object):
         self.namelabel_3.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.handlabel_3.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
         self.notelabel_3.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
-  
+        self.goallabel_3.setText(_translate("Option1", "<html><head/><body><p>Goal line</p></body></html>"))  
 
         
     def clicked1_3(self):
@@ -245,8 +257,13 @@ class Ui_Option3(object):
                 
                 self.i += 1
                 self.j += 1
-                self.spn = self.spinBox_3.value()
-                self.intens = self.spinBox_3.value()
+                if(self.state4 == 0):
+                    self.spn = self.spinBox_3.value()
+                elif(self.state4 == 1):
+                    self.spn = self.averagepeakright
+                elif(self.state4 == 2):
+                    self.spn = self.averagepeakleft 
+                self.intens = self.spn
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
 
@@ -262,10 +279,9 @@ class Ui_Option3(object):
                     if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
                         self.pulltime = self.timer
                         self.displaylabel1_3.setText(str(int(self.pulltime)))
-                        self.displaylabel_3.setText("Straight endurance test is finish")
+                        self.displaylabel_3.setText("Straight endurance test is finished")
                         self.state2 = 1
-                        
-                        
+             
                   
 
         elif(self.state3 == 1):
@@ -282,7 +298,12 @@ class Ui_Option3(object):
                 
                 self.i += 1
                 self.j += 1
-                self.spn = self.spinBox_3.value()
+                if(self.state4 == 0):
+                    self.spn = self.spinBox_3.value()
+                elif(self.state4 == 1):
+                    self.spn = self.averagepeakright
+                elif(self.state4 == 2):
+                    self.spn = self.averagepeakleft                    
                 self.intens2 = self.spinBox_3.value()
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
@@ -298,17 +319,10 @@ class Ui_Option3(object):
                     if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
                         self.pulltime_2 = self.timer
                         self.displaylabel2_3.setText(str(int(self.pulltime_2)))
-                        self.displaylabel_3.setText("Straight endurance test is finish")
+                        self.displaylabel_3.setText("Straight endurance test is finished")
                         self.state2 = 1
                         
 
-    def plotvalue(self):
-    
-        self.i += 1
-        self.j += 1
-        self.spn = self.spinBox.value()
-        self.rang = self.spn - 5
-        self.rang2 = self.spn + 5 
                 
     def timesim(self):
         if(self.state2 == 0):
@@ -332,6 +346,7 @@ class Ui_Option3(object):
         self.timer = 0
         self.state = 1
         self.state2 = 1
+        self.state4 = 0
         self.displaylabel_3.setText("") 
         self.displaylabel3_3.setText("")
         
@@ -370,11 +385,13 @@ class Ui_Option3(object):
         self.displaylabel2_3.setText("")
         self.displaylabel_3.setText("")
         self.displaylabel3_3.setText("")
+        self.peaklabel_3.setText("")
         
         self.state = 1
         self.state2 = 1
         self.spn = 0
         self.state3 = 0
+        self.state4 = 0
         self.straight.clear()
         self:straight_2.clear()
         self.rang = 0
@@ -384,6 +401,10 @@ class Ui_Option3(object):
         self.timepoint = 0
         self.intens = 0
         self.intens2 = 0
+        self.peakloadleft = []
+        self.peakloadright = []
+        self.averagepeakright = 0
+        self.averagepeakleft = 0
         
         
         
@@ -458,8 +479,8 @@ class Ui_Option3(object):
                 self.peakloadright = [float(i) for i in self.peakloadright]
                 self.averagepeakright = sum(self.peakloadright) / len(self.peakloadright)
                 self.averagepeakright = round(self.averagepeakright * 0.6)
-                self.spinBox_3.setValue(self.averagepeakright)
-                
+                self.peaklabel_3.setText(str(self.averagepeakright))
+                self.state4 = 1
 
     def close2(self):
         self.name = self.fileEdit_3.toPlainText()
@@ -476,9 +497,9 @@ class Ui_Option3(object):
                 self.peakloadleft = list(str.split(string2))
                 self.peakloadleft = [float(i) for i in self.peakloadleft]
                 self.averagepeakleft = sum(self.peakloadleft) / len(self.peakloadleft)
-                self.averagepeakleft= round(self.averagepeakleft * 0.6)
-                self.spinBox_3.setValue(self.averagepeakleft)
-                
+                self.averagepeakleft = round(self.averagepeakleft * 0.6)
+                self.peaklabel_3.setText(str(self.averagepeakleft))
+                self.state4 = 2
                 
 
 if __name__ == "__main__":

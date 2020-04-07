@@ -13,15 +13,16 @@ import ctypes
 import pandas as pd
 
 
-
 class Ui_MainWindow(object):
     
     def setupUi(self, MainWindow):
         
         self.state = 0
         self.weight = 0
+        self.weight2 = 0
         self.clean = 0
         self.peakloadvalue = 0
+        self.state4 = 0
         
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(480, 969)
@@ -40,12 +41,19 @@ class Ui_MainWindow(object):
         self.ageBox.setObjectName("ageBox")
 
         self.weightBox = QtWidgets.QDoubleSpinBox(self.centralwidget)
-        self.weightBox.setGeometry(QtCore.QRect(300, 150, 130, 30))
+        self.weightBox.setGeometry(QtCore.QRect(340, 150, 90, 30))
         self.weightBox.setMaximum(200)
         self.weightBox.setObjectName("weightBox")
+
+        self.scalelabel = QtWidgets.QLabel(self.centralwidget)
+        self.scalelabel.setGeometry(QtCore.QRect(270, 150, 60, 30))
+        self.scalelabel.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.scalelabel.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.scalelabel.setAlignment(QtCore.Qt.AlignCenter)        
+        self.scalelabel.setObjectName("scalelabel")        
         
         self.startButt = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt.setGeometry(QtCore.QRect(190, 150, 100, 30))
+        self.startButt.setGeometry(QtCore.QRect(160, 150, 100, 30))
         self.startButt.setObjectName("startButt")
         self.startButt.clicked.connect(self.clicked_6)        
  
@@ -210,7 +218,6 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option1()
         self.ui.setupUi(self.window)
-        #MainWindow.close()
         self.window.show()
         
 
@@ -218,21 +225,18 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option2()
         self.ui.setupUi(self.window)
-        #MainWindow.hide()
         self.window.show()
         
     def clicked_3(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option3()
         self.ui.setupUi(self.window)
-        #MainWindow.hide()
         self.window.show()
         
     def clicked_4(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Option4()
         self.ui.setupUi(self.window)
-        #MainWindow.hide()
         self.window.show()
 
     def clicked_6(self):
@@ -247,7 +251,6 @@ class Ui_MainWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Free()
         self.ui.setupUi(self.window)
-        #MainWindow.hide()
         self.window.show()
         
     def clicked_8(self):
@@ -259,16 +262,15 @@ class Ui_MainWindow(object):
         self.ageBox.setValue(0)
         self.weightBox.setValue(0.00)
         self.Sexbox.clear()
-        
+        self.Sexbox.addItems(['', 'Female', 'Male'])
+        self.state4 = 0
+        self.scalelabel.setText('')
 
     def connecte(self):
         ser = ardconnect2.ardconnect()
         self.state = 0
-        self.clean = 0
-
-        
-               
-        while(self.clean == 0):
+                      
+        while True :
                         
             ser_bytes = ser.readline()
             value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
@@ -280,15 +282,18 @@ class Ui_MainWindow(object):
 
             elif(self.state == 1) and(value < 0.3):
                 time.sleep(1)
-                self.weightBox.setValue(self.weight)
-                self.clean = 1
-                
+                self.scalelabel.setText(str(self.weight))
+                self.state4 = 1
+                break
        
         
     def saves(self):
         self.name = self.nameEdit.toPlainText()
         self.age = self.ageBox.value()
-        self.weight = self.weightBox.value()
+        if(self.state4 == 0):
+            self.weight2 = self.weightBox.value()
+        elif(self.state4 == 1):
+            self.weight2 = self.weight
         self.size = self.sizeEdit.toPlainText()
         self.climb = self.climbEdit.toPlainText()
         self.bould = self.bouldEdit.toPlainText()
@@ -302,18 +307,13 @@ class Ui_MainWindow(object):
             "sex": pd.Series([self.sex]),
             "age": pd.Series([self.age]),
             "size": pd.Series([self.size]),
-            "weight": pd.Series([self.weight]),
+            "weight": pd.Series([self.weight2]),
             "climbing": pd.Series([self.climb]),
             "bouldering": pd.Series([self.bould]),
             "notes": pd.Series([self.notes])
         }
         df = pd.DataFrame(personnal_data)
         df.to_csv("%s.csv"%self.name, header = True, index = False)
-
-
-
-
-
 
 
 if __name__ == "__main__":

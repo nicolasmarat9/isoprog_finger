@@ -36,7 +36,7 @@ class MplWidget(QWidget ):
         self.setLayout(vertical_layout)
         self.canvas.axes.tick_params(axis = 'x', which = 'both', bottom = False, top = False, labelbottom = False)
        
-         
+        
             
     def update_bargraph(self, value, peakload):
         
@@ -51,8 +51,7 @@ class MplWidget(QWidget ):
         self.canvas.axes.bar(x, y) 
         self.canvas.axes.set_title('pull') 
         self.canvas.draw()
-
-    
+   
         
         
     def update_graph(self, value, i):
@@ -69,8 +68,7 @@ class MplWidget(QWidget ):
         self.canvas.axes.plot(self.x, self.y,'-',label='linehand')
         self.canvas.axes.set_title('pull') 
         self.canvas.draw()
-        
-        
+   
 
         
     def update_graph2(self, value, i, spn, j):
@@ -89,11 +87,8 @@ class MplWidget(QWidget ):
         self.canvas.axes.plot(self.y2, self.x2,'-')
         self.canvas.axes.set_title('pull') 
         self.canvas.draw()
+
         
-
-
-
-
         
     def update_graph3(self, value, i, j, teeth):
         

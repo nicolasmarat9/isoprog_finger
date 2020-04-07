@@ -17,14 +17,7 @@ import pandas as pd
 import ctypes
 
 
-
 class Ui_Option1(object):
-
-   # def __init__( self, parent = None):
-
-
-       #super(Option1, self).__init__(self, parent)
-
 
    
     def setupUi(self, Option1):
@@ -266,7 +259,7 @@ class Ui_Option1(object):
                 if(self.clean == 0):
                     self.displaylabel_1.setText("peak load test is finish")
                     self.plot.canvas.axes.clear()
-           
+                    break
 
                 
     def disconnect(self):

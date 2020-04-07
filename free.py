@@ -75,7 +75,6 @@ class Ui_Free(object):
 
         self.retranslateUi(Free)
         QtCore.QMetaObject.connectSlotsByName(Free)
-
       
         
     def retranslateUi(self, Free):
@@ -85,8 +84,7 @@ class Ui_Free(object):
         self.butt2.setText(_translate("Free", "CLEAR"))
         self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
      
-
-        
+      
     def clicked1(self):
         t = Thread(target = self.connect)
         t.start()
@@ -94,9 +92,8 @@ class Ui_Free(object):
     def clicked2(self):
         d = Thread(target = self.disconnect)
         d.start()
-        
 
-
+ 
     def connect(self):
         ser = ardconnect2.ardconnect()
                
@@ -111,19 +108,11 @@ class Ui_Free(object):
             self.lcdNumber2.display(self.peakload)
             self.MplWidget.update_bargraph(value, self.peakload)
 
-       
- 
-                
-
-            
-
                 
     def disconnect(self):
         self.peakload = 0
 
-
-
-        
+      
 
 if __name__ == "__main__":
     import sys

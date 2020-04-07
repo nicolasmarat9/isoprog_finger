@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
 import ctypes
+import pandas as pd
 
 
 class Ui_Option2(object):
@@ -299,8 +300,7 @@ class Ui_Option2(object):
             time.sleep(3)
         if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText("")
-                                        
-            
+           
             
 
             if(self.statemain2 == 0):
@@ -311,15 +311,15 @@ class Ui_Option2(object):
                 self.peak2_2 = str(self.peakload2)
                 self.peaklabel2_2.setText(str(round(self.average, 2)))
                 self.average2 = self.average
-            self.statemain2 += 1
-            time.sleep(1)
-            self.end()
-
+                self.statemain2 += 1
+                time.sleep(1)
+                self.end()
+                
+           
     def everadgedata(self):
         while True:
             self.everadge.append(self.value)
-
-   
+  
 
         
     def end(self):
@@ -358,8 +358,7 @@ class Ui_Option2(object):
         self.displaylabel_22.setText("")
         self.peaklabel_2.setText("")
         self.peaklabel2_2.setText("")
- 
-        
+       
 
         
     def save(self):
@@ -413,9 +412,7 @@ class Ui_Option2(object):
         self.nameEdit_2.clear()
         self.noteEdit_2.clear()
         self.handbox_2.clear()
-        
-
-  
+ 
 
 
 if __name__ == "__main__":
