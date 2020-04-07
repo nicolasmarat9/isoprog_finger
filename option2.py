@@ -162,7 +162,7 @@ class Ui_Option2(object):
         _translate = QtCore.QCoreApplication.translate
         Option2.setWindowTitle(_translate("Option2", "Max Strength"))
         self.startButt_2.setText(_translate("Option2", "START"))
-        self.stopButt_2.setText(_translate("Option2", "STOP"))
+        self.stopButt_2.setText(_translate("Option2", "RESET"))
         self.title_2.setText(_translate("Option2", "<html><head/><body><p><span style=\" font-size:12pt;\">MAX STRENGTH</span></p></body></html>"))
         self.saveButt_2.setText(_translate("Option2", "SAVE"))
         self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak average right</p></body></html>"))
@@ -307,11 +307,15 @@ class Ui_Option2(object):
                 self.peak2_1 = str(self.peakload2)
                 self.peaklabel_2.setText(str(round(self.average, 2)))
                 self.average1 = self.average
+                self.statemain2 = 1
+                time.sleep(1)
+                self.end()
+                                
             elif(self.statemain2 == 1):
                 self.peak2_2 = str(self.peakload2)
                 self.peaklabel2_2.setText(str(round(self.average, 2)))
                 self.average2 = self.average
-                self.statemain2 += 1
+                self.statemain2 = 0
                 time.sleep(1)
                 self.end()
                 

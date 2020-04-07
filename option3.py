@@ -263,7 +263,6 @@ class Ui_Option3(object):
                     self.spn = self.averagepeakright
                 elif(self.state4 == 2):
                     self.spn = self.averagepeakleft 
-                self.intens = self.spn
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
 
@@ -280,9 +279,10 @@ class Ui_Option3(object):
                         self.pulltime = self.timer
                         self.displaylabel1_3.setText(str(int(self.pulltime)))
                         self.displaylabel_3.setText("Straight endurance test is finished")
+                        self.intens = self.spn
                         self.state2 = 1
-             
-                  
+                        
+                
 
         elif(self.state3 == 1):
 
@@ -304,7 +304,6 @@ class Ui_Option3(object):
                     self.spn = self.averagepeakright
                 elif(self.state4 == 2):
                     self.spn = self.averagepeakleft                    
-                self.intens2 = self.spinBox_3.value()
                 self.rang  = self.spn -5
                 self.rang2 = self.spn +8
 
@@ -320,6 +319,7 @@ class Ui_Option3(object):
                         self.pulltime_2 = self.timer
                         self.displaylabel2_3.setText(str(int(self.pulltime_2)))
                         self.displaylabel_3.setText("Straight endurance test is finished")
+                        self.intens2 = self.spn
                         self.state2 = 1
                         
 
@@ -364,7 +364,7 @@ class Ui_Option3(object):
         self.val = 0
         self.rang = 0
         self.rang2 = 0
-        self.spn = 0
+        
         
           
             

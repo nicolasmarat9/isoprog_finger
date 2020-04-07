@@ -170,7 +170,7 @@ class Ui_Option1(object):
         _translate = QtCore.QCoreApplication.translate
         Option1.setWindowTitle(_translate("Option1", "peakload"))
         self.startButt_1.setText(_translate("Option1", "START"))
-        self.stopButt_1.setText(_translate("Option1", "STOP"))
+        self.stopButt_1.setText(_translate("Option1", "RESET"))
         self.title.setText(_translate("Option1", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
         self.right1label.setText(_translate("Option1", "<html><head/><body><p>Right hand 1</p></body></html>"))
         self.left1label.setText(_translate("Option1", "<html><head/><body><p>Left hand 1</p></body></html>"))
@@ -259,21 +259,28 @@ class Ui_Option1(object):
                 if(self.clean == 0):
                     self.displaylabel_1.setText("peak load test is finish")
                     self.plot.canvas.axes.clear()
+                    self.plot.x.clear()
+                    self.plot.y.clear()
                     break
 
                 
     def disconnect(self):
+        self.state = 0
         self.peakload = 0
         self.picr1 = 0
         self.picl1 = 0
         self.picr2 = 0
         self.picl2 = 0
         self.exit = 1
+        
+        self.plot.canvas.axes.clear()
+        self.plot.x.clear()
+        self.plot.y.clear()
+        
         self.picr1label.setText("")
         self.picl1label.setText("")
         self.picr2label.setText("")
         self.picl2label.setText("")
-        self.state = 0
         self.displaylabel_1.setText("")
 
     def save(self):
