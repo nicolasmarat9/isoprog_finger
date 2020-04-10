@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np 
-import ardconnect2
 import serial
 from threading import Thread
 import time
@@ -14,7 +13,7 @@ import csv
 from mplwidget import MplWidget
 from math import nan as nan
 import pandas as pd
-
+import serial.tools.list_ports
 
 
 class Ui_Free(object):
@@ -28,6 +27,7 @@ class Ui_Free(object):
         Free.setObjectName("Free")
         Free.resize(1427, 969)
         Free.move(488, 3)
+        Free.setWindowIcon(QtGui.QIcon("icons/logoapp702.ico"))
         
         self.centralwidget = QtWidgets.QWidget(Free)
         self.centralwidget.setObjectName("centralwidget")
@@ -37,26 +37,47 @@ class Ui_Free(object):
         self.MplWidget.setObjectName("MplWidget")
         
         self.lcdNumber = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber.setGeometry(QtCore.QRect(130, 90, 141, 61))
+        self.lcdNumber.setGeometry(QtCore.QRect(140, 90, 131, 61))
         self.lcdNumber.setObjectName("lcdNumber")
 
         self.lcdNumber2 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber2.setGeometry(QtCore.QRect(130, 160, 141, 61))
+        self.lcdNumber2.setGeometry(QtCore.QRect(140, 160, 131, 61))
         self.lcdNumber2.setObjectName("lcdNumber2") 
         
         self.butt1 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt1.setGeometry(QtCore.QRect(30, 90, 71, 41))
+        self.butt1.setGeometry(QtCore.QRect(30, 90, 90, 45))
+        self.butt1.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.butt1.setObjectName("butt1")
+        self.butt1.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.butt1.setIconSize(QtCore.QSize(90, 90))           
         self.butt1.clicked.connect(self. clicked1)
         
         self.butt2 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt2.setGeometry(QtCore.QRect(30, 150, 71, 41))
+        self.butt2.setGeometry(QtCore.QRect(30, 150, 90, 45))
+        self.butt2.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.butt2.setObjectName("butt2")
+        self.butt2.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.butt2.setIconSize(QtCore.QSize(90, 90))          
         self.butt2.clicked.connect(self. clicked2)
         
         self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(10, 10, 201, 41))
+        self.title.setGeometry(QtCore.QRect(30, 30, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setWeight(65)
+        self.title.setFont(font)         
         self.title.setObjectName("title")
+
+        self.displaylabel_11 = QtWidgets.QLabel(self.centralwidget)
+        self.displaylabel_11.setGeometry(QtCore.QRect(705, 35, 280, 40))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setWeight(50)
+        self.displaylabel_11.setFont(font)
+        self.displaylabel_11.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaylabel_11.setObjectName("displaylabel_11")
         
   
         
@@ -80,9 +101,9 @@ class Ui_Free(object):
     def retranslateUi(self, Free):
         _translate = QtCore.QCoreApplication.translate
         Free.setWindowTitle(_translate("Free", "peakload"))
-        self.butt1.setText(_translate("Free", "START"))
-        self.butt2.setText(_translate("Free", "CLEAR"))
-        self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">PEAK LOAD</span></p></body></html>"))
+        #self.butt1.setText(_translate("Free", "START"))
+        #self.butt2.setText(_translate("Free", "CLEAR"))
+        self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE PEAK LOAD</span></p></body></html>"))
      
       
     def clicked1(self):
@@ -95,7 +116,41 @@ class Ui_Free(object):
 
  
     def connect(self):
-        ser = ardconnect2.ardconnect()
+        
+        portName = ""
+        str2 = ""
+        
+        ports = list(serial.tools.list_ports.comports())
+        for p in ports:
+            if portName == '':    
+                int1 = 0
+                while int1 <= 20:   
+                    if "USB Serial Device" in p[1]:  
+                        
+                        str2 = str(int1) 
+                        portName = "COM" + str2 
+                        
+                    if "USB Serial Device" in p[1] and portName in p[1]:
+                        self.displaylabel_11.setText("Found Sensor on " + portName)
+                        print("Found Sensor on " + portName)
+                        time.sleep(2)
+                        self.displaylabel_11.setText("")
+                        break
+                    
+                    int1 = int1 + 1
+                        
+            else:
+                break
+
+        if portName == '':
+            self.displaylabel_11.setText("No Sensor found")
+            raise IOError("No Sensor found")
+            time.sleep(2)
+            self.displaylabel_11.setText("")        
+            
+        
+        baudrate = 9600
+        ser = serial.Serial(portName, baudrate)
                
         while True:
                         

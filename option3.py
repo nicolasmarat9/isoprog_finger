@@ -6,12 +6,12 @@ matplotlib.use("tkAgg")
 import matplotlib.pyplot as plt 
 import numpy as np 
 import pandas as pd
-import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
 import ctypes
 import importlib
+import serial.tools.list_ports
 
 
 class Ui_Option3(object):
@@ -45,6 +45,7 @@ class Ui_Option3(object):
         Option3.setObjectName("Option3")
         Option3.resize(1427, 969)
         Option3.move(488, 3)
+        Option3.setWindowIcon(QtGui.QIcon("icons/logoapp702.ico"))
         
         self.centralwidget = QtWidgets.QWidget(Option3)
         self.centralwidget.setObjectName("centralwidget")
@@ -54,16 +55,16 @@ class Ui_Option3(object):
         self.plot.setObjectName("plot")
 
         self.displaylabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_3.setGeometry(QtCore.QRect(655, 5, 400, 70))
+        self.displaylabel_3.setGeometry(QtCore.QRect(610, 5, 490, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setWeight(50)
+        font.setPointSize(14)
+        font.setWeight(65)
         self.displaylabel_3.setFont(font)
         self.displaylabel_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_3.setObjectName("displaylabel_3")
 
         self.displaylabel3_3= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_3.setGeometry(QtCore.QRect(25 ,360, 246, 200))
+        self.displaylabel3_3.setGeometry(QtCore.QRect(25 ,340, 246, 200))
         font = QtGui.QFont()
         font.setPointSize(40)
         font.setWeight(50)
@@ -72,22 +73,34 @@ class Ui_Option3(object):
         self.displaylabel3_3.setObjectName("displaylabel3_3")
 
         self.lcdNumber_3 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber_3.setGeometry(QtCore.QRect(130, 90, 141, 61))
+        self.lcdNumber_3.setGeometry(QtCore.QRect(140, 90, 131, 61))
         self.lcdNumber_3.setObjectName("lcdNumber")
 
         self.startButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_3.setGeometry(QtCore.QRect(30, 90, 71, 41))
+        self.startButt_3.setGeometry(QtCore.QRect(30, 90, 90, 45))
+        self.startButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.startButt_3.setObjectName("startButt_3")
+        self.startButt_3.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.startButt_3.setIconSize(QtCore.QSize(90, 90))          
         self.startButt_3.clicked.connect(self. clicked1_3)
 
         self.stopButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_3.setGeometry(QtCore.QRect(30, 150, 71, 41))
+        self.stopButt_3.setGeometry(QtCore.QRect(30, 200, 90, 45))
+        self.stopButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.stopButt_3.setObjectName("stopButt_3")
+        self.stopButt_3.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.stopButt_3.setIconSize(QtCore.QSize(90, 90))         
         self.stopButt_3.clicked.connect(self. clicked2_3)
         
         self.nextButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.nextButt_3.setGeometry(QtCore.QRect(170, 160, 80, 41))
+        self.nextButt_3.setGeometry(QtCore.QRect(30, 145, 90, 45))
+        self.nextButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.nextButt_3.setObjectName("next_3")
+        self.nextButt_3.setIcon(QtGui.QIcon("pushbutt/ziconpush11.png"))
+        self.nextButt_3.setIconSize(QtCore.QSize(90, 90))        
         self.nextButt_3.clicked.connect(self. clicked5_3)
         
         self.title_3 = QtWidgets.QLabel(self.centralwidget)
@@ -99,81 +112,99 @@ class Ui_Option3(object):
         self.title_3.setObjectName("title")
 
         self.backButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_3.setGeometry(QtCore.QRect(30, 890, 115, 31))
+        self.backButt_3.setGeometry(QtCore.QRect(50, 590, 90, 45))
+        self.backButt_3.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.backButt_3.setObjectName("backButt_3")
+        self.backButt_3.setIcon(QtGui.QIcon("pushbutt/ziconpush13.png"))
+        self.backButt_3.setIconSize(QtCore.QSize(90, 90))        
         self.backButt_3.clicked.connect(self. clicked3_3)
 
         self.backButt2_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt2_3.setGeometry(QtCore.QRect(150, 890, 115, 31))
+        self.backButt2_3.setGeometry(QtCore.QRect(160, 590, 90, 45))
+        self.backButt2_3.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.backButt2_3.setObjectName("backButt_3")
+        self.backButt2_3.setIcon(QtGui.QIcon("pushbutt/ziconpush12.png"))
+        self.backButt2_3.setIconSize(QtCore.QSize(90, 90))          
         self.backButt2_3.clicked.connect(self. clicked7_3)        
 
         self.saveButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.saveButt_3.setGeometry(QtCore.QRect(30, 840, 235, 31))
+        self.saveButt_3.setGeometry(QtCore.QRect(30, 890, 90, 45))
+        self.saveButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 6px; border: 1px solid grey;}"
+                                      "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 6px; border: 1px solid dimgrey;}")
         self.saveButt_3.setObjectName("saveButt_4")
+        self.saveButt_3.setIcon(QtGui.QIcon("pushbutt/ziconpush9.png"))
+        self.saveButt_3.setIconSize(QtCore.QSize(90, 90))        
         self.saveButt_3.clicked.connect(self. clicked4_3)
 
         self.displaylabel1_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel1_3.setGeometry(QtCore.QRect(170, 210, 80, 31))
-        self.displaylabel1_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.displaylabel1_3.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.displaylabel1_3.setGeometry(QtCore.QRect(45, 300, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.displaylabel1_3.setFont(font)           
         self.displaylabel1_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel1_3.setObjectName("displaylabel1_3")
 
         self.displaylabel2_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel2_3.setGeometry(QtCore.QRect(170, 260, 80, 31))
-        self.displaylabel2_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.displaylabel2_3.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.displaylabel2_3.setGeometry(QtCore.QRect(179, 300, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.displaylabel2_3.setFont(font)        
         self.displaylabel2_3.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel2_3.setObjectName("displaylabel2_3")
 
         self.timelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.timelabel_3.setGeometry(QtCore.QRect(40, 210, 200, 31))
+        self.timelabel_3.setGeometry(QtCore.QRect(36, 250, 100, 51))
+        self.timelabel_3.setAlignment(QtCore.Qt.AlignCenter) 
         self.timelabel_3.setObjectName("timelabel_3")
 
         self.everadgelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.everadgelabel_3.setGeometry(QtCore.QRect(40, 260, 200, 31))
+        self.everadgelabel_3.setGeometry(QtCore.QRect(170, 250, 100, 51))
+        self.everadgelabel_3.setAlignment(QtCore.Qt.AlignCenter)
         self.everadgelabel_3.setObjectName("everadgelabel_3")
 
         self.spinBox_3 = QtWidgets.QSpinBox(self.centralwidget)
-        self.spinBox_3.setGeometry(QtCore.QRect(205, 320, 60, 35))
+        self.spinBox_3.setGeometry(QtCore.QRect(200, 650, 60, 35))
         self.spinBox_3.setMaximum(200)
         self.spinBox_3.setObjectName("spinBox_3")
 
         self.peaklabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_3.setGeometry(QtCore.QRect(130, 320, 60, 35))
+        self.peaklabel_3.setGeometry(QtCore.QRect(130, 650, 55, 35))
         self.peaklabel_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_3.setAlignment(QtCore.Qt.AlignCenter)        
         self.peaklabel_3.setObjectName("peaklabel_3")
         
         self.goallabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.goallabel_3.setGeometry(QtCore.QRect(40, 320, 100, 30))
+        self.goallabel_3.setGeometry(QtCore.QRect(40, 650, 100, 30))
         self.goallabel_3.setObjectName("goallabel_3")
 
         self.namelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel_3.setGeometry(QtCore.QRect(40, 790, 211, 30))
+        self.namelabel_3.setGeometry(QtCore.QRect(40, 840, 211, 30))
         self.namelabel_3.setObjectName("namelabel_3")
 
         self.handlabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_3.setGeometry(QtCore.QRect(40, 650, 130, 30))
+        self.handlabel_3.setGeometry(QtCore.QRect(40, 700, 130, 30))
         self.handlabel_3.setObjectName("handlabel_3") 
 
         self.notelabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_3.setGeometry(QtCore.QRect(40, 700, 211, 30))
+        self.notelabel_3.setGeometry(QtCore.QRect(40, 750, 211, 30))
         self.notelabel_3.setObjectName("notelabel_3")
 
         self.noteEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_3.setGeometry(QtCore.QRect(130, 700, 131, 70))
+        self.noteEdit_3.setGeometry(QtCore.QRect(130, 750, 131, 70))
         self.noteEdit_3.setObjectName("noteEdit_3")
 
         self.handbox_3 = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox_3.setGeometry(QtCore.QRect(130, 650, 131, 30))
+        self.handbox_3.setGeometry(QtCore.QRect(130, 700, 131, 30))
         self.handbox_3.setObjectName("handbox_3")
         self.handbox_3.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])        
         
         self.fileEdit_3 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.fileEdit_3.setGeometry(QtCore.QRect(130, 790, 131, 30))
+        self.fileEdit_3.setGeometry(QtCore.QRect(130, 840, 131, 30))
         self.fileEdit_3.setObjectName("fileEdit_3")           
                
         Option3.setCentralWidget(self.centralwidget)
@@ -195,15 +226,15 @@ class Ui_Option3(object):
     def retranslateUi(self, Option3):
         _translate = QtCore.QCoreApplication.translate
         Option3.setWindowTitle(_translate("Option3", "Straight endurance"))
-        self.startButt_3.setText(_translate("Option3", "START"))
-        self.stopButt_3.setText(_translate("Option3", "RESET"))
+        #self.startButt_3.setText(_translate("Option3", "START"))
+        #self.stopButt_3.setText(_translate("Option3", "RESET"))
         self.title_3.setText(_translate("Option3", "<html><head/><body><p><span style=\" font-size:12pt;\">STRAIGHT ENDURANCE</span></p></body></html>"))
-        self.backButt_3.setText(_translate("Option3", "PEAK RIGHT"))
-        self.backButt2_3.setText(_translate("Option3", "PEAK LEFT"))        
-        self.saveButt_3.setText(_translate("Option3", "SAVE"))
-        self.nextButt_3.setText(_translate("Option3", "NEXT"))        
-        self.timelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time right (sec)</p></body></html>"))
-        self.everadgelabel_3.setText(_translate("Option3", "<html><head/><body><p>Time left (sec)</p></body></html>"))
+        #self.backButt_3.setText(_translate("Option3", "PEAK RIGHT"))
+        #self.backButt2_3.setText(_translate("Option3", "PEAK LEFT"))        
+        #self.saveButt_3.setText(_translate("Option3", "SAVE"))
+        #self.nextButt_3.setText(_translate("Option3", "NEXT"))        
+        self.timelabel_3.setText("Time right\n(sec)")
+        self.everadgelabel_3.setText("Time left\n(sec)")
         self.namelabel_3.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.handlabel_3.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
         self.notelabel_3.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
@@ -240,11 +271,47 @@ class Ui_Option3(object):
         self.spn = 0
         self.state = 0
         self.state2 = 0
-        ser = ardconnect2.ardconnect()
+
+        portName = ""
+        str2 = ""
+        
+        ports = list(serial.tools.list_ports.comports())
+        for p in ports:
+            if portName == '':    
+                int1 = 0
+                while int1 <= 20:   
+                    if "USB Serial Device" in p[1]:  
+                        
+                        str2 = str(int1) 
+                        portName = "COM" + str2 
+                        
+                    if "USB Serial Device" in p[1] and portName in p[1]:
+                        self.displaylabel_3.setText("Found Sensor on " + portName)
+                        print("Found Sensor on " + portName)
+                        time.sleep(2)
+                        self.displaylabel_3.setText("")
+                        break
+                    
+                    int1 = int1 + 1
+                        
+            else:
+                break
+
+        if portName == '':
+            self.displaylabel_3.setText("No Sensor found")
+            raise IOError("No Sensor found")
+            time.sleep(2)
+            self.displaylabel_3.setText("")        
+            
+        
+        baudrate = 9600
+        ser = serial.Serial(portName, baudrate)
+
         z = Thread(target = self.timersec)
         z.start() 
 
         if(self.state3 == 0):
+            self.displaylabel_3.setText("RIGHT HAND")
             
             while(self.state == 0):
                             
@@ -285,6 +352,7 @@ class Ui_Option3(object):
                 
 
         elif(self.state3 == 1):
+            self.displaylabel_3.setText("LEFT HAND")
 
             while(self.state == 0):
                 
@@ -347,7 +415,7 @@ class Ui_Option3(object):
         self.state = 1
         self.state2 = 1
         self.state4 = 0
-        self.displaylabel_3.setText("") 
+        self.displaylabel_3.setText("wait...") 
         self.displaylabel3_3.setText("")
         
         self.plot.canvas.axes.clear()
@@ -364,7 +432,8 @@ class Ui_Option3(object):
         self.val = 0
         self.rang = 0
         self.rang2 = 0
-        
+        time.sleep(2)
+        self.displaylabel_3.setText("")
         
           
             
@@ -383,7 +452,7 @@ class Ui_Option3(object):
         self.clean = 1
         self.displaylabel1_3.setText("")
         self.displaylabel2_3.setText("")
-        self.displaylabel_3.setText("")
+        self.displaylabel_3.setText("reset straight endurance")
         self.displaylabel3_3.setText("")
         self.peaklabel_3.setText("")
         
@@ -405,7 +474,8 @@ class Ui_Option3(object):
         self.peakloadright = []
         self.averagepeakright = 0
         self.averagepeakleft = 0
-        
+        time.sleep(2.5)
+        self.displaylabel_3.setText("")
         
         
     def save(self):

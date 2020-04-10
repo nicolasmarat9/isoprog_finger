@@ -6,11 +6,12 @@ matplotlib.use("tkAgg")
 import matplotlib.pyplot as plt 
 import numpy as np 
 import pandas as pd
-import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
 import ctypes
+import serial.tools.list_ports
+
 
 class Ui_Option4(object):
     
@@ -51,6 +52,7 @@ class Ui_Option4(object):
         Option4.setObjectName("Option4")
         Option4.resize(1427, 969)
         Option4.move(488, 3)
+        Option4.setWindowIcon(QtGui.QIcon("icons/logoapp702.ico"))
        
         self.centralwidget = QtWidgets.QWidget(Option4)
         self.centralwidget.setObjectName("centralwidget")
@@ -60,22 +62,34 @@ class Ui_Option4(object):
         self.plot.setObjectName("plot")
 
         self.lcdNumber_4 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber_4.setGeometry(QtCore.QRect(130, 90, 141, 61))
+        self.lcdNumber_4.setGeometry(QtCore.QRect(140, 90, 131, 61))
         self.lcdNumber_4.setObjectName("lcdNumber")
 
         self.startButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_4.setGeometry(QtCore.QRect(30, 90, 71, 41))
+        self.startButt_4.setGeometry(QtCore.QRect(30, 90, 90, 45))
+        self.startButt_4.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.startButt_4.setObjectName("butt1")
+        self.startButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.startButt_4.setIconSize(QtCore.QSize(90, 90))         
         self.startButt_4.clicked.connect(self. clicked1)
 
         self.stopButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_4.setGeometry(QtCore.QRect(30, 150, 71, 41))
+        self.stopButt_4.setGeometry(QtCore.QRect(30, 200, 90, 45))
+        self.stopButt_4.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.stopButt_4.setObjectName("stopButt_4")
+        self.stopButt_4.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.stopButt_4.setIconSize(QtCore.QSize(90, 90))        
         self.stopButt_4.clicked.connect(self. clicked2)
 
         self.nextButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.nextButt_4.setGeometry(QtCore.QRect(170, 160, 80, 41))
+        self.nextButt_4.setGeometry(QtCore.QRect(30, 145, 90, 45))
+        self.nextButt_4.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.nextButt_4.setObjectName("next_4")
+        self.nextButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush11.png"))
+        self.nextButt_4.setIconSize(QtCore.QSize(90, 90))                                     
         self.nextButt_4.clicked.connect(self. clicked5)        
 
         self.title = QtWidgets.QLabel(self.centralwidget)
@@ -87,56 +101,74 @@ class Ui_Option4(object):
         self.title.setObjectName("title")
 
         self.backButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_4.setGeometry(QtCore.QRect(30, 890, 115, 31))
+        self.backButt_4.setGeometry(QtCore.QRect(50, 590, 90, 45))
+        self.backButt_4.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.backButt_4.setObjectName("backButt_4")
+        self.backButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush13.png"))
+        self.backButt_4.setIconSize(QtCore.QSize(90, 90))                                      
         self.backButt_4.clicked.connect(self. clicked3)
 
         self.backButt2_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt2_4.setGeometry(QtCore.QRect(150, 890, 115, 31))
+        self.backButt2_4.setGeometry(QtCore.QRect(160, 590, 90, 45))
+        self.backButt2_4.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.backButt2_4.setObjectName("backButt2_4")
+        self.backButt2_4.setIcon(QtGui.QIcon("pushbutt/ziconpush12.png"))
+        self.backButt2_4.setIconSize(QtCore.QSize(90, 90))                                     
         self.backButt2_4.clicked.connect(self. clicked7_3)           
 
         self.saveButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.saveButt_4.setGeometry(QtCore.QRect(30, 840, 235, 31))
+        self.saveButt_4.setGeometry(QtCore.QRect(30, 890, 90, 45))
+        self.saveButt_4.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 6px; border: 1px solid grey;}"
+                                      "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 6px; border: 1px solid dimgrey;}")
         self.saveButt_4.setObjectName("saveButt_4")
+        self.saveButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush9.png"))
+        self.saveButt_4.setIconSize(QtCore.QSize(90, 90))                                     
         self.saveButt_4.clicked.connect(self. clicked4)
 
         self.displaylabel1_4 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel1_4.setGeometry(QtCore.QRect(170, 210, 80, 31))
-        self.displaylabel1_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.displaylabel1_4.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.displaylabel1_4.setGeometry(QtCore.QRect(45, 300, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.displaylabel1_4.setFont(font) 
         self.displaylabel1_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel1_4.setObjectName("displaylabel1_4")
 
         self.displaylabel2_4 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel2_4.setGeometry(QtCore.QRect(170, 260, 80, 31))
-        self.displaylabel2_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.displaylabel2_4.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.displaylabel2_4.setGeometry(QtCore.QRect(179, 300, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.displaylabel2_4.setFont(font) 
         self.displaylabel2_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel2_4.setObjectName("displaylabel2_4")
 
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(40, 210, 200, 31))
+        self.label.setGeometry(QtCore.QRect(36, 250, 100, 51))
+        self.label.setAlignment(QtCore.Qt.AlignCenter)        
         self.label.setObjectName("label")
 
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(40, 260, 200, 31))
+        self.label_2.setGeometry(QtCore.QRect(170, 250, 100, 51))
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)        
         self.label_2.setObjectName("label_2")
 
         self.spinBox_7 = QtWidgets.QSpinBox(self.centralwidget)
-        self.spinBox_7.setGeometry(QtCore.QRect(205, 320, 60, 35))
+        self.spinBox_7.setGeometry(QtCore.QRect(200, 650, 60, 35))
         self.spinBox_7.setMaximum(200)
         self.spinBox_7.setObjectName("spinBox")
 
         self.peaklabel_4 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_4.setGeometry(QtCore.QRect(130, 320, 60, 35))
+        self.peaklabel_4.setGeometry(QtCore.QRect(130, 650, 55, 35))
         self.peaklabel_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.peaklabel_4.setFrameShadow(QtWidgets.QFrame.Plain)
         self.peaklabel_4.setAlignment(QtCore.Qt.AlignCenter)        
         self.peaklabel_4.setObjectName("peaklabel_4")
         
         self.goallabel_4 = QtWidgets.QLabel(self.centralwidget)
-        self.goallabel_4.setGeometry(QtCore.QRect(40, 320, 100, 30))
+        self.goallabel_4.setGeometry(QtCore.QRect(40, 650, 100, 30))
         self.goallabel_4.setObjectName("goallabel_4")        
                
         Option4.setCentralWidget(self.centralwidget)
@@ -146,41 +178,41 @@ class Ui_Option4(object):
         self.menubar.setObjectName("menubar")
         
         self.filename4 = QtWidgets.QLabel(self.centralwidget)
-        self.filename4.setGeometry(QtCore.QRect(40, 790, 211, 30))
+        self.filename4.setGeometry(QtCore.QRect(40, 840, 211, 30))
         self.filename4.setObjectName("filename4")        
         
         self.fileEdit_4 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.fileEdit_4.setGeometry(QtCore.QRect(130, 790, 131, 30))
+        self.fileEdit_4.setGeometry(QtCore.QRect(130, 840, 131, 30))
         self.fileEdit_4.setObjectName("fileEdit_4")
 
         self.handlabel_4 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_4.setGeometry(QtCore.QRect(40, 650, 130, 30))
+        self.handlabel_4.setGeometry(QtCore.QRect(40, 700, 130, 30))
         self.handlabel_4.setObjectName("handlabel_4") 
 
         self.notelabel_4 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_4.setGeometry(QtCore.QRect(40, 700, 211, 30))
+        self.notelabel_4.setGeometry(QtCore.QRect(40, 750, 211, 30))
         self.notelabel_4.setObjectName("notelabel_4")
 
         self.noteEdit_4 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_4.setGeometry(QtCore.QRect(130, 700, 131, 70))
+        self.noteEdit_4.setGeometry(QtCore.QRect(130, 750, 131, 70))
         self.noteEdit_4.setObjectName("noteEdit_4")
 
         self.handbox_4 = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox_4.setGeometry(QtCore.QRect(130, 650, 131, 30))
+        self.handbox_4.setGeometry(QtCore.QRect(130, 700, 131, 30))
         self.handbox_4.setObjectName("handbox_3")
         self.handbox_4.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])         
 
         self.displaylabel_4= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_4.setGeometry(QtCore.QRect(655, 5, 400, 70))
+        self.displaylabel_4.setGeometry(QtCore.QRect(610, 5, 490, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setWeight(50)
+        font.setPointSize(14)
+        font.setWeight(65)
         self.displaylabel_4.setFont(font)
         self.displaylabel_4.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_4.setObjectName("displaylabel_4")
                
         self.displaylabel3_4= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_4.setGeometry(QtCore.QRect(25 ,360, 246, 200))
+        self.displaylabel3_4.setGeometry(QtCore.QRect(25 ,340, 246, 200))
         font = QtGui.QFont()
         font.setPointSize(40)
         font.setWeight(50)
@@ -202,15 +234,15 @@ class Ui_Option4(object):
     def retranslateUi(self, Option4):
         _translate = QtCore.QCoreApplication.translate
         Option4.setWindowTitle(_translate("Option4", "Interval endurance"))
-        self.startButt_4.setText(_translate("Option4", "START"))
-        self.stopButt_4.setText(_translate("Option4", "RESET"))
+        #self.startButt_4.setText(_translate("Option4", "START"))
+        #self.stopButt_4.setText(_translate("Option4", "RESET"))
         self.title.setText(_translate("Option4", "<html><head/><body><p><span style=\" font-size:12pt;\">INTERVAL ENDURANCE</span></p></body></html>"))
-        self.backButt_4.setText(_translate("Option4", "PEAK RIGHT"))
-        self.backButt2_4.setText(_translate("Option4", "PEAK LEFT"))        
-        self.saveButt_4.setText(_translate("Option4", "SAVE"))
-        self.nextButt_4.setText(_translate("Option4", "NEXT"))
-        self.label.setText(_translate("Option4", "<html><head/><body><p>Time right (sec)</p></body></html>"))
-        self.label_2.setText(_translate("Option4", "<html><head/><body><p>Time left (sec)</p></body></html>"))
+        #self.backButt_4.setText(_translate("Option4", "PEAK RIGHT"))
+        #self.backButt2_4.setText(_translate("Option4", "PEAK LEFT"))        
+        #self.saveButt_4.setText(_translate("Option4", "SAVE"))
+        #self.nextButt_4.setText(_translate("Option4", "NEXT"))
+        self.label.setText("Time right\n(sec)")
+        self.label_2.setText("Time left\n(sec)")
         self.filename4.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.handlabel_4.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
         self.notelabel_4.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
@@ -248,12 +280,48 @@ class Ui_Option4(object):
         self.spn = 0
         self.clean = 0
         self.clean2 = 0
-        ser = ardconnect2.ardconnect()
+
+        portName = ""
+        str2 = ""
+        
+        ports = list(serial.tools.list_ports.comports())
+        for p in ports:
+            if portName == '':    
+                int1 = 0
+                while int1 <= 20:   
+                    if "USB Serial Device" in p[1]:  
+                        
+                        str2 = str(int1) 
+                        portName = "COM" + str2 
+                        
+                    if "USB Serial Device" in p[1] and portName in p[1]:
+                        self.displaylabel_4.setText("Found Sensor on " + portName)
+                        print("Found Sensor on " + portName)
+                        time.sleep(2)
+                        self.displaylabel_4.setText("")
+                        break
+                    
+                    int1 = int1 + 1
+                        
+            else:
+                break
+
+        if portName == '':
+            self.displaylabel_4.setText("No Sensor found")
+            raise IOError("No Sensor found")
+            time.sleep(2)
+            self.displaylabel_4.setText("")        
+            
+        
+        baudrate = 9600
+        ser = serial.Serial(portName, baudrate)
+
+
         w = Thread(target = self.timersec)
         w.start()
         
         if self.state3 == 0:
-            
+            self.displaylabel_4.setText("RIGHT HAND")
             while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
@@ -289,7 +357,8 @@ class Ui_Option4(object):
                     self.state2 = 1
                     
         if self.state3 == 1:
-            
+            if(self.clean == 0):
+                self.displaylabel_4.setText("LEFT HAND")
             while (self.clean2 == 0):
                             
                 ser_bytes = ser.readline()
@@ -376,7 +445,7 @@ class Ui_Option4(object):
             
 
     def next(self):
-       
+        #self.displaylabel_4.setText("wait...")
         if(self.state3 == 0):
             self.state3 = 1
         elif(self.state3 == 1):
@@ -384,7 +453,7 @@ class Ui_Option4(object):
         self.clean = 1    
         self.clean2 = 1
         self.timer = 0
-        self.displaylabel_4.setText("")
+        self.displaylabel_4.setText("wait...")
         self.displaylabel3_4.setText("")
 
         self.i = 0
@@ -402,8 +471,8 @@ class Ui_Option4(object):
         self.plot.y2.clear()
         self.plot.linehand.clear()
         self.plot.lineprog.clear()        
-
-        
+        time.sleep(2)
+        self.displaylabel_4.setText("")
    
     def disconnect(self):
         
@@ -424,7 +493,7 @@ class Ui_Option4(object):
         self.j = 25        
         self.displaylabel1_4.setText("")
         self.displaylabel2_4.setText("")
-        self.displaylabel_4.setText("")
+        self.displaylabel_4.setText("reset interval endurance")
         self.displaylabel3_4.setText("") 
         self.state = 0
         self.state3 = 0
@@ -438,8 +507,11 @@ class Ui_Option4(object):
         self.pulltime2 = 0
         self.peaklabel_4.setText("")
         self.timepoint4 = 0
-        
-        
+        time.sleep(2.5)
+        self.displaylabel_4.setText("")
+
+
+                
     def save(self):
         
         

@@ -6,12 +6,12 @@ matplotlib.use("tkAgg")
 import matplotlib.pyplot as plt 
 import numpy as np 
 import pandas as pd
-import ardconnect2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MplWidget
 from threading import Thread
 import ctypes
 import pandas as pd
+import serial.tools.list_ports
 
 
 class Ui_Option2(object):
@@ -42,6 +42,7 @@ class Ui_Option2(object):
         Option2.setObjectName("Option2")
         Option2.resize(1427, 969)
         Option2.move(488, 3)
+        Option2.setWindowIcon(QtGui.QIcon("icons/logoapp702.ico"))
         
         self.centralwidget = QtWidgets.QWidget(Option2)
         self.centralwidget.setObjectName("centralwidget")
@@ -51,7 +52,7 @@ class Ui_Option2(object):
         self.plot.setObjectName("plot")
 
         self.displaylabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_2.setGeometry(QtCore.QRect(25 ,320, 246, 200))
+        self.displaylabel_2.setGeometry(QtCore.QRect(25 ,330, 246, 200))
         font = QtGui.QFont()
         font.setPointSize(40)
         font.setWeight(50)
@@ -60,26 +61,34 @@ class Ui_Option2(object):
         self.displaylabel_2.setObjectName("displaylabel_2")
 
         self.displaylabel_22 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_22.setGeometry(QtCore.QRect(530, 5, 400, 70))
+        self.displaylabel_22.setGeometry(QtCore.QRect(655, 5, 400, 70))
         font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setWeight(50)
+        font.setPointSize(14)
+        font.setWeight(65)
         self.displaylabel_22.setFont(font)
         self.displaylabel_22.setAlignment(QtCore.Qt.AlignCenter)
         self.displaylabel_22.setObjectName("displaylabel_22")        
 
         self.lcdNumber_2 = QtWidgets.QLCDNumber(self.centralwidget)
-        self.lcdNumber_2.setGeometry(QtCore.QRect(130, 90, 141, 61))
+        self.lcdNumber_2.setGeometry(QtCore.QRect(140, 90, 131, 61))
         self.lcdNumber_2.setObjectName("lcdNumber_2")
 
         self.startButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_2.setGeometry(QtCore.QRect(30, 90, 71, 41))
+        self.startButt_2.setGeometry(QtCore.QRect(30, 90, 90, 45))
+        self.startButt_2.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.startButt_2.setObjectName("startButt_2")
+        self.startButt_2.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.startButt_2.setIconSize(QtCore.QSize(90, 90))         
         self.startButt_2.clicked.connect(self.clicked1_2)
 
         self.stopButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_2.setGeometry(QtCore.QRect(30, 150, 71, 41))
+        self.stopButt_2.setGeometry(QtCore.QRect(30, 150, 90, 45))
+        self.stopButt_2.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.stopButt_2.setObjectName("stopButt_2")
+        self.stopButt_2.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.stopButt_2.setIconSize(QtCore.QSize(90, 90))         
         self.stopButt_2.clicked.connect(self.clicked2_2)
 
         self.title_2 = QtWidgets.QLabel(self.centralwidget)
@@ -91,54 +100,64 @@ class Ui_Option2(object):
         self.title_2.setObjectName("title_2")
 
         self.saveButt_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.saveButt_2.setGeometry(QtCore.QRect(30, 840, 235, 31))
+        self.saveButt_2.setGeometry(QtCore.QRect(30, 890, 90, 45))
+        self.saveButt_2.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 6px; border: 1px solid grey;}"
+                                      "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 6px; border: 1px solid dimgrey;}")
         self.saveButt_2.setObjectName("saveButt_2")
+        self.saveButt_2.setIcon(QtGui.QIcon("pushbutt/ziconpush9.png"))
+        self.saveButt_2.setIconSize(QtCore.QSize(90, 90))          
         self.saveButt_2.clicked.connect(self.clicked4_2)
 
         self.peaklabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel_2.setGeometry(QtCore.QRect(190, 210, 80, 31))
-        self.peaklabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.peaklabel_2.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.peaklabel_2.setGeometry(QtCore.QRect(45, 260, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.peaklabel_2.setFont(font)
         self.peaklabel_2.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel_2.setObjectName("peaklabel_2")
 
         self.peaklabel2_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peaklabel2_2.setGeometry(QtCore.QRect(190, 260, 80, 31))
-        self.peaklabel2_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.peaklabel2_2.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.peaklabel2_2.setGeometry(QtCore.QRect(179, 260, 80, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setWeight(65)
+        self.peaklabel2_2.setFont(font)        
         self.peaklabel2_2.setAlignment(QtCore.Qt.AlignCenter)
         self.peaklabel2_2.setObjectName("peaklabel2_2")
 
         self.peakloadlabel = QtWidgets.QLabel(self.centralwidget)
-        self.peakloadlabel.setGeometry(QtCore.QRect(40, 210, 200, 31))
+        self.peakloadlabel.setGeometry(QtCore.QRect(36, 210, 100, 51))
+        self.peakloadlabel.setAlignment(QtCore.Qt.AlignCenter)
         self.peakloadlabel.setObjectName("peakloadlabel")
 
         self.peakloadlabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.peakloadlabel_2.setGeometry(QtCore.QRect(40, 260, 200, 31))
+        self.peakloadlabel_2.setGeometry(QtCore.QRect(170, 210, 100, 51))
+        self.peakloadlabel_2.setAlignment(QtCore.Qt.AlignCenter)        
         self.peakloadlabel_2.setObjectName("everadgelabel")
 
         self.namelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.namelabel_2.setGeometry(QtCore.QRect(40, 790, 211, 30))
+        self.namelabel_2.setGeometry(QtCore.QRect(40, 840, 211, 30))
         self.namelabel_2.setObjectName("namelabel_2")
         
         self.handlabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.handlabel_2.setGeometry(QtCore.QRect(40, 650, 130, 30))
+        self.handlabel_2.setGeometry(QtCore.QRect(40, 700, 130, 30))
         self.handlabel_2.setObjectName("handlabel_2")
         
         self.nameEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.nameEdit_2.setGeometry(QtCore.QRect(130, 790, 131, 30))
+        self.nameEdit_2.setGeometry(QtCore.QRect(130, 840, 131, 30))
         self.nameEdit_2.setObjectName("nameEdit_2")
         
         self.notelabel_2 = QtWidgets.QLabel(self.centralwidget)
-        self.notelabel_2.setGeometry(QtCore.QRect(40, 700, 211, 30))
+        self.notelabel_2.setGeometry(QtCore.QRect(40, 750, 211, 30))
         self.notelabel_2.setObjectName("notelabel_2")
         
         self.noteEdit_2 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.noteEdit_2.setGeometry(QtCore.QRect(130, 700, 131, 70))
+        self.noteEdit_2.setGeometry(QtCore.QRect(130, 750, 131, 70))
         self.noteEdit_2.setObjectName("noteEdit_2")
         
         self.handbox_2 = QtWidgets.QComboBox(self.centralwidget)
-        self.handbox_2.setGeometry(QtCore.QRect(130, 650, 131, 30))
+        self.handbox_2.setGeometry(QtCore.QRect(130, 700, 131, 30))
         self.handbox_2.setObjectName("handbox_2")
         self.handbox_2.addItems(['', 'Drag', 'Half crimp', 'Full crimp'])
                
@@ -161,12 +180,12 @@ class Ui_Option2(object):
     def retranslateUi(self, Option2):
         _translate = QtCore.QCoreApplication.translate
         Option2.setWindowTitle(_translate("Option2", "Max Strength"))
-        self.startButt_2.setText(_translate("Option2", "START"))
-        self.stopButt_2.setText(_translate("Option2", "RESET"))
+        #self.startButt_2.setText(_translate("Option2", "START"))
+        #self.stopButt_2.setText(_translate("Option2", "RESET"))
         self.title_2.setText(_translate("Option2", "<html><head/><body><p><span style=\" font-size:12pt;\">MAX STRENGTH</span></p></body></html>"))
-        self.saveButt_2.setText(_translate("Option2", "SAVE"))
-        self.peakloadlabel.setText(_translate("Option2", "<html><head/><body><p>Peak average right</p></body></html>"))
-        self.peakloadlabel_2.setText(_translate("Option2", "<html><head/><body><p>peak average left</p></body></html>"))
+        #self.saveButt_2.setText(_translate("Option2", "SAVE"))
+        self.peakloadlabel.setText("Peak average\nright")
+        self.peakloadlabel_2.setText("peak average\nleft")
         self.namelabel_2.setText(_translate("Option1", "<html><head/><body><p>File name</p></body></html>"))
         self.handlabel_2.setText(_translate("Option1", "<html><head/><body><p>Holding</p></body></html>"))
         self.notelabel_2.setText(_translate("Option1", "<html><head/><body><p>Notes</p></body></html>"))
@@ -189,11 +208,48 @@ class Ui_Option2(object):
     def connect_22(self):
         self.statedisplay2 = 0
         self.stateclean2 = 0
-        ser = ardconnect2.ardconnect()
+
+        portName = ""
+        str2 = ""
+        
+        ports = list(serial.tools.list_ports.comports())
+        for p in ports:
+            if portName == '':    
+                int1 = 0
+                while int1 <= 20:   
+                    if "USB Serial Device" in p[1]:  
+                        
+                        str2 = str(int1) 
+                        portName = "COM" + str2 
+                        
+                    if "USB Serial Device" in p[1] and portName in p[1]:
+                        self.displaylabel_22.setText("Found Sensor on " + portName)
+                        print("Found Sensor on " + portName)
+                        time.sleep(2)
+                        self.displaylabel_22.setText("")
+                        break
+                    
+                    int1 = int1 + 1
+                        
+            else:
+                break
+
+        if portName == '':
+            self.displaylabel_22.setText("No Sensor found")
+            raise IOError("No Sensor found")
+            time.sleep(2)
+            self.displaylabel_22.setText("")        
+            
+        
+        baudrate = 9600
+        ser = serial.Serial(portName, baudrate)
+
+        
         krono = Thread(target = self.timer)
         krono.start()
         
         if(self.statemain2 == 0):
+            self.displaylabel_22.setText("RIGHT HAND") 
             
             while (self.stateclean2 == 0):
                             
@@ -210,6 +266,7 @@ class Ui_Option2(object):
                 self.i += 1
                 
         elif(self.statemain2 == 1):
+            self.displaylabel_22.setText("LEFT HAND")
 
             while (self.stateclean2 == 0):
                             
@@ -300,7 +357,7 @@ class Ui_Option2(object):
             time.sleep(3)
         if(self.statedisplay2 == 0):     
             self.displaylabel_2.setText("")
-           
+            self.displaylabel_22.setText("")
             
 
             if(self.statemain2 == 0):
@@ -358,12 +415,13 @@ class Ui_Option2(object):
         self.maxbyte_2.clear()
         self.everadge.clear()
         
+        self.displaylabel_22.setText("reset max strength")
         self.displaylabel_2.setText("")
-        self.displaylabel_22.setText("")
         self.peaklabel_2.setText("")
         self.peaklabel2_2.setText("")
-       
-
+        time.sleep(2.5)
+        self.displaylabel_22.setText("")
+        
         
     def save(self):
         self.name = self.nameEdit_2.toPlainText()
