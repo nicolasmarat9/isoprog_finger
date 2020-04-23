@@ -594,7 +594,7 @@ class Ui_Option4(object):
         df["left intend x pulling data"] = data10
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
        
-        ctypes.windll.user32.MessageBoxW(0, "interval endurance data saved", "Saved", 1)
+        ctypes.windll.user32.MessageBoxW(0, "interval endurance data saved", "Saved", 0x00000000)
         self.nameEdit_4.clear()
         self.noteEdit_4.clear()
         self.handbox_4.clear()

@@ -518,7 +518,7 @@ class Ui_Option2(object):
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
            
             
-        ctypes.windll.user32.MessageBoxW(0, "maximal strength data saved", "Saved", 1)               
+        ctypes.windll.user32.MessageBoxW(0, "maximal strength data saved", "Saved", 0x00000000)               
         self.nameEdit_2.clear()
         self.noteEdit_2.clear()
         self.handbox_2.clear()

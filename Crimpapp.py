@@ -17,7 +17,7 @@ import serial.tools.list_ports
 import pushbutt
 import os
 import datetime
-
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
@@ -440,7 +440,7 @@ class Ui_MainWindow(object):
                 self.WeightDisplaylabel.setText(str(self.weight))
                 self.statescale = 1
                 break
-  
+            
         
     def saves(self):
        
@@ -482,7 +482,7 @@ class Ui_MainWindow(object):
            
         df = pd.DataFrame(personnal_data)
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False)
-        ctypes.windll.user32.MessageBoxW(0, "personnal data saved", "Saved", 1)
+        ctypes.windll.user32.MessageBoxW(0, "personnal data saved", "Saved", 0x00000000)
 
 
 if __name__ == "__main__":

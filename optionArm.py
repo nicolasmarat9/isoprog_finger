@@ -14,8 +14,6 @@ class Ui_ArmsWindow(object):
     
     def setupUi(self, ArmsWindow):
         
-
-        
         ArmsWindow.setObjectName("ArmsWindow")
         ArmsWindow.resize(1427, 969)
         ArmsWindow.move(488, 3)
@@ -358,7 +356,7 @@ class Ui_ArmsWindow(object):
         df["climbing coordination"] = data11
         df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
         
-        ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
+        ctypes.windll.user32.MessageBoxW(0, "Exo body data saved", "Saved", 0x00000000)
 
 if __name__ == "__main__":
     import sys

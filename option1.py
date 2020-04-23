@@ -249,7 +249,6 @@ class Ui_Option1(object):
                         self.displaylabel_1.setText("Found Sensor on " + portName)
                         time.sleep(2)
                         self.displaylabel_1.setText("")
-                        #print("Found Sensor on " + portName)
                         break
                     
                     int1 = int1 + 1
@@ -395,7 +394,7 @@ class Ui_Option1(object):
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
 
         
-        ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
+        ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 0x00000000)
         self.nameEdit_1.clear()
         self.noteEdit_1.clear()
         self.handbox.clear()

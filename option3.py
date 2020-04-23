@@ -552,7 +552,7 @@ class Ui_Option3(object):
         df["left strend x pulling data"] = data10
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
     
-        ctypes.windll.user32.MessageBoxW(0, "straight endurance data saved", "Saved", 1)
+        ctypes.windll.user32.MessageBoxW(0, "straight endurance data saved", "Saved", 0x00000000)
         self.nameEdit_3.clear()
         self.noteEdit_3.clear()
         self.handbox_3.clear()
