@@ -233,8 +233,7 @@ class Ui_Option3(object):
         self.leftButt.setIcon(QtGui.QIcon("pushbutt/ziconpush12.png"))
         self.leftButt.setIconSize(QtCore.QSize(90, 90))          
         self.leftButt.clicked.connect(self.clicked_getLeftPeak)        
-
-             
+            
         Option3.setCentralWidget(self.centralwidget)
 
         self.menubar = QtWidgets.QMenuBar(Option3)
@@ -263,8 +262,7 @@ class Ui_Option3(object):
         self.goallabel.setText(_translate("Option1", "<html><head/><body><p>Goal line</p></body></html>"))  
         self.timerlabel.setText("Timer")
         self.currentWeightlabel.setText("Current weight") 
-
-        
+       
     def clicked_startMeasures(self):
         k = Thread(target = self.connect_3)
         k.start()
@@ -288,10 +286,8 @@ class Ui_Option3(object):
     def clicked_getRightPeak(self):
         m = Thread(target = self.getRightPeak)
         m.start()
-        
 
     def connect_3(self):
-
         self.clean = 0
         self.spn = 0
         self.state = 0
@@ -314,7 +310,6 @@ class Ui_Option3(object):
                         self.displaylabel_3.setText("Found Sensor on " + portName)
                         time.sleep(2)
                         self.displaylabel_3.setText("")
-                        #print("Found Sensor on " + portName)                        
                         break
                     
                     int1 = int1 + 1
@@ -337,7 +332,6 @@ class Ui_Option3(object):
         ser_bytes = ser.readline()
         valueP1 = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))        
 
-
         if(self.state3 == 0):
             self.displaylabel_3.setText("RIGHT HAND")
             
@@ -346,8 +340,7 @@ class Ui_Option3(object):
                 ser_bytes = ser.readline()
                 valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 value = round(valueP - valueP1, 1)
-
-                
+               
                 self.straight.append(value)
                 self.straightx.append(round(self.i, 1))
                 
@@ -368,7 +361,6 @@ class Ui_Option3(object):
 
                 v = Thread(target = self.timesim)
                 v.start()
-                
 
                 if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
                     self.pulltime = self.timer
@@ -407,16 +399,13 @@ class Ui_Option3(object):
 
                 v = Thread(target = self.timesim)
                 v.start()
-                
-                    
+                   
                 if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
                     self.pulltime_2 = self.timer
                     self.displayTimeLeftlabel.setText(str(int(self.pulltime_2)))
                     self.displaylabel_3.setText("Straight endurance test is finished")
                     self.intens2 = self.spn
                     self.state2 = 1
-                        
-
                 
     def timesim(self):
         if(self.state2 == 0):
@@ -428,10 +417,8 @@ class Ui_Option3(object):
             self.timer += 1
             time.sleep(1)
             self.displaytimerlabel.setText(str(int(self.timer)))         
-            
 
     def next(self):
-                     
         if(self.state3 == 0):
             self.state3 = 1
         elif(self.state3 == 1):
@@ -462,11 +449,8 @@ class Ui_Option3(object):
         self.rang2 = 0
         time.sleep(2)
         self.displaylabel_3.setText("")
-        
-          
-            
+           
     def disconnect(self):
-
         self.state = 1
         self.state2 = 1
         self.clean = 1
@@ -511,8 +495,7 @@ class Ui_Option3(object):
         
         time.sleep(2.5)
         self.displaylabel_3.setText("")
-        
-        
+       
     def save(self):
         self.name = self.nameEdit_3.toPlainText()
         self.notes = self.noteEdit_3.toPlainText()
@@ -573,7 +556,6 @@ class Ui_Option3(object):
         self.nameEdit_3.clear()
         self.noteEdit_3.clear()
         self.handbox_3.clear()
-            
 
     def getRightPeak(self):
         dates = datetime.date.today()

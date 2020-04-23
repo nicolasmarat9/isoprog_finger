@@ -306,8 +306,6 @@ class Ui_Option2(object):
                 valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 self.value = round(valueP - valueP1, 1)
 
-                
-                
                 self.peakload2 = max(self.peakload2, self.value)
                 self.maxbyte_2.append(self.value)
                 self.maxbytex_2.append(round(self.i, 1))
@@ -535,3 +533,9 @@ if __name__ == "__main__":
     ui.setupUi(Option2)
     Option2.show()
     sys.exit(app.exec_())
+
+
+
+
+
+    

@@ -13,7 +13,6 @@ import ctypes
 import serial.tools.list_ports
 import datetime
 
-
 class Ui_Option4(object):
     
     def setupUi(self,Option4 ):
@@ -192,7 +191,7 @@ class Ui_Option4(object):
         self.startButt_4.setObjectName("butt1")
         self.startButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
         self.startButt_4.setIconSize(QtCore.QSize(90, 90))         
-        self.startButt_4.clicked.connect(self. clicked1)
+        self.startButt_4.clicked.connect(self.clicked_startMeasures)
 
         self.stopButt_4 = QtWidgets.QPushButton(self.centralwidget)
         self.stopButt_4.setGeometry(QtCore.QRect(30, 200, 90, 45))
@@ -201,34 +200,7 @@ class Ui_Option4(object):
         self.stopButt_4.setObjectName("stopButt_4")
         self.stopButt_4.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
         self.stopButt_4.setIconSize(QtCore.QSize(90, 90))        
-        self.stopButt_4.clicked.connect(self. clicked2)
-
-        self.nextButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.nextButt_4.setGeometry(QtCore.QRect(30, 145, 90, 45))
-        self.nextButt_4.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
-                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.nextButt_4.setObjectName("next_4")
-        self.nextButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush11.png"))
-        self.nextButt_4.setIconSize(QtCore.QSize(90, 90))                                     
-        self.nextButt_4.clicked.connect(self. clicked5)        
-
-        self.backButt_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt_4.setGeometry(QtCore.QRect(50, 590, 90, 45))
-        self.backButt_4.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
-                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.backButt_4.setObjectName("backButt_4")
-        self.backButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush13.png"))
-        self.backButt_4.setIconSize(QtCore.QSize(90, 90))                                      
-        self.backButt_4.clicked.connect(self. clicked3)
-
-        self.backButt2_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButt2_4.setGeometry(QtCore.QRect(160, 590, 90, 45))
-        self.backButt2_4.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
-                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.backButt2_4.setObjectName("backButt2_4")
-        self.backButt2_4.setIcon(QtGui.QIcon("pushbutt/ziconpush12.png"))
-        self.backButt2_4.setIconSize(QtCore.QSize(90, 90))                                     
-        self.backButt2_4.clicked.connect(self. clicked7_3)           
+        self.stopButt_4.clicked.connect(self.clicked_stop_clear)
 
         self.saveButt_4 = QtWidgets.QPushButton(self.centralwidget)
         self.saveButt_4.setGeometry(QtCore.QRect(30, 890, 90, 45))
@@ -237,8 +209,34 @@ class Ui_Option4(object):
         self.saveButt_4.setObjectName("saveButt_4")
         self.saveButt_4.setIcon(QtGui.QIcon("pushbutt/ziconpush9.png"))
         self.saveButt_4.setIconSize(QtCore.QSize(90, 90))                                     
-        self.saveButt_4.clicked.connect(self. clicked4)
-       
+        self.saveButt_4.clicked.connect(self.clicked_saveMeasures)
+
+        self.nextButt = QtWidgets.QPushButton(self.centralwidget)
+        self.nextButt.setGeometry(QtCore.QRect(30, 145, 90, 45))
+        self.nextButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.nextButt.setObjectName("next_4")
+        self.nextButt.setIcon(QtGui.QIcon("pushbutt/ziconpush11.png"))
+        self.nextButt.setIconSize(QtCore.QSize(90, 90))                                     
+        self.nextButt.clicked.connect(self.clicked_nextMeasures)
+        
+        self.rightButt = QtWidgets.QPushButton(self.centralwidget)
+        self.rightButt.setGeometry(QtCore.QRect(50, 590, 90, 45))
+        self.rightButt.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.rightButt.setObjectName("rightButt")
+        self.rightButt.setIcon(QtGui.QIcon("pushbutt/ziconpush13.png"))
+        self.rightButt.setIconSize(QtCore.QSize(90, 90))                                      
+        self.rightButt.clicked.connect(self.clicked_getRightPeak)
+
+        self.leftButt = QtWidgets.QPushButton(self.centralwidget)
+        self.leftButt.setGeometry(QtCore.QRect(160, 590, 90, 45))
+        self.leftButt.setStyleSheet("QPushButton {background-color: lightsteelblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: cornflowerblue; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.leftButt.setObjectName("leftButt")
+        self.leftButt.setIcon(QtGui.QIcon("pushbutt/ziconpush12.png"))
+        self.leftButt.setIconSize(QtCore.QSize(90, 90))                                     
+        self.leftButt.clicked.connect(self.clicked_getLeftPeak)           
                
         Option4.setCentralWidget(self.centralwidget)
 
@@ -268,33 +266,32 @@ class Ui_Option4(object):
         self.goallabel.setText(_translate("Option1", "<html><head/><body><p>Goal line</p></body></html>"))  
         self.timerlabel.setText("Timer")
         self.currentWeightlabel.setText("Current weight")         
-
         
-    def clicked1(self):
-        o = Thread(target = self.connect)
+    def clicked_startMeasures(self):
+        o = Thread(target = self.connect_4)
         o.start()
 
-    def clicked2(self):
+    def clicked_stop_clear(self):
         p = Thread(target = self.disconnect)
         p.start()
-        
-    def clicked3(self):
-        q = Thread(target = self.close)
-        q.start()
 
-    def clicked4(self):
+    def clicked_saveMeasures(self):
         r = Thread(target = self.save)
         r.start()
         
-    def clicked5(self):
+    def clicked_nextMeasures(self):
         n = Thread(target = self.next)
         n.start()
         
-    def clicked7_3(self):
-        guh = Thread(target = self.close2)
+    def clicked_getRightPeak(self):
+        q = Thread(target = self.getRightPeak)
+        q.start()
+        
+    def clicked_getLeftPeak(self):
+        guh = Thread(target = self.getLeftPeak)
         guh.start()                       
 
-    def connect(self):
+    def connect_4(self):
         self.displaytimerlabel.setText("")
         self.state2 = 0
         self.spn = 0
@@ -318,7 +315,6 @@ class Ui_Option4(object):
                         self.displaylabel_4.setText("Found Sensor on " + portName)
                         time.sleep(2)
                         self.displaylabel_4.setText("")
-                        #print("Found Sensor on " + portName)                        
                         break
                     
                     int1 = int1 + 1
@@ -341,8 +337,7 @@ class Ui_Option4(object):
 
         ser_bytes = ser.readline()
         valueP1 = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))        
-        
-        
+       
         if (self.state3 == 0):
             self.displaylabel_4.setText("RIGHT HAND")
             while (self.clean2 == 0):
@@ -420,9 +415,7 @@ class Ui_Option4(object):
                     self.intens2 = self.spn
                     self.state2 = 1
 
-
     def plotvalue(self):
-    
         self.i += 0.1
         self.j += 0.1
         if(self.state4 == 0):
@@ -458,8 +451,7 @@ class Ui_Option4(object):
             self.state = 1
             self.val += 1
             self.teeth = 0
-            
-            
+           
     def timesim(self):
         if(self.state2 ==0):
             self.timepoint4 += 1
@@ -470,10 +462,8 @@ class Ui_Option4(object):
             self.timer += 1
             time.sleep(1)
             self.displaytimerlabel.setText(str(int(self.timer)))
-            
 
     def next(self):
-        #self.displaylabel_4.setText("wait...")
         if(self.state3 == 0):
             self.state3 = 1
         elif(self.state3 == 1):
@@ -490,7 +480,6 @@ class Ui_Option4(object):
         self.state = 0
         self.val = 0
         self.teeth = 0
-
         
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
@@ -505,7 +494,6 @@ class Ui_Option4(object):
         self.displaylabel_4.setText("")
    
     def disconnect(self):
-        
         self.state2 = 1
         self.clean = 1
         self.clean2 = 1
@@ -545,19 +533,16 @@ class Ui_Option4(object):
         self.displayGoallabel.setText("")
         self.timepoint4 = 0
         self.goalBox.setValue(0)
-
-        
+       
         time.sleep(2.5)
         self.displaylabel_4.setText("")
 
                 
     def save(self):
-        
         dates = datetime.date.today()
         self.name = self.nameEdit_4.toPlainText()
         self.notes = self.noteEdit_4.toPlainText()
         self.hand = str(self.handbox_4.currentText())        
-        
 
         df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data1 = [self.notes]
@@ -608,15 +593,13 @@ class Ui_Option4(object):
         data10 = [self.inter2x]
         df["left intend x pulling data"] = data10
         df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
-
-          
+       
         ctypes.windll.user32.MessageBoxW(0, "interval endurance data saved", "Saved", 1)
         self.nameEdit_4.clear()
         self.noteEdit_4.clear()
         self.handbox_4.clear()
 
-
-    def close(self):
+    def getRightPeak(self):
         dates = datetime.date.today()
         self.name = self.nameEdit_4.toPlainText()
         with open("{0}/{0}%s.csv".format(self.name)%dates,"r") as f:
@@ -635,10 +618,8 @@ class Ui_Option4(object):
                 self.averagepeakright = round(self.averagepeakright * 0.6)
                 self.displayGoallabel.setText(str(self.averagepeakright))
                 self.state4 = 1
-        
-        
 
-    def close2(self):
+    def getLeftPeak(self):
         dates = datetime.date.today()
         self.name = self.nameEdit_4.toPlainText()
         with open("{0}/{0}%s.csv".format(self.name)%dates,"r") as f:

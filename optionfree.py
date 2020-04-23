@@ -17,12 +17,16 @@ import serial.tools.list_ports
 
 
 class Ui_Free(object):
-   
-
     
     def setupUi(self, Free):
+
+        ### variables ###        
         
         self.peakload = 0
+        
+        ### option 3 straight endurance ###
+
+            ## window setting ##
         
         Free.setObjectName("Free")
         Free.resize(1427, 969)
@@ -32,73 +36,75 @@ class Ui_Free(object):
         self.centralwidget = QtWidgets.QWidget(Free)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setGeometry(QtCore.QRect(420, 71, 860, 881))
-        self.MplWidget.setObjectName("MplWidget")
+        self.plot = MplWidget(self.centralwidget)
+        self.plot.setGeometry(QtCore.QRect(420, 71, 860, 881))
+        self.plot.setObjectName("plot")
 
-        self.poidlabel3 = QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel3.setGeometry(QtCore.QRect(161, 80, 110, 31))
-        self.poidlabel3.setObjectName("rightlabel3")        
-
-        self.poidlabel_F= QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel_F.setGeometry(QtCore.QRect(88 ,40 , 246, 200))
-        font = QtGui.QFont()
-        font.setPointSize(32)
-        font.setWeight(65)
-        self.poidlabel_F.setFont(font)
-        self.poidlabel_F.setAlignment(QtCore.Qt.AlignCenter)
-        self.poidlabel_F.setObjectName("poidlabel_F") 
-
-        self.poidlabel4 = QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel4.setGeometry(QtCore.QRect(181, 190, 110, 31))
-        self.poidlabel4.setObjectName("rightlabel3")        
-
-        self.poidlabel_F2= QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel_F2.setGeometry(QtCore.QRect(88 ,150 , 246, 200))
-        font = QtGui.QFont()
-        font.setPointSize(28)
-        font.setWeight(55)
-        self.poidlabel_F2.setFont(font)
-        self.poidlabel_F2.setAlignment(QtCore.Qt.AlignCenter)
-        self.poidlabel_F2.setObjectName("poidlabel_F") 
+            ## titles and display labels ##        
         
-        self.butt1 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt1.setGeometry(QtCore.QRect(30, 90, 90, 45))
-        self.butt1.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
-                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.butt1.setObjectName("butt1")
-        self.butt1.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
-        self.butt1.setIconSize(QtCore.QSize(90, 90))           
-        self.butt1.clicked.connect(self. clicked1)
-        
-        self.butt2 = QtWidgets.QPushButton(self.centralwidget)
-        self.butt2.setGeometry(QtCore.QRect(30, 150, 90, 45))
-        self.butt2.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
-                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.butt2.setObjectName("butt2")
-        self.butt2.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
-        self.butt2.setIconSize(QtCore.QSize(90, 90))          
-        self.butt2.clicked.connect(self. clicked2)
-        
-        self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(30, 30, 201, 41))
+        self.freetitlelabel = QtWidgets.QLabel(self.centralwidget)
+        self.freetitlelabel.setGeometry(QtCore.QRect(30, 30, 201, 41))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setWeight(65)
-        self.title.setFont(font)         
-        self.title.setObjectName("title")
+        self.freetitlelabel.setFont(font)         
+        self.freetitlelabel.setObjectName("freetitlelabel")
 
-        self.displaylabel_11 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_11.setGeometry(QtCore.QRect(705, 35, 280, 40))
+        self.displaylabel_F = QtWidgets.QLabel(self.centralwidget)
+        self.displaylabel_F.setGeometry(QtCore.QRect(705, 35, 280, 40))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setWeight(50)
-        self.displaylabel_11.setFont(font)
-        self.displaylabel_11.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel_11.setObjectName("displaylabel_11")
+        self.displaylabel_F.setFont(font)
+        self.displaylabel_F.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaylabel_F.setObjectName("displaylabel_F")        
+
+        self.currentWeightlabel = QtWidgets.QLabel(self.centralwidget)
+        self.currentWeightlabel.setGeometry(QtCore.QRect(161, 80, 110, 31))
+        self.currentWeightlabel.setObjectName("currentWeightlabel")        
+
+        self.displayWeightlabel= QtWidgets.QLabel(self.centralwidget)
+        self.displayWeightlabel.setGeometry(QtCore.QRect(88 ,40 , 246, 200))
+        font = QtGui.QFont()
+        font.setPointSize(32)
+        font.setWeight(65)
+        self.displayWeightlabel.setFont(font)
+        self.displayWeightlabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displayWeightlabel.setObjectName("displayWeightlabel") 
+
+        self.currentpeakloadlabel = QtWidgets.QLabel(self.centralwidget)
+        self.currentpeakloadlabel.setGeometry(QtCore.QRect(181, 190, 110, 31))
+        self.currentpeakloadlabel.setObjectName("currentpeakloadlabel")        
+
+        self.displayPeakloadlabel= QtWidgets.QLabel(self.centralwidget)
+        self.displayPeakloadlabel.setGeometry(QtCore.QRect(88 ,150 , 246, 200))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        font.setWeight(55)
+        self.displayPeakloadlabel.setFont(font)
+        self.displayPeakloadlabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displayPeakloadlabel.setObjectName("displayPeakloadlabel") 
+
+            ## buttons ##
         
-  
+        self.startButt = QtWidgets.QPushButton(self.centralwidget)
+        self.startButt.setGeometry(QtCore.QRect(30, 90, 90, 45))
+        self.startButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.startButt.setObjectName("startButt")
+        self.startButt.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.startButt.setIconSize(QtCore.QSize(90, 90))          
+        self.startButt.clicked.connect(self.clicked_startMeasures)
         
+        self.stopButt = QtWidgets.QPushButton(self.centralwidget)
+        self.stopButt.setGeometry(QtCore.QRect(30, 150, 90, 45))
+        self.stopButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.stopButt.setObjectName("stopButt")
+        self.stopButt.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.stopButt.setIconSize(QtCore.QSize(90, 90))         
+        self.stopButt.clicked.connect(self.clicked_stop_clear)
+       
         Free.setCentralWidget(self.centralwidget)
         
         self.menubar = QtWidgets.QMenuBar(Free)
@@ -114,28 +120,23 @@ class Ui_Free(object):
 
         self.retranslateUi(Free)
         QtCore.QMetaObject.connectSlotsByName(Free)
-      
-        
+       
     def retranslateUi(self, Free):
         _translate = QtCore.QCoreApplication.translate
         Free.setWindowTitle(_translate("Free", "peakload"))
-        #self.butt1.setText(_translate("Free", "START"))
-        #self.butt2.setText(_translate("Free", "CLEAR"))
-        self.title.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE PEAK LOAD</span></p></body></html>"))
-        self.poidlabel3.setText("Current weight")
-        self.poidlabel4.setText("Peakload")         
+        self.freetitlelabel.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE PEAK LOAD</span></p></body></html>"))
+        self.currentWeightlabel.setText("Current weight")
+        self.currentpeakloadlabel.setText("Peakload")         
       
-    def clicked1(self):
-        t = Thread(target = self.connect)
+    def clicked_startMeasures(self):
+        t = Thread(target = self.connect_F)
         t.start()
 
-    def clicked2(self):
+    def clicked_stop_clear(self):
         d = Thread(target = self.disconnect)
         d.start()
 
- 
-    def connect(self):
-        
+    def connect_F(self):
         portName = ""
         str2 = ""
         
@@ -150,10 +151,10 @@ class Ui_Free(object):
                         portName = "COM" + str2 
                         
                     if "USB Serial Device" in p[1] and portName in p[1]:
-                        self.displaylabel_11.setText("Found Sensor on " + portName)
+                        self.displaylabel_F.setText("Found Sensor on " + portName)
                         print("Found Sensor on " + portName)
                         time.sleep(2)
-                        self.displaylabel_11.setText("")
+                        self.displaylabel_F.setText("")
                         break
                     
                     int1 = int1 + 1
@@ -162,38 +163,31 @@ class Ui_Free(object):
                 break
 
         if portName == '':
-            self.displaylabel_11.setText("No Sensor found")
+            self.displaylabel_F.setText("No Sensor found")
             raise IOError("No Sensor found")
             time.sleep(2)
-            self.displaylabel_11.setText("")        
-            
-        
+            self.displaylabel_F.setText("")        
+       
         baudrate = 9600
         ser = serial.Serial(portName, baudrate)
         
         ser_bytes = ser.readline()
         valueP1 = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))        
-
-        
-               
+              
         while True:
                         
             ser_bytes = ser.readline()
             valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
             value = round(valueP - valueP1, 1)
-
-                       
             self.peakload = max(self.peakload, value)
             
-            self.poidlabel_F.setText(str(value))
-            self.poidlabel_F2.setText(str(self.peakload))
-            self.MplWidget.update_bargraph(value, self.peakload)
-
-                
+            self.displayWeightlabel.setText(str(value))
+            self.displayPeakloadlabel.setText(str(self.peakload))
+            self.plot.update_bargraph(value, self.peakload)
+               
     def disconnect(self):
         self.peakload = 0
 
-      
 
 if __name__ == "__main__":
     import sys

@@ -358,15 +358,7 @@ class Ui_ArmsWindow(object):
         df["climbing coordination"] = data11
         df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
         
-
-        
         ctypes.windll.user32.MessageBoxW(0, "peakload data saved", "Saved", 1)
-
-
-
-
-        
-
 
 if __name__ == "__main__":
     import sys
