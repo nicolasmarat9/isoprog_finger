@@ -16,6 +16,7 @@ class Ui_Option6(object):
     
     def setupUi(self, Option6):
         
+        ### variables ###        
 
         self.i = 0
         self.spn = 0
@@ -30,6 +31,10 @@ class Ui_Option6(object):
         self.everadge = []
         self.average = 0
         
+        ### option 3 straight endurance ###
+
+            ## window setting ##
+        
         Option6.setObjectName("Option6")
         Option6.resize(1427, 969)
         Option6.move(488, 3)
@@ -42,89 +47,96 @@ class Ui_Option6(object):
         self.plot.setGeometry(QtCore.QRect(295, 71, 1115, 881))
         self.plot.setObjectName("plot")
 
-        self.displaylabel_3 = QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel_3.setGeometry(QtCore.QRect(700, 35, 280, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setWeight(50)
-        self.displaylabel_3.setFont(font)
-        self.displaylabel_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel_3.setObjectName("displaylabel_3")        
+            ## titles and display labels ##        
 
-        self.displaylabel3_3= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_3.setGeometry(QtCore.QRect(25 ,330, 246, 200))
+        self.FreeEndutitlelabel = QtWidgets.QLabel(self.centralwidget)
+        self.FreeEndutitlelabel.setGeometry(QtCore.QRect(30, 10, 401, 41))
         font = QtGui.QFont()
-        font.setPointSize(40)
-        font.setWeight(50)
-        self.displaylabel3_3.setFont(font)
-        self.displaylabel3_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel3_3.setObjectName("displaylabel3_3")
-
-        self.poidlabel_F= QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel_F.setGeometry(QtCore.QRect(88 ,20 , 246, 200))
+        font.setPointSize(12)
+        font.setWeight(65)
+        self.FreeEndutitlelabel.setFont(font)         
+        self.FreeEndutitlelabel.setObjectName("FreeEndutitlelabel")
+        
+        self.currentWeightlabel = QtWidgets.QLabel(self.centralwidget)
+        self.currentWeightlabel.setGeometry(QtCore.QRect(161, 60, 110, 31))
+        self.currentWeightlabel.setObjectName("currentWeightlabel")
+        
+        self.displayWeightlabel= QtWidgets.QLabel(self.centralwidget)
+        self.displayWeightlabel.setGeometry(QtCore.QRect(88 ,20 , 246, 200))
         font = QtGui.QFont()
         font.setPointSize(32)
         font.setWeight(65)
-        self.poidlabel_F.setFont(font)
-        self.poidlabel_F.setAlignment(QtCore.Qt.AlignCenter)
-        self.poidlabel_F.setObjectName("poidlabel_F")        
-
-        self.displaylabel3_5= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_5.setGeometry(QtCore.QRect(25 ,230, 120, 100))
+        self.displayWeightlabel.setFont(font)
+        self.displayWeightlabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displayWeightlabel.setObjectName("displayWeightlabel")
+        
+        self.peakloadlabel = QtWidgets.QLabel(self.centralwidget)
+        self.peakloadlabel.setGeometry(QtCore.QRect(50, 220, 110, 31))
+        self.peakloadlabel.setObjectName("peakloadlabel")
+        
+        self.displayPeakloadlabel = QtWidgets.QLabel(self.centralwidget)
+        self.displayPeakloadlabel.setGeometry(QtCore.QRect(25 ,230, 120, 100))
         font = QtGui.QFont()
         font.setPointSize(20)
         font.setWeight(50)
-        self.displaylabel3_5.setFont(font)
-        self.displaylabel3_5.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel3_5.setObjectName("displaylabel3_5")
+        self.displayPeakloadlabel.setFont(font)
+        self.displayPeakloadlabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displayPeakloadlabel.setObjectName("displayPeakloadlabel")
 
-        self.displaylabel3_6= QtWidgets.QLabel(self.centralwidget)
-        self.displaylabel3_6.setGeometry(QtCore.QRect(155 ,230, 120, 100))
+        self.averagelabel = QtWidgets.QLabel(self.centralwidget)
+        self.averagelabel.setGeometry(QtCore.QRect(185, 220, 110, 31))
+        self.averagelabel.setObjectName("averagelabel")
+        
+        self.displayAveragelabel = QtWidgets.QLabel(self.centralwidget)
+        self.displayAveragelabel.setGeometry(QtCore.QRect(155 ,230, 120, 100))
         font = QtGui.QFont()
         font.setPointSize(20)
         font.setWeight(50)
-        self.displaylabel3_6.setFont(font)
-        self.displaylabel3_6.setAlignment(QtCore.Qt.AlignCenter)
-        self.displaylabel3_6.setObjectName("displaylabel3_6")
+        self.displayAveragelabel.setFont(font)
+        self.displayAveragelabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displayAveragelabel.setObjectName("displayAveragelabel")
+        
+        self.displaylabel_F_E = QtWidgets.QLabel(self.centralwidget)
+        self.displaylabel_F_E.setGeometry(QtCore.QRect(700, 35, 280, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setWeight(50)
+        self.displaylabel_F_E.setFont(font)
+        self.displaylabel_F_E.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaylabel_F_E.setObjectName("displaylabel_F_E")        
 
-        self.right2label = QtWidgets.QLabel(self.centralwidget)
-        self.right2label.setGeometry(QtCore.QRect(50, 220, 110, 31))
-        self.right2label.setObjectName("right2label")
+        self.timerlabel = QtWidgets.QLabel(self.centralwidget)
+        self.timerlabel.setGeometry(QtCore.QRect(130, 360, 110, 31))
+        self.timerlabel.setObjectName("timerlabel")
+        
+        self.displaytimerlabel= QtWidgets.QLabel(self.centralwidget)
+        self.displaytimerlabel.setGeometry(QtCore.QRect(25 ,330, 246, 200))
+        font = QtGui.QFont()
+        font.setPointSize(40)
+        font.setWeight(50)
+        self.displaytimerlabel.setFont(font)
+        self.displaytimerlabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.displaytimerlabel.setObjectName("displaytimerlabel")
+        
+            ## buttons ##  
 
-        self.rightlabel = QtWidgets.QLabel(self.centralwidget)
-        self.rightlabel.setGeometry(QtCore.QRect(185, 220, 110, 31))
-        self.rightlabel.setObjectName("rightlabel")
-
-        self.rightlabel3 = QtWidgets.QLabel(self.centralwidget)
-        self.rightlabel3.setGeometry(QtCore.QRect(130, 360, 110, 31))
-        self.rightlabel3.setObjectName("rightlabel3")
-
-        self.poidlabel3 = QtWidgets.QLabel(self.centralwidget)
-        self.poidlabel3.setGeometry(QtCore.QRect(161, 60, 110, 31))
-        self.poidlabel3.setObjectName("rightlabel3")            
-
-        self.startButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButt_3.setGeometry(QtCore.QRect(30, 70, 90, 45))
-        self.startButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+        self.startButt = QtWidgets.QPushButton(self.centralwidget)
+        self.startButt.setGeometry(QtCore.QRect(30, 70, 90, 45))
+        self.startButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
                                        "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.startButt_3.setObjectName("startButt_3")
-        self.startButt_3.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
-        self.startButt_3.setIconSize(QtCore.QSize(90, 90))        
-        self.startButt_3.clicked.connect(self. clicked1_3)
+        self.startButt.setObjectName("startButt_3")
+        self.startButt.setIcon(QtGui.QIcon("pushbutt/ziconpush7.png"))
+        self.startButt.setIconSize(QtCore.QSize(90, 90))        
+        self.startButt.clicked.connect(self.clicked_startMeasures)
 
-        self.stopButt_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.stopButt_3.setGeometry(QtCore.QRect(30, 130, 90, 45))
-        self.stopButt_3.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
+        self.stopButt = QtWidgets.QPushButton(self.centralwidget)
+        self.stopButt.setGeometry(QtCore.QRect(30, 130, 90, 45))
+        self.stopButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 22px; border: 1px solid grey;}"
                                        "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
-        self.stopButt_3.setObjectName("stopButt_3")
-        self.stopButt_3.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
-        self.stopButt_3.setIconSize(QtCore.QSize(90, 90))       
-        self.stopButt_3.clicked.connect(self. clicked2_3)
-
-        self.title_3 = QtWidgets.QLabel(self.centralwidget)
-        self.title_3.setGeometry(QtCore.QRect(30, 10, 401, 41))
-        self.title_3.setObjectName("title")
-  
+        self.stopButt.setObjectName("stopButt_3")
+        self.stopButt.setIcon(QtGui.QIcon("pushbutt/iconpush10.png"))
+        self.stopButt.setIconSize(QtCore.QSize(90, 90))       
+        self.stopButt.clicked.connect(self.clicked_stop_clear)
         
         Option6.setCentralWidget(self.centralwidget)
 
@@ -145,23 +157,21 @@ class Ui_Option6(object):
     def retranslateUi(self, Option6):
         _translate = QtCore.QCoreApplication.translate
         Option6.setWindowTitle(_translate("Option6", "Free endurance"))
-        #self.startButt_3.setText(_translate("Option6", "START"))
-        #self.stopButt_3.setText(_translate("Option6", "RESET"))
-        self.title_3.setText(_translate("Option6", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE ENDURANCE</span></p></body></html>"))
-        self.right2label.setText("Peakload")
-        self.rightlabel.setText("Average")
-        self.rightlabel3.setText("Timer")
-        self.poidlabel3.setText("Current weight")        
+        self.FreeEndutitlelabel.setText(_translate("Option6", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE ENDURANCE</span></p></body></html>"))
+        self.peakloadlabel.setText("Peakload")
+        self.averagelabel.setText("Average")
+        self.timerlabel.setText("Timer")
+        self.currentWeightlabel.setText("Current weight")        
         
-    def clicked1_3(self):
-        k = Thread(target = self.connect)
+    def clicked_startMeasures(self):
+        k = Thread(target = self.connect_F_E)
         k.start()
 
-    def clicked2_3(self):
+    def clicked_stop_clear(self):
         l = Thread(target = self.disconnect)
         l.start()
                 
-    def connect(self):
+    def connect_F_E(self):
         self.state = 0
         if(self.state == 0):
             portName = ""
@@ -178,10 +188,10 @@ class Ui_Option6(object):
                             portName = "COM" + str2 
                             
                         if "USB Serial Device" in p[1] and portName in p[1]:
-                            self.displaylabel_3.setText("Found Sensor on " + portName)
+                            self.displaylabel_F_E.setText("Found Sensor on " + portName)
                             print("Found Sensor on " + portName)
                             time.sleep(2)
-                            self.displaylabel_3.setText("")
+                            self.displaylabel_F_E.setText("")
                             break
                         
                         int1 = int1 + 1
@@ -190,59 +200,47 @@ class Ui_Option6(object):
                     break
 
             if portName == '':
-                self.displaylabel_3.setText("No Sensor found")
+                self.displaylabel_F_E.setText("No Sensor found")
                 raise IOError("No Sensor found")
                 time.sleep(2)
-                self.displaylabel_3.setText("")        
-                
-            
+                self.displaylabel_F_E.setText("")        
+      
             baudrate = 9600
             ser = serial.Serial(portName, baudrate)
-
 
             u = Thread(target = self.timersec)
             u.start()
             
             ser_bytes = ser.readline()
             valueP1 = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))        
-
             
             while(self.state == 0):
-                            
                 ser_bytes = ser.readline()
                 valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
                 value = round(valueP - valueP1, 1)
-
                 
                 self.peakload = max(self.peakload, value)
-                self.displaylabel3_5.setText(str(self.peakload))
+                self.displayPeakloadlabel.setText(str(self.peakload))
 
                 self.everadge.append(value)
                 self.average = sum(self.everadge) / len(self.everadge)
-                self.displaylabel3_6.setText(str(round(self.average, 1)))
+                self.displayAveragelabel.setText(str(round(self.average, 1)))
                 
-                self.poidlabel_F.setText(str(value))
+                self.displayWeightlabel.setText(str(value))
                 self.plot.update_graph4(value, self.i)
                 s = Thread(target = self.plotvalue)
-                
                 s.start()
 
-
     def plotvalue(self):
-    
         self.i += 1
-
 
     def timersec(self):
         time.sleep(1)
-        self.displaylabel3_3.setText("START")
+        self.displaytimerlabel.setText("START")
         while(self.state == 0):
             self.timer += 1
             time.sleep(1)
-            self.displaylabel3_3.setText(str(int(self.timer)))    
-        
-         
-        
+            self.displaytimerlabel.setText(str(int(self.timer)))    
             
     def disconnect(self):
         self.state = 1
@@ -258,10 +256,10 @@ class Ui_Option6(object):
         self.peakload = 0
         self.everadge = []
         self.average = 0
-        self.displaylabel3_5.setText("")
-        self.displaylabel3_3.setText("")
-        self.displaylabel3_6.setText("")
-        self.displaylabel_3.setText("")        
+        self.displayAveragelabel.setText("")
+        self.displaytimerlabel.setText("")
+        self.displayPeakloadlabel.setText("")
+        self.displaylabel_F_E.setText("")        
         
 
 if __name__ == "__main__":
