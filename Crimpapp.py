@@ -17,7 +17,7 @@ import serial.tools.list_ports
 import pushbutt
 import os
 import datetime
-from PyQt5.QtWidgets import QMessageBox
+
 
 
 class Ui_MainWindow(object):
@@ -360,15 +360,15 @@ class Ui_MainWindow(object):
 
             ## click start save clear ##        
 
-    def clicked_startscale(self):
+    def clicked_startscale(self): #call connection function (weight mesurement)
         t = Thread(target = self.connection)
         t.start()
 
-    def clicked_save(self):
+    def clicked_save(self): #call saves function (saving data function)
         v = Thread(target = self.saves)
         v.start()
 
-    def clicked_cleardata(self):
+    def clicked_cleardata(self): #clear the all data input
         self.nameEdit.clear()
         self.sizeEdit.clear()
         self.climbEdit.clear()
@@ -381,15 +381,14 @@ class Ui_MainWindow(object):
         self.statescale = 0
         self.WeightDisplaylabel.setText('')
 
-        ### function ### 
+        ### functions ### 
 
-    def connection(self):
-
+    def connection(self): #connect to arduino, read incoming data (weight)
+                          #find out how much weight is hanging and display it in main window
         ## connect arduino ##
-        
         portName = ""
         str2 = ""
-        
+        # search in wich usb port is the arduino
         ports = list(serial.tools.list_ports.comports())
         for p in ports:
             if portName == '':    
@@ -400,11 +399,10 @@ class Ui_MainWindow(object):
                         str2 = str(int1) 
                         portName = "COM" + str2 
                         
-                    if "USB Serial Device" in p[1] and portName in p[1]: 
-                        self.Displaylabel.setText("Found Sensor on " + portName)
+                    if "USB Serial Device" in p[1] and portName in p[1]: # if arduino found 
+                        self.Displaylabel.setText("Found Sensor on " + portName) # display usb port name 
                         time.sleep(2)
                         self.Displaylabel.setText("")
-                        #print("Found Sensor on " + portName)
                         break
                     
                     int1 = int1 + 1
@@ -412,8 +410,8 @@ class Ui_MainWindow(object):
             else:
                 break
 
-        if portName == '':
-            self.Displaylabel.setText("No Sensor found")
+        if portName == '': # if arduino not found 
+            self.Displaylabel.setText("No Sensor found") # display no arduino found
             time.sleep(2)
             self.Displaylabel.setText("")
             raise IOError("No Sensor found")
@@ -428,16 +426,16 @@ class Ui_MainWindow(object):
         while True :
                         
             ser_bytes = ser.readline()
-            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+            value = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8")) # decode serial data
                        
-            self.weight = max(self.weight, value)
+            self.weight = max(self.weight, value) # continuously keep the maximal value given by the arduino
 
-            if(self.state == 0) and(value > 5):
+            if(self.state == 0) and(value > 5): # if the weight is more than 5kg then continue and 
                 self.state = 1
 
-            elif(self.state == 1) and(value < 0.3):
+            elif(self.state == 1) and(value < 0.3): # if the value previously was more than 5kg and come back for less than 0.3kg
                 time.sleep(1)
-                self.WeightDisplaylabel.setText(str(self.weight))
+                self.WeightDisplaylabel.setText(str(self.weight)) # then keep the highest weight value who was given and display it
                 self.statescale = 1
                 break
             
