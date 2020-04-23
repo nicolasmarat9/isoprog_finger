@@ -353,6 +353,7 @@ class Ui_Option1(object):
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
+        self.plot.canvas.draw()
         
         self.displaylabel_1.setText("reset peakload")
         self.picr1label.setText("")

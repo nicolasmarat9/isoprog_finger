@@ -369,15 +369,13 @@ class Ui_Option3(object):
                 v = Thread(target = self.timesim)
                 v.start()
                 
-                if(self.state2 == 0) and(self.timepoint > 25):
-                    self.displaylabel_3.setText("START") 
-                   
-                    if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
-                        self.pulltime = self.timer
-                        self.displayTimeRightlabel.setText(str(int(self.pulltime)))
-                        self.displaylabel_3.setText("Straight endurance test is finished")
-                        self.intens = self.spn
-                        self.state2 = 1
+
+                if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                    self.pulltime = self.timer
+                    self.displayTimeRightlabel.setText(str(int(self.pulltime)))
+                    self.displaylabel_3.setText("Straight endurance test is finished")
+                    self.intens = self.spn
+                    self.state2 = 1
 
         elif(self.state3 == 1):
             self.displaylabel_3.setText("LEFT HAND")
@@ -410,15 +408,13 @@ class Ui_Option3(object):
                 v = Thread(target = self.timesim)
                 v.start()
                 
-                if(self.state2 == 0) and(self.timepoint > 25):
-                    self.displaylabel_3.setText("START") 
                     
-                    if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
-                        self.pulltime_2 = self.timer
-                        self.displayTimeLeftlabel.setText(str(int(self.pulltime_2)))
-                        self.displaylabel_3.setText("Straight endurance test is finished")
-                        self.intens2 = self.spn
-                        self.state2 = 1
+                if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                    self.pulltime_2 = self.timer
+                    self.displayTimeLeftlabel.setText(str(int(self.pulltime_2)))
+                    self.displaylabel_3.setText("Straight endurance test is finished")
+                    self.intens2 = self.spn
+                    self.state2 = 1
                         
 
                 
@@ -432,7 +428,7 @@ class Ui_Option3(object):
             self.timer += 1
             time.sleep(1)
             self.displaytimerlabel.setText(str(int(self.timer)))         
-
+            
 
     def next(self):
                      
@@ -455,6 +451,8 @@ class Ui_Option3(object):
         self.plot.y2.clear()
         self.plot.linehand.clear()
         self.plot.lineprog.clear()
+        self.plot.canvas.axes.set_ylim(0,90)
+        self.plot.canvas.draw()
         
         self.i = 0
         self.j = 3.5        
@@ -471,21 +469,25 @@ class Ui_Option3(object):
 
         self.state = 1
         self.state2 = 1
+        self.clean = 1
         self.spn = 0
         self.state3 = 0
         self.state4 = 0      
         self.timer = 0
-        self.plot.canvas.axes.clear()
+        time.sleep(1)
+        
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
         self.plot.linehand.clear()
         self.plot.lineprog.clear()
+        self.plot.canvas.axes.clear()
+        self.plot.canvas.axes.set_ylim(0,90)
+        self.plot.canvas.draw()
         
         self.i = 0
         self.j = 3.5        
-        self.clean = 1
         self.displayTimeRightlabel.setText("")
         self.displayTimeLeftlabel.setText("")
         self.displaylabel_3.setText("reset straight endurance")
@@ -506,6 +508,7 @@ class Ui_Option3(object):
         self.averagepeakright = 0
         self.averagepeakleft = 0
         self.goalBox.setValue(0)
+        
         time.sleep(2.5)
         self.displaylabel_3.setText("")
         

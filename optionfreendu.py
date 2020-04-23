@@ -252,7 +252,7 @@ class Ui_Option6(object):
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
-        
+        self.plot.canvas.draw()
         self.i = 0
 
         self.peakload = 0

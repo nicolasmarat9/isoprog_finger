@@ -349,13 +349,13 @@ class Ui_Option4(object):
                             
                 ser_bytes = ser.readline()
                 valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-                self.value = round(valueP - valueP1, 1)
+                value = round(valueP - valueP1, 1)
                 
-                self.inter.append(self.value)
+                self.inter.append(value)
                 self.interx.append(round(self.i, 1))              
                             
-                self.displayWeightlabel.setText(str(self.value))
-                self.plot.update_graph3(self.value, self.i, self.teeth, self.j)
+                self.displayWeightlabel.setText(str(value))
+                self.plot.update_graph3(value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
                 
@@ -365,7 +365,7 @@ class Ui_Option4(object):
                 s.join()
                 u.join()
 
-                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (self.value < self.rang) :
+                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
                     self.pulltime = self.timer
                     self.displayTimeRightlabel.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finished")
@@ -373,7 +373,7 @@ class Ui_Option4(object):
                     self.intens = self.spn
                     self.state2 = 1
             
-                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
+                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
                     self.pulltime = self.timer
                     self.displayTimeRightlabel.setText(str(int(self.pulltime)))
                     self.displaylabel_4.setText("Interval endurance test is finished")
@@ -388,13 +388,13 @@ class Ui_Option4(object):
                             
                 ser_bytes = ser.readline()
                 valueP = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-                self.value = round(valueP - valueP1, 1)
+                value = round(valueP - valueP1, 1)
                 
-                self.inter2.append(self.value)
+                self.inter2.append(value)
                 self.inter2x.append(round(self.i, 1))                
                                            
-                self.displayWeightlabel.setText(str(self.value))
-                self.plot.update_graph3(self.value, self.i, self.teeth, self.j)
+                self.displayWeightlabel.setText(str(value))
+                self.plot.update_graph3(value, self.i, self.teeth, self.j)
                 s = Thread(target = self.plotvalue)
                 u = Thread(target = self.timesim)
                                
@@ -404,7 +404,7 @@ class Ui_Option4(object):
                 s.join()
                 u.join()
                    
-                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (self.value < self.rang) :
+                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
                     self.pulltime2 = self.timer 
                     self.displayTimeLeftlabel.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
@@ -412,7 +412,7 @@ class Ui_Option4(object):
                     self.intens2 = self.spn
                     self.state2 = 1
             
-                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (self.value < self.rang) :
+                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
                     self.pulltime2 = self.timer 
                     self.displayTimeLeftlabel.setText(str(int(self.pulltime2)))
                     self.displaylabel_4.setText("Interval endurance test is finish")
@@ -490,7 +490,7 @@ class Ui_Option4(object):
         self.state = 0
         self.val = 0
         self.teeth = 0
-        self.value = 0
+
         
         self.plot.canvas.axes.clear()
         self.plot.x.clear()
@@ -498,7 +498,9 @@ class Ui_Option4(object):
         self.plot.x2.clear()
         self.plot.y2.clear()
         self.plot.linehand.clear()
-        self.plot.lineprog.clear()        
+        self.plot.lineprog.clear()
+        self.plot.canvas.axes.set_ylim(0,90)
+        self.plot.canvas.draw()
         time.sleep(2)
         self.displaylabel_4.setText("")
    
@@ -507,17 +509,26 @@ class Ui_Option4(object):
         self.state2 = 1
         self.clean = 1
         self.clean2 = 1
-        self.plot.canvas.axes.clear()
+        self.spn = 0
+        self.state = 0
+        self.state3 = 0
+        self.timer = 0
+        time.sleep(1)
+        
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
+        self.plot.linehand.clear()
+        self.plot.lineprog.clear()
+        self.plot.canvas.axes.clear()
+        self.plot.canvas.axes.set_ylim(0,90)
+        self.plot.canvas.draw()
+        
         self.inter.clear()
         self.inter2.clear()
         self.interx.clear()
-        self.inter2x.clear()        
-        self.plot.linehand.clear()
-        self.plot.lineprog.clear()
+        self.inter2x.clear()
         
         self.i = 0
         self.j = 2.5        
@@ -525,19 +536,17 @@ class Ui_Option4(object):
         self.displayTimeLeftlabel.setText("")
         self.displaylabel_4.setText("reset interval endurance")
         self.displaytimerlabel.setText("") 
-        self.state = 0
-        self.state3 = 0
         self.val = 0
         self.teeth = 0
-        self.value = 0
         self.intens = 0
         self.intens2 = 0
-        self.timer = 0
         self.pulltime = 0
         self.pulltime2 = 0
         self.displayGoallabel.setText("")
         self.timepoint4 = 0
         self.goalBox.setValue(0)
+
+        
         time.sleep(2.5)
         self.displaylabel_4.setText("")
 

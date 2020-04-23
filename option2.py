@@ -430,7 +430,10 @@ class Ui_Option2(object):
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.linehand.clear()
+        self.plot.canvas.axes.set_ylim(0,110)
+        self.plot.canvas.draw()
         self.everadge.clear()
+        
 
        
     def disconnect(self):
@@ -445,6 +448,8 @@ class Ui_Option2(object):
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.linehand.clear()
+        self.plot.canvas.axes.set_ylim(0,110)
+        self.plot.canvas.draw()
         
         self.maxbyte.clear()
         self.maxbyte_2.clear()
