@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import pandas as pd
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mplwidget import MplWidget
+from mplwidget import MplWidgetBis
 from threading import Thread
 import ctypes
 import serial.tools.list_ports
@@ -64,7 +64,7 @@ class Ui_Option4(object):
         self.centralwidget = QtWidgets.QWidget(Option4)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.plot = MplWidget(self.centralwidget)
+        self.plot = MplWidgetBis(self.centralwidget)
         self.plot.setGeometry(QtCore.QRect(295, 71, 1115, 881))
         self.plot.setObjectName("plot")
 

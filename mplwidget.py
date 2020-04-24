@@ -30,7 +30,7 @@ class MplWidget(QWidget ):
         self.canvas.axes = self.canvas.figure.add_subplot(1,1,1)
         self.linehand = self.canvas.axes.plot(self.x, self.y)
         self.lineprog = self.canvas.axes.plot(self.x2, self.y2)
-        self.canvas.axes.set_ylim(0,100)
+        self.canvas.axes.set_ylim(0,110)
         self.canvas.axes.set_xlim(0,60)
         self.setLayout(vertical_layout)
         self.canvas.axes.tick_params(axis = 'x', which = 'both', bottom = False, top = False, labelbottom = False)
@@ -61,6 +61,31 @@ class MplWidget(QWidget ):
         self.canvas.axes.fill_between(self.x, self.y, 0, facecolor = 'orange', alpha = 0.5, interpolate=True)
         self.canvas.axes.set_title('pull') 
         self.canvas.draw()
+
+class MplWidgetBis(QWidget ):
+    
+    def __init__( self, parent = None):
+
+        QWidget.__init__(self, parent)
+        
+        self.x = []
+        self.y = []
+        self.x2 = []
+        self.y2 = []
+        
+        self.canvas = FigureCanvas(Figure())
+                
+        vertical_layout = QVBoxLayout() 
+        vertical_layout.addWidget(self.canvas)
+        
+        self.canvas.axes = self.canvas.figure.add_subplot(1,1,1)
+        self.linehand = self.canvas.axes.plot(self.x, self.y)
+        self.lineprog = self.canvas.axes.plot(self.x2, self.y2)
+        self.canvas.axes.set_ylim(0,90)
+        self.canvas.axes.set_xlim(0,60)
+        self.setLayout(vertical_layout)
+        self.canvas.axes.tick_params(axis = 'x', which = 'both', bottom = False, top = False, labelbottom = False)
+
         
     def update_graph2(self, value, i, spn, j):
         self.y.append(value)

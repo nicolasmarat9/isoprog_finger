@@ -123,7 +123,7 @@ class Ui_Free(object):
        
     def retranslateUi(self, Free):
         _translate = QtCore.QCoreApplication.translate
-        Free.setWindowTitle(_translate("Free", "peakload"))
+        Free.setWindowTitle(_translate("Free", "Free peakload"))
         self.freetitlelabel.setText(_translate("Free", "<html><head/><body><p><span style=\" font-size:12pt;\">FREE PEAK LOAD</span></p></body></html>"))
         self.currentWeightlabel.setText("Current weight")
         self.currentpeakloadlabel.setText("Peakload")         
