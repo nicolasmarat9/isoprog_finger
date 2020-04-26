@@ -13,7 +13,7 @@ from threading import Thread
 import ctypes
 import pandas as pd
 import serial.tools.list_ports
-
+import datetime
 
 class Ui_Option5(object):
    
@@ -102,6 +102,15 @@ class Ui_Option5(object):
         self.plotFingerButt.setIcon(QtGui.QIcon("pushbutt/iconpush40.png"))
         self.plotFingerButt.setIconSize(QtCore.QSize(55, 55))          
         self.plotFingerButt.clicked.connect(self.clicked_plotFinger)
+
+        self.clearButt = QtWidgets.QPushButton(self.centralwidget)
+        self.clearButt.setGeometry(QtCore.QRect(30, 240, 96, 45))
+        self.clearButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 96px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 96px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.clearButt.setObjectName("clearButt")
+        self.clearButt.setIcon(QtGui.QIcon("pushbutt/ziconpush8.png"))
+        self.clearButt.setIconSize(QtCore.QSize(90, 90))        
+        self.clearButt.clicked.connect(self.clicked_cleardata) 
                
         Option5.setCentralWidget(self.centralwidget)
 
@@ -141,8 +150,12 @@ class Ui_Option5(object):
         g.start()
 
     def clicked_plotFinger(self):
-        g = Thread(target = self.plotFingerResults)
-        g.start()
+        j = Thread(target = self.plotFingerResults)
+        j.start()
+
+    def clicked_cleardata(self):
+        p = Thread(target = self.disconnect)
+        p.start()   
 
     def plotMaxStrength(self):
         self.dates = self.dateEdit.toPlainText()
@@ -164,7 +177,29 @@ class Ui_Option5(object):
         self.dates = self.dateEdit.toPlainText()
         self.name = self.nameEdit_2.toPlainText()        
         self.plot2.plotfingers(self.name, self.dates)                
+
+    def disconnect(self):
         
+        self.plot.canvas.axes.clear()
+        self.plot.canvas.axes.set_ylim(0,80)
+        self.plot.canvas.axes.set_xlim(0,200)        
+        self.plot.canvas.axes.set_xlabel(xlabel = "time (sec)")
+        self.plot.canvas.axes.set_ylabel(ylabel = "kg")
+        self.plot.canvas.axes2.clear()
+        self.plot.canvas.axes2.set_ylim(0,80)
+        self.plot.canvas.axes2.set_xlim(0,200)        
+        self.plot.canvas.axes2.set_xlabel(xlabel = "time (sec)")
+        self.plot.canvas.axes2.set_ylabel(ylabel = "kg")        
+        self.plot.canvas.draw()
+
+        labels = ['alactic','aerobic', 'lactic', 'recovering']   
+        angles = np.linspace(0, 2*np.pi, len(labels), endpoint=False)
+        angles = np.concatenate((angles,[angles[0]]))
+        
+        self.plot2.canvas.axes.clear()
+        self.plot2.canvas.axes.set_thetagrids(angles * 180/np.pi, labels, fontsize = 7)
+        self.plot2.canvas.axes.set_yticklabels([])
+        self.plot2.canvas.draw()
 
 if __name__ == "__main__":
     import sys

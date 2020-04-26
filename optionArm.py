@@ -7,7 +7,8 @@ import csv
 import ctypes
 import pandas as pd
 import serial.tools.list_ports
-
+import numpy as np
+import datetime
 
 
 class Ui_ArmsWindow(object):
@@ -35,11 +36,11 @@ class Ui_ArmsWindow(object):
         self.nameEdit.setObjectName("nameEdit")
 
         self.datelabel = QtWidgets.QLabel(self.centralwidget)
-        self.datelabel.setGeometry(QtCore.QRect(40, 670, 211, 30))
+        self.datelabel.setGeometry(QtCore.QRect(40, 720, 211, 30))
         self.datelabel.setObjectName("datelabel")
       
         self.dateEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.dateEdit.setGeometry(QtCore.QRect(280, 670, 150, 30))
+        self.dateEdit.setGeometry(QtCore.QRect(280, 720, 150, 30))
         self.dateEdit.setObjectName("dateEdit")
 
         self.deadhanglabel = QtWidgets.QLabel(self.centralwidget)
@@ -157,10 +158,19 @@ class Ui_ArmsWindow(object):
         font.setWeight(65)
         self.Titlelabel_4.setFont(font)
         self.Titlelabel_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.Titlelabel_4.setObjectName("Titlelabel_4")          
+        self.Titlelabel_4.setObjectName("Titlelabel_4")
+
+        self.plotTitlelabel = QtWidgets.QLabel(self.centralwidget)
+        self.plotTitlelabel.setGeometry(QtCore.QRect(85, 670, 300, 30))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setWeight(65)
+        self.plotTitlelabel.setFont(font)
+        self.plotTitlelabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.plotTitlelabel.setObjectName("plotTitlelabel")          
 
         self.viewButt = QtWidgets.QPushButton(self.centralwidget)
-        self.viewButt.setGeometry(QtCore.QRect(185, 720, 96, 45))
+        self.viewButt.setGeometry(QtCore.QRect(130, 770, 96, 45))
         self.viewButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 135px; width: 115px; border-radius: 22px; border: 1px solid grey;}"
                                      "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.viewButt.setObjectName("viewButt")
@@ -169,7 +179,7 @@ class Ui_ArmsWindow(object):
         self.viewButt.clicked.connect(self.clicked_view)        
 
         self.ClearButt = QtWidgets.QPushButton(self.centralwidget)
-        self.ClearButt.setGeometry(QtCore.QRect(130, 600, 96, 45))
+        self.ClearButt.setGeometry(QtCore.QRect(130, 590, 96, 45))
         self.ClearButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 96px; border-radius: 22px; border: 1px solid grey;}"
                                        "QPushButton:pressed {background-color: silver; height: 45px; width: 96px; border-radius: 22px; border: 1px solid dimgrey;}")
         self.ClearButt.setObjectName("clearButt")
@@ -178,7 +188,7 @@ class Ui_ArmsWindow(object):
         self.ClearButt.clicked.connect(self.clicked_clear)        
          
         self.savebutt = QtWidgets.QPushButton(self.centralwidget)
-        self.savebutt.setGeometry(QtCore.QRect(240, 600, 90, 45))
+        self.savebutt.setGeometry(QtCore.QRect(240, 590, 90, 45))
         self.savebutt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 90px; border-radius: 6px; border: 1px solid grey;}"
                                        "QPushButton:pressed {background-color: silver; height: 45px; width: 90px; border-radius: 6px; border: 1px solid dimgrey;}")
         self.savebutt.setObjectName("savebutt")
@@ -186,7 +196,14 @@ class Ui_ArmsWindow(object):
         self.savebutt.setIconSize(QtCore.QSize(90, 90))
         self.savebutt.clicked.connect(self.clicked_save)
 
-       
+        self.clearplotButt = QtWidgets.QPushButton(self.centralwidget)
+        self.clearplotButt.setGeometry(QtCore.QRect(240, 770, 96, 45))
+        self.clearplotButt.setStyleSheet("QPushButton {background-color: gainsboro; height: 45px; width: 96px; border-radius: 22px; border: 1px solid grey;}"
+                                       "QPushButton:pressed {background-color: silver; height: 45px; width: 96px; border-radius: 22px; border: 1px solid dimgrey;}")
+        self.clearplotButt.setObjectName("clearplotButt")
+        self.clearplotButt.setIcon(QtGui.QIcon("pushbutt/ziconpush8.png"))
+        self.clearplotButt.setIconSize(QtCore.QSize(90, 90))        
+        self.clearplotButt.clicked.connect(self.clicked_clearplot)         
 
         ArmsWindow.setCentralWidget(self.centralwidget)
 
@@ -215,6 +232,7 @@ class Ui_ArmsWindow(object):
         self.maxdipslabel.setText(_translate("ArmsWindow", "<html><head/><body><p>Max dips (rep) :</p></body></html>"))
         self.maxpulluplabel.setText(_translate("ArmsWindow", "<html><head/><body><p>Max pull-up (rep) :</p></body></html>"))
         self.Titlelabel_4.setText(_translate("ArmsWindow", "<html><head/><body><p>SKILLS BALANCE GRAPHIC</p></body></html>"))
+        self.plotTitlelabel.setText(_translate("ArmsWindow", "<html><head/><body><p>DISPLAY RESULTS</p></body></html>"))
         self.Titlelabel_2.setText(_translate("ArmsWindow", "<html><head/><body><p>BODY MEASURES</p></body></html>"))
         self.frontleverlabel.setText(_translate("ArmsWindow", "<html><head/><body><p>Front lever (sec) :</p></body></html>"))
         self.tlabel.setText(_translate("ArmsWindow", "<html><head/><body><p>Butterfly on bench 5kg (rep) :</p></body></html>"))
@@ -237,8 +255,8 @@ class Ui_ArmsWindow(object):
         self.frontleverBox.setValue(0)
         self.tBox.setValue(0)
         self.splitBox.setValue(0.00)
-        
-
+        self.coordBox.setValue(0)
+        self.techBox.setValue(0)
 
     def clicked_save(self):
         v = Thread(target = self.save2)
@@ -253,37 +271,20 @@ class Ui_ArmsWindow(object):
         self.dates = self.dateEdit.toPlainText()
         self.name = self.nameEdit.toPlainText()
         self.plot.plot_data(self.name, self.dates)
-      
-           
-    def save(self):
-        self.name = self.nameEdit.toPlainText()
-        self.deadhang = self.deadhangBox.value()
-        self.maxweightpullup = self.maxweightpullupBox.value()
-        self.maxpullup = self.maxpullupBox.value()        
-        self.maxweightdip = self.maxweightdipBox.value()
-        self.maxdips = self.maxdipsBox.value()        
-        self.frontleveroption = str(self.frontleveroptionbox.currentText())
-        self.frontlever = self.frontleverBox.value()
-        self.TRX = self.tBox.value()
-        self.split = self.splitBox.value()
-        ctypes.windll.user32.MessageBoxW(0, "personnal data saved", "Saved", 1)
 
-        personnal_data = {
-            
-            "name": pd.Series([self.name]),
-            "2 hands dead hang": pd.Series([self.deadhang]),
-            "1 max weighted pull-up": pd.Series([self.maxweightpullup]),
-            "max pull-up": pd.Series([self.maxpullup]),
-            "1 max weighted dip": pd.Series([self.maxweightdip]),
-            "max dips": pd.Series([self.maxdips]),
-            "front lever option": pd.Series([self.frontleveroption]),
-            "front lever": pd.Series([self.frontlever]),
-            "T on TRX": pd.Series([self.TRX]),
-            "front split": pd.Series([self.split])
-            
-        }
-        df = pd.DataFrame(personnal_data)
-        df.to_csv("%s_arms.csv"%self.name, header = True, index = False)
+    def clicked_clearplot(self):
+        p = Thread(target = self.disconnect)
+        p.start()
+        
+    def disconnect(self):
+        labels = ['technic','coordination', 'back strength', 'core strength', 'arms strength', 'arms endurance', 'fingers strength', 'fingers endurance']   
+        angles = np.linspace(0, 2*np.pi, len(labels), endpoint=False)
+        angles = np.concatenate((angles,[angles[0]]))
+        
+        self.plot.canvas.axes.clear()
+        self.plot.canvas.axes.set_thetagrids(angles * 180/np.pi, labels, fontsize = 10)
+        self.plot.canvas.axes.set_yticklabels([])
+        self.plot.canvas.draw()      
 
     def save2(self):
         
@@ -299,62 +300,63 @@ class Ui_ArmsWindow(object):
         self.split = self.splitBox.value()
         self.tech = self.techBox.value()
         self.coord = self.coordBox.value()
+        dates = datetime.date.today()       
         
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data1 = [self.deadhang]
         df["2 hands dead hang"] = data1
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
         
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data2 = [self.maxweightpullup]
         df["1 max weighted pull-up"] = data2
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
        
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data3 = [self.maxpullup]
         df["max pull-up"] = data3
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")            
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data4 = [self.maxweightdip]
         df["1 max weighted dip"] = data4
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
         
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data5 = [self.maxdips]
         df["max dips"] = data5
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
         
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data6 = [self.frontleveroption]
         df["front lever option"] = data6
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
        
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data7 = [self.frontlever]
         df["front lever"] = data7
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")            
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")            
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data8 = [self.TRX]
         df["T on TRX"] = data8
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data9 = [self.split]
         df["front split"] = data9
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data10 = [self.tech]
         df["climbing technic"] = data10
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
 
-        df = pd.read_csv("%s.csv"%self.name)
+        df = pd.read_csv("{0}/{0}%s.csv".format(self.name)%dates)
         data11 = [self.coord]
         df["climbing coordination"] = data11
-        df.to_csv("%s.csv"%self.name, header = True, index = False, na_rep = "")
+        df.to_csv("{0}/{0}%s.csv".format(self.name)%dates, header = True, index = False, na_rep = "")
         
         ctypes.windll.user32.MessageBoxW(0, "Exo body data saved", "Saved", 0x00000000)
 

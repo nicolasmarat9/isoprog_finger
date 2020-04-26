@@ -428,16 +428,17 @@ class Ui_Option3(object):
         self.state = 1
         self.state2 = 1
         self.state4 = 0
+        self.spn = 0
         self.displaylabel_3.setText("wait...") 
         self.displaytimerlabel.setText("")
         
-        self.plot.canvas.axes.clear()
         self.plot.x.clear()
         self.plot.y.clear()
         self.plot.x2.clear()
         self.plot.y2.clear()
         self.plot.linehand.clear()
         self.plot.lineprog.clear()
+        self.plot.canvas.axes.clear()        
         self.plot.canvas.axes.set_ylim(0,90)
         self.plot.canvas.draw()
         

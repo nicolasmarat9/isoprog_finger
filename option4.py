@@ -473,7 +473,8 @@ class Ui_Option4(object):
         self.timer = 0
         self.displaylabel_4.setText("wait...")
         self.displaytimerlabel.setText("")
-
+        
+        self.spn = 0
         self.i = 0
         self.j = 2.5        
         self.timepoint4 = 0
