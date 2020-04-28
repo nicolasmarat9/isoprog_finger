@@ -24,7 +24,7 @@ class Ui_Option3(object):
         self.rang = 0
         self.rang2 = 0
         self.i = 0
-        self.j = 3.5
+        self.j = 6.5
         self.spn = 0
         self.state = 0
         self.state2 = 0
@@ -88,7 +88,7 @@ class Ui_Option3(object):
         self.timerlabel.setObjectName("timerlabel") 
 
         self.displaytimerlabel= QtWidgets.QLabel(self.centralwidget)
-        self.displaytimerlabel.setGeometry(QtCore.QRect(25 ,340, 246, 200))
+        self.displaytimerlabel.setGeometry(QtCore.QRect(15 ,340, 266, 200))
         font = QtGui.QFont()
         font.setPointSize(40)
         font.setWeight(50)
@@ -362,10 +362,10 @@ class Ui_Option3(object):
                 v = Thread(target = self.timesim)
                 v.start()
 
-                if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                if(self.state2 == 0) and (self.timepoint > 80) and (value < self.rang) or (value > self.rang2) : 
                     self.pulltime = self.timer
                     self.displayTimeRightlabel.setText(str(int(self.pulltime)))
-                    self.displaylabel_3.setText("Straight endurance test is finished")
+                    self.displaylabel_3.setText("FAIL!!! Test is finished")
                     self.intens = self.spn
                     self.state2 = 1
 
@@ -400,10 +400,10 @@ class Ui_Option3(object):
                 v = Thread(target = self.timesim)
                 v.start()
                    
-                if(self.state2 == 0) and (self.timepoint > 50) and (value < self.rang) or (value > self.rang2) : 
+                if(self.state2 == 0) and (self.timepoint > 80) and (value < self.rang) or (value > self.rang2) : 
                     self.pulltime_2 = self.timer
                     self.displayTimeLeftlabel.setText(str(int(self.pulltime_2)))
-                    self.displaylabel_3.setText("Straight endurance test is finished")
+                    self.displaylabel_3.setText("FAIL!!! Test is finished")
                     self.intens2 = self.spn
                     self.state2 = 1
                 
@@ -412,7 +412,10 @@ class Ui_Option3(object):
             self.timepoint += 1
 
     def timersec(self):
+        self.displaytimerlabel.setText("WAIT...")
         time.sleep(2)
+        self.displaytimerlabel.setText("GRAB!")
+        time.sleep(3)
         while(self.clean == 0):
             self.timer += 1
             time.sleep(1)
@@ -443,7 +446,7 @@ class Ui_Option3(object):
         self.plot.canvas.draw()
         
         self.i = 0
-        self.j = 3.5        
+        self.j = 6.5       
         self.timepoint = 0
         self.val = 0
         self.rang = 0
@@ -472,7 +475,7 @@ class Ui_Option3(object):
         self.plot.canvas.draw()
         
         self.i = 0
-        self.j = 3.5        
+        self.j = 6.5        
         self.displayTimeRightlabel.setText("")
         self.displayTimeLeftlabel.setText("")
         self.displaylabel_3.setText("reset straight endurance")

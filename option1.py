@@ -264,10 +264,10 @@ class Ui_Option1(object):
         
         baudrate = 9600
         ser = serial.Serial(portName, baudrate)
-        
+        self.displaylabel_1.setText("WAIT...")
         ser_bytes = ser.readline()
         valueP1 = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))        
-     
+        time.sleep(1)
                
         while self.statexit == 0:
                         

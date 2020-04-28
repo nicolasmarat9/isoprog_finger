@@ -31,7 +31,7 @@ class Ui_Option4(object):
         self.teeth = 0
         self.val = 0    
         self.i = 0
-        self.j = 2.5
+        self.j = 5
         self.spn = 0
         self.timer = 0
         
@@ -92,7 +92,7 @@ class Ui_Option4(object):
         self.timerlabel.setObjectName("timerlabel")
 
         self.displaytimerlabel= QtWidgets.QLabel(self.centralwidget)
-        self.displaytimerlabel.setGeometry(QtCore.QRect(25 ,340, 246, 200))
+        self.displaytimerlabel.setGeometry(QtCore.QRect(15 ,340, 266, 200))
         font = QtGui.QFont()
         font.setPointSize(40)
         font.setWeight(50)
@@ -360,18 +360,10 @@ class Ui_Option4(object):
                 s.join()
                 u.join()
 
-                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
+                if(self.state2 == 0) and (self.timepoint4 > 110) and (self.state == 1) and (self.val < 47) and (self.val > 3) and (value < self.rang) :
                     self.pulltime = self.timer
                     self.displayTimeRightlabel.setText(str(int(self.pulltime)))
-                    self.displaylabel_4.setText("Interval endurance test is finished")
-                    self.interm = self.inter
-                    self.intens = self.spn
-                    self.state2 = 1
-            
-                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime = self.timer
-                    self.displayTimeRightlabel.setText(str(int(self.pulltime)))
-                    self.displaylabel_4.setText("Interval endurance test is finished")
+                    self.displaylabel_4.setText("FAIL!!! Test is finished")
                     self.interm = self.inter
                     self.intens = self.spn
                     self.state2 = 1
@@ -398,23 +390,15 @@ class Ui_Option4(object):
                 
                 s.join()
                 u.join()
-                   
-                if(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 1) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime2 = self.timer 
-                    self.displayTimeLeftlabel.setText(str(int(self.pulltime2)))
-                    self.displaylabel_4.setText("Interval endurance test is finish")
-                    self.interm2 = self.inter2
-                    self.intens2 = self.spn
+                    
+                if(self.state2 == 0) and (self.timepoint4 > 110) and (self.state == 1) and (self.val < 47) and (self.val > 3) and (value < self.rang):
+                    self.pulltime = self.timer
+                    self.displayTimeRightlabel.setText(str(int(self.pulltime)))
+                    self.displaylabel_4.setText("FAIL!!! Test is finished")
+                    self.interm = self.inter
+                    self.intens = self.spn
                     self.state2 = 1
             
-                elif(self.state2 == 0) and (self.timepoint4 > 50) and (self.state == 2) and (self.val < 22) and (value < self.rang) :
-                    self.pulltime2 = self.timer 
-                    self.displayTimeLeftlabel.setText(str(int(self.pulltime2)))
-                    self.displaylabel_4.setText("Interval endurance test is finish")
-                    self.interm2 = self.inter2
-                    self.intens2 = self.spn
-                    self.state2 = 1
-
     def plotvalue(self):
         self.i += 0.1
         self.j += 0.1
@@ -425,7 +409,7 @@ class Ui_Option4(object):
         elif(self.state4 == 2):
             self.spn = self.averagepeakleft 
         self.rang = self.spn - 5
-        self.rang2 = self.spn + 5 
+        self.rang2 = self.spn + 8 
 
         if(self.state == 0) and (self.val == 0):
             self.state = 1
@@ -457,6 +441,9 @@ class Ui_Option4(object):
             self.timepoint4 += 1
 
     def timersec(self):
+        self.displaytimerlabel.setText("WAIT...")
+        time.sleep(2)
+        self.displaytimerlabel.setText("GRAB!")
         time.sleep(6)
         while(self.clean == 0):
             self.timer += 1
@@ -476,7 +463,7 @@ class Ui_Option4(object):
         
         self.spn = 0
         self.i = 0
-        self.j = 2.5        
+        self.j = 5        
         self.timepoint4 = 0
         self.state = 0
         self.val = 0
@@ -520,7 +507,7 @@ class Ui_Option4(object):
         self.inter2x.clear()
         
         self.i = 0
-        self.j = 2.5        
+        self.j = 5       
         self.displayTimeRightlabel.setText("")
         self.displayTimeLeftlabel.setText("")
         self.displaylabel_4.setText("reset interval endurance")

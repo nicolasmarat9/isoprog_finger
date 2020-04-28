@@ -494,6 +494,17 @@ class MplWidget3(QWidget ):
 
     def plotfingers(self, name, dates):
 
+        with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string1 = ''
+                for c in (row["sex"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string1 += c
+                self.sex = str(string1)        
+
                    ########## VALUE 1 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
             reader = csv.DictReader(f, delimiter = ",")
@@ -533,8 +544,12 @@ class MplWidget3(QWidget ):
                 self.averagepeakright = sum(self.peakloadright) / len(self.peakloadright)
                 averageboth = (self.averagepeakright + self.averagepeakleft) / 2
                 valp2 = (averageboth / weight) * 100
-                valp3 = 150 / valp2
-                val1 = 100 / valp3
+                if self.sex == "Male":
+                    valp3 = 150 / valp2
+                    val1 = 100 / valp3
+                elif self.sex == "Female":
+                    valp3 = 130 / valp2
+                    val1 = 100 / valp3
 
                    ########## VALUE 2 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -558,9 +573,13 @@ class MplWidget3(QWidget ):
                             if c != ',':
                                 string4 += c
                 self.strendright = float(str(string4))
-                averagestrend = (self.strendright + self.strendleft) / 2               
-                sup = 300 / averagestrend
-                val = 100 / sup
+                averagestrend = (self.strendright + self.strendleft) / 2
+                if self.sex == "Male":
+                    sup = 300 / averagestrend
+                    val = 100 / sup
+                elif self.sex == "Female":
+                    sup = 270 / averagestrend
+                    val = 100 / sup                    
 
                    ########## VALUE 3 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -584,13 +603,20 @@ class MplWidget3(QWidget ):
                             if c != ',':
                                 string4 += c
                 self.intendright = float(str(string4))
-                averageintend = (self.intendright + self.intendleft) / 2               
-                sup2 = 480 / averageintend
-                val2 = 100 / sup2
-                aero = (averageintend + averagestrend) / 2
-                sup3 = 390 / aero
-                val3 = 100 / sup3
-                
+                averageintend = (self.intendright + self.intendleft) / 2
+                if self.sex == "Male":
+                    sup2 = 480 / averageintend
+                    val2 = 100 / sup2
+                    aero = (averageintend + averagestrend) / 2
+                    sup3 = 390 / aero
+                    val3 = 100 / sup3
+                elif self.sex == "Female":
+                    sup2 = 450 / averageintend
+                    val2 = 100 / sup2
+                    aero = (averageintend + averagestrend) / 2
+                    sup3 = 340 / aero
+                    val3 = 100 / sup3                    
+                    
         labels = ['alactic','aerobic', 'lactic', 'recovering']        
         value = [val1, val3, val, val2, val1]
         angles = np.linspace(0, 2*np.pi, len(labels), endpoint=False)
@@ -626,6 +652,17 @@ class MplWidget4(QWidget ):
         self.canvas.axes.set_yticklabels([])
 
     def plot_data(self, name, dates):
+
+        with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
+            reader = csv.DictReader(f, delimiter = ",")
+            for row in reader:
+                string1 = ''
+                for c in (row["sex"]):
+                    if c != '(':
+                        if c != ')':
+                            if c != ',':
+                                string1 += c
+                self.sex = str(string1)
 
                    ########## VALUE 1 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -666,8 +703,12 @@ class MplWidget4(QWidget ):
                 self.averagepeakright = sum(self.peakloadright) / len(self.peakloadright)
                 valp = (self.averagepeakright + self.averagepeakleft) / 2
                 valp2 = (valp / weight) * 100
-                valp3 = 150 / valp2
-                val1 = 100 / valp3
+                if self.sex == "Male":
+                    valp3 = 150 / valp2
+                    val1 = 100 / valp3
+                elif self.sex == "Female":
+                    valp3 = 130 / valp2
+                    val1 = 100 / valp3                    
 
                    ########## VALUE 2 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -691,9 +732,14 @@ class MplWidget4(QWidget ):
                             if c != ',':
                                 string2 += c
                 self.strendright = float(str(string2))
-                averagestrend = (self.strendright + self.strendleft) / 2               
-                sup = 360 / averagestrend
-                val = 100 / sup
+                averagestrend = (self.strendright + self.strendleft) / 2
+                if self.sex == "Male":
+                    sup = 360 / averagestrend
+                    val = 100 / sup
+                elif self.sex == "Female":
+                    sup = 320 / averagestrend
+                    val = 100 / sup
+                    
 
                    ########## VALUE 2 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -719,8 +765,13 @@ class MplWidget4(QWidget ):
                 self.intendright = float(str(string2))
                 averageintend = (self.intendright + self.intendleft) / 2               
                 aero = (averageintend + averagestrend) / 2
-                sup3 = 480 / aero
-                val2 = 100 / sup3
+                if self.sex == "Male":
+                    sup3 = 480 / aero
+                    val2 = 100 / sup3
+                elif self.sex == "Female":
+                    sup3 = 450 / aero
+                    val2 = 100 / sup3
+                    
 
                    ########## VALUE 3 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -734,8 +785,13 @@ class MplWidget4(QWidget ):
                                 string1 += c
                 self.maxwpullup = float(str(string1))
                 valp2 = (self.maxwpullup / weight) * 100
-                valp3 = 130 / valp2
-                valp1 = 100 / valp3
+                if self.sex == "Male":                
+                    valp3 = 130 / valp2
+                    valp1 = 100 / valp3
+                elif self.sex == "Female":                
+                    valp3 = 115 / valp2
+                    valp1 = 100 / valp3
+                    
                 
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
             reader = csv.DictReader(f, delimiter = ",")
@@ -748,10 +804,15 @@ class MplWidget4(QWidget ):
                                 string2 += c
                 self.maxdip = float(str(string2))
                 valp2 = (self.maxwpullup / weight) * 100
-                valp3 = 140 / valp2
-                valp4 = 100 / valp3
-                
-                val3 = (valp4 + valp1) / 2
+                if self.sex == "Male":                
+                    valp3 = 140 / valp2
+                    valp4 = 100 / valp3
+                    val3 = (valp4 + valp1) / 2
+                elif self.sex == "Female":                
+                    valp3 = 110 / valp2
+                    valp4 = 100 / valp3
+                    val3 = (valp4 + valp1) / 2
+                    
 
                    ########## VALUE 4 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -764,8 +825,13 @@ class MplWidget4(QWidget ):
                             if c != ',':
                                 string1 += c
                 self.maxwpullup = float(str(string1))
-                sup2 = 50 / self.maxwpullup
-                valp1 = 100 / sup2
+                if self.sex == "Male": 
+                    sup2 = 50 / self.maxwpullup
+                    valp1 = 100 / sup2
+                elif self.sex == "Female": 
+                    sup2 = 43 / self.maxwpullup
+                    valp1 = 100 / sup2
+                    
 
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
             reader = csv.DictReader(f, delimiter = ",")
@@ -777,9 +843,15 @@ class MplWidget4(QWidget ):
                             if c != ',':
                                 string2 += c
                 self.maxwpullup = float(str(string2))
-                sup2 = 50 / self.maxwpullup
-                valp2 = 100 / sup2
-                val4 = (valp2 + valp1) / 2
+                if self.sex == "Male":                
+                    sup2 = 50 / self.maxwpullup
+                    valp2 = 100 / sup2
+                    val4 = (valp2 + valp1) / 2
+                elif self.sex == "Female":                
+                    sup2 = 42 / self.maxwpullup
+                    valp2 = 100 / sup2
+                    val4 = (valp2 + valp1) / 2
+                    
 
                    ########## VALUE 5 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -803,12 +875,20 @@ class MplWidget4(QWidget ):
                             if c != ',':
                                 string2 += c
                 self.frontlev = float(str(string2))
-                if self.frontopt == "straight":
-                    sup2 = 45 / self.frontlev
-                    val5 = (80 / sup2) + 20   
-                elif self.frontopt == "bend":
-                    sup2 = 45 / self.frontlev
-                    val5 = 80 / sup2
+                if self.sex == "Male":                
+                    if self.frontopt == "straight":
+                        sup2 = 45 / self.frontlev
+                        val5 = (80 / sup2) + 20   
+                    elif self.frontopt == "bend":
+                        sup2 = 45 / self.frontlev
+                        val5 = 80 / sup2
+                elif self.sex == "Female":                
+                    if self.frontopt == "straight":
+                        sup2 = 40 / self.frontlev
+                        val5 = (80 / sup2) + 20   
+                    elif self.frontopt == "bend":
+                        sup2 = 40 / self.frontlev
+                        val5 = 80 / sup2                        
 
                    ########## VALUE 6 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -820,9 +900,13 @@ class MplWidget4(QWidget ):
                         if c != ')':
                             if c != ',':
                                 string += c
-                self.TRX = float(str(string)) 
-                sup2 = 60 / self.TRX
-                val6 = 100 / sup2                    
+                self.TRX = float(str(string))
+                if self.sex == "Male":                
+                    sup2 = 60 / self.TRX
+                    val6 = 100 / sup2
+                elif self.sex == "Female":                
+                    sup2 = 50 / self.TRX
+                    val6 = 100 / sup2                    
 
                    ########## VALUE 7 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -834,9 +918,14 @@ class MplWidget4(QWidget ):
                         if c != ')':
                             if c != ',':
                                 string += c
-                self.split = float(str(string)) 
-                sup2 = 100 / self.split
-                val7 = 100 - sup2
+                self.split = float(str(string))
+                if self.sex == "Male":                
+                    sup2 = 100 / self.split
+                    val7 = 100 - sup2
+                elif self.sex == "Female":                
+                    sup2 = 90 / self.split
+                    val7 = 100 - sup2
+                    
 
                    ########## VALUE 8 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -848,9 +937,13 @@ class MplWidget4(QWidget ):
                         if c != ')':
                             if c != ',':
                                 string += c
-                self.split = float(str(string)) 
-                sup2 = 100 / self.split
-                val8 = 100 / sup2
+                self.split = float(str(string))
+                if self.sex == "Male":                
+                    sup2 = 100 / self.split
+                    val8 = 100 / sup2
+                elif self.sex == "Female":                
+                    sup2 = 90 / self.split
+                    val8 = 100 / sup2                    
 
                    ########## VALUE 9 ##########
         with open("{0}/{0}%s.csv".format(name)%dates,"r") as f:
@@ -862,9 +955,13 @@ class MplWidget4(QWidget ):
                         if c != ')':
                             if c != ',':
                                 string += c
-                self.split = float(str(string)) 
-                sup2 = 100 / self.split
-                val9 = 100 / sup2
+                self.split = float(str(string))
+                if self.sex == "Male":                
+                    sup2 = 100 / self.split
+                    val9 = 100 / sup2
+                elif self.sex == "Female":                
+                    sup2 = 90 / self.split
+                    val9 = 100 / sup2                    
                 
         labels = ['technic','coordination', 'flexibility', 'back strength', 'core strength', 'arms strength', 'arms endurance', 'fingers strength', 'fingers endurance']   
  
